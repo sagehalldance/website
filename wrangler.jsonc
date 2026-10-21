@@ -1,0 +1,10 @@
+// Cloudflare Workers config. Cloudflare runs `sh scripts/build.sh`, then
+// `npx wrangler deploy`, which publishes only dist/ (the public site),
+// not the repo root. "name" must match the Worker in the Cloudflare dashboard.
+{
+  "name": "website",
+  "compatibility_date": "2026-10-19",
+  "assets": {
+    "directory": "./dist"
+  }
+}
