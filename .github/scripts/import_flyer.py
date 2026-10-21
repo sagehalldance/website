@@ -68,7 +68,7 @@ Otherwise:
 - month: the month in the flyer's heading, 1-12.
 - nights: one entry per night listed, in order.
   - day: the day of the month.
-  - weekday: the weekday exactly as printed next to it (THUR means THU). Empty if none is printed.
+  - weekday: the weekday exactly as printed next to it (THUR means THU). NONE if none is printed.
   - time: the start time in 24-hour HH:MM, one of: {", ".join(times)}. "TBA" if the flyer gives no time.
   - venue: one of: {", ".join(venues)}. If the flyer names no venue, says TBD/TBA, or names a place not in that list, use "Location TBA".
   - title: empty for a regular night. If the line names a special event or group instead of (or besides) a venue, such as a fundraiser or a club night, put that name here.
@@ -89,7 +89,7 @@ def schema(times, venues):
                 "type": "OBJECT", "required": night_fields, "propertyOrdering": night_fields,
                 "properties": {
                     "day": {"type": "INTEGER"},
-                    "weekday": {"type": "STRING", "enum": DAYS + [""]},
+                    "weekday": {"type": "STRING", "enum": DAYS + ["NONE"]},
                     "time": {"type": "STRING", "enum": times},
                     "venue": {"type": "STRING", "enum": venues},
                     "title": {"type": "STRING"},
@@ -129,7 +129,7 @@ def ask_gemini(model, body):
 
 def pick_year(month, nights, today):
     """The year, nearest to today, in which every printed weekday matches its date."""
-    printed = [(n["day"], n["weekday"]) for n in nights if n["weekday"]]
+    printed = [(n["day"], n["weekday"]) for n in nights if n["weekday"] in DAYS]
     for year in sorted(range(today.year - 1, today.year + 2),
                        key=lambda y: abs((datetime.date(y, month, 1) - today.replace(day=1)).days)):
         try:
