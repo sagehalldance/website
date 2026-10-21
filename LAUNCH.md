@@ -14,7 +14,7 @@ The goal: Sage Hall owns everything (the code, the domain and the hosting) in ac
 - [x] **Find out whether anyone uses an @sagehalldance.com email address.** Confirmed: no one does.
 - [ ] **Have the friend screenshot the domain's DNS records** in Hostinger (hPanel → Domains → sagehalldance.com → DNS): an actual picture of the record list. Cloudflare's copy in step 4 is a best guess and can miss records; this is what you check it against. Low-stakes: a public lookup on Oct 21 found only Hostinger defaults (A `157.173.212.97`, `www` CNAME, Hostinger mail MX/SPF, DMARC `p=none`) and no verification records. It isn't needed before adding the domain to Cloudflare, only before the nameserver switch.
 - [ ] **Back up the current website** from the friend's server, just in case.
-- [ ] **Check the domain can be transferred.** It can't move within 60 days of being registered or transferred. The friend can see the date in Hostinger.
+- [x] **Check the domain can be transferred.** It can't move within 60 days of being registered or transferred. Public registry record (Oct 21): registered at Hostinger on May 15, 2025, so it's clear to transfer. It **expires May 15, 2027** and has the usual transfer lock on. The friend keeps control of it until step 6, so do step 6 soon after launch rather than near the expiry date.
 
 ## 2. Create Sage Hall's accounts
 

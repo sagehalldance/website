@@ -31,7 +31,8 @@ Goals:
 ### Launch (details in LAUNCH.md)
 - [x] Confirm whether anyone uses @sagehalldance.com email. Nobody does.
 - [x] Create Sage Hall GitHub and Cloudflare accounts.
-- [ ] Friend: screenshot Hostinger DNS records; back up the old site; check the domain is more than 60 days past its last registration or transfer.
+- [x] Domain is clear to transfer: registered at Hostinger May 15, 2025; expires May 15, 2027.
+- [ ] Friend: screenshot Hostinger DNS records; back up the old site.
 - [x] Transfer the repo to the Sage Hall GitHub account. It's now `sagehalldance/website`.
 - [x] Set `CMS_REPO` in `admin/index.html` to `sagehalldance/website/main` (on the launch branch).
 - [x] Put the docs, `scripts/build.sh` and the `CMS_REPO` change on `main`.
