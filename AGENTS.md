@@ -60,7 +60,6 @@ Goals:
 ### Ideas / later
 - A plainer one-page launch summary for the owner (offered, not requested yet).
 - Google Calendar mode exists but isn't set up (README §3).
-- **Flyer → schedule import (next feature, after launch):** staff upload the monthly Instagram flyer in Pages CMS. A workflow has Gemini read it into `data/events.json` for that month only, with the same venue and time lists as the editor, and checks each date against the weekday printed on the flyer. Tested Oct 21 against the hand-entered Sept and Oct schedules: `gemini-3.5-flash-lite` and `gemini-3.8-flash` both got 120/120 fields right, with flash-lite about 10 s per flyer. The key is the repo secret `GEMINI_API_KEY` (free tier, from Google AI Studio). GitHub Models, the first idea, was retired on Jul 30, 2026. Still to decide: open a PR for review, or save straight to `main`.
 - Email for the domain: Cloudflare Email Routing (free forwarding) or a paid mailbox. See LAUNCH.md *Email (later)*.
 
 ## Confirmed facts (from the owner; don't change without asking)
@@ -79,6 +78,7 @@ Goals:
   - `data/events.json`: the schedule.
   - `data/site.json`: announcement, theme, venues, reels, FAQ, Google Calendar.
   - `data/weekly.json`: Dancers of the Week and weekly photos.
+  - `data/flyer.json`: the monthly flyer. Saving it runs `.github/workflows/import-flyer.yml`, which has Gemini read the flyer and rewrite that month in `data/events.json`, committing straight to `main` as github-actions[bot]. The safety rules are in the docstring of `.github/scripts/import_flyer.py`. On failure nothing changes, and a GitHub issue is opened. It needs the repo secret `GEMINI_API_KEY` (free tier, Google AI Studio). Models are set by `FLYER_MODELS`, default `gemini-flash-lite-latest,gemini-flash-latest`.
 - **Uploads** land in `assets/uploads/`. `.github/workflows/shrink-photos.yml` resizes them to 1600px and strips EXIF/GPS.
 - **Themes:** summer is the base `styles.css`. `theme-spring.css`, `theme-fall.css` and `theme-winter.css` layer on top, scoped to `html[data-theme=...]`. An inline script in `index.html` applies the theme before first paint.
 
@@ -110,6 +110,7 @@ Newest first. Record decisions and the reasons behind them here, not a running c
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-21 | Monthly flyer → schedule import with Gemini, committing straight to `main` (no PR review) | The owner already posts a flyer on Instagram each month, so uploading it once in the editor replaces typing the nights in by hand. Gemini's free tier is enough; GitHub Models was retired Jul 30, 2026. Tested live: Sept and Oct flyers read 120/120 fields right, a re-upload kept hand edits, and a non-flyer was refused. The checks are why no review step is needed |
 | 2026-10-21 | Host on a Cloudflare **Worker** with static assets, not a Pages project | Cloudflare's Git import now creates Workers. It's free for a static site and supports custom domains. `wrangler.jsonc` pins the published folder to `dist/`, because the first auto-configured deploy published the whole repo, `.git/` included |
 | 2026-10-21 | Work directly on `main` during launch; use feature branches once requests come in. Docs, build script and `CMS_REPO` moved to `main`; footer, season switch and photo workflow wait for the Cloudflare cutover | Launching as we go. The held changes would alter the live demo or break photo republishing on GitHub Pages |
 | 2026-10-21 | Repo transferred to the `sagehalldance` account and renamed `website`; to be made private after launch | Sage Hall owns the code (LAUNCH.md step 3). Private waits until GitHub Pages is no longer needed |
