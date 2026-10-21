@@ -26,7 +26,7 @@ The western pattern band and boot bouquet are cut from Sage Hall's September fly
 
 1. Merge this branch into `main`.
 2. In the repo, open **Settings → Pages**. Under **Build and deployment**, pick **Deploy from a branch**, then choose `main` and `/ (root)`.
-3. After a minute the site is live at `https://alejandro-usu.github.io/sagehall/`.
+3. After a minute the site is live at `https://sagehalldance.github.io/website/`.
 
 To preview locally, run `python3 -m http.server` in this folder and open <http://localhost:8000>. (Opening `index.html` straight from disk won't work, because the browser blocks loading the JSON files.)
 
@@ -42,7 +42,7 @@ Do this once, as the repo owner:
 
 From then on, staff go to `/admin` on the site and tap **Edit the dance schedule**. Each save commits to the repo, and GitHub Pages republishes within a minute or two.
 
-> If the repo moves (for example, transferred to Sage Hall's own GitHub account) or publishes from another branch, update the two editor links in `admin/index.html`.
+> If the repo is renamed, moves to another account, or publishes from another branch, update the `CMS_REPO` line near the bottom of `admin/index.html`.
 
 **Adding a new venue:** add it under **Site settings → Venues**, then add the same name to the `venue` options in `.pages.yml` so it shows in the schedule dropdown.
 
@@ -53,7 +53,7 @@ If staff would rather use the Google Calendar app on their phones:
 1. In Google Calendar, create a calendar (e.g. "Sage Hall Dances"). In its settings, under **Access permissions**, turn on **Make available to public**.
 2. Copy the **Calendar ID** from **Integrate calendar**. It looks like `abc123@group.calendar.google.com`.
 3. In the [Google Cloud Console](https://console.cloud.google.com/), create a project, enable the **Google Calendar API**, and create an **API key**. Restrict it:
-   - **Application restrictions → Websites:** `https://alejandro-usu.github.io/*` (plus the real domain later)
+   - **Application restrictions → Websites:** `https://sagehalldance.github.io/*` (plus the real domain later)
    - **API restrictions:** Google Calendar API only
 
    A browser key like this is meant to be public. The restrictions keep anyone else from using it.
@@ -65,7 +65,7 @@ The site then reads events from Google Calendar and shows "Subscribe" links unde
 
 All four looks are the same page with different styling, so they always show the same schedule and settings. There's nothing extra to host.
 
-- **Links to share:** add `?theme=spring`, `?theme=summer`, `?theme=fall` or `?theme=winter` to the site address, e.g. `https://alejandro-usu.github.io/sagehall/?theme=winter`. Older `?theme=classic` links still work and open Summer.
+- **Links to share:** add `?theme=spring`, `?theme=summer`, `?theme=fall` or `?theme=winter` to the site address, e.g. `https://sagehalldance.github.io/website/?theme=winter`. Older `?theme=classic` links still work and open Summer.
 - **Switch in the corner:** a Spring / Summer / Fall / Winter toggle floats in the bottom-right corner (icons only on phones). It remembers the visitor's pick.
 - **Default look:** **Site settings → Site theme** sets what first-time visitors see, so staff can change it with the seasons.
 - **Hide the switch** when the site goes live with **Site settings → Show theme switcher**.

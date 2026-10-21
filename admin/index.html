@@ -33,9 +33,9 @@
         </header>
 
         <div class="admin-actions">
-          <a class="btn btn-primary" data-cms-file="events" href="https://app.pagescms.org/alejandro-usu/sagehall/main/file/events">Edit the dance schedule</a>
-          <a class="btn btn-outline" data-cms-file="weekly" href="https://app.pagescms.org/alejandro-usu/sagehall/main/file/weekly">Update Dancers of the Week &amp; photos</a>
-          <a class="btn btn-outline" data-cms-file="settings" href="https://app.pagescms.org/alejandro-usu/sagehall/main/file/settings">Edit reels, venues &amp; FAQ</a>
+          <a class="btn btn-primary" data-cms-file="events" href="https://app.pagescms.org/sagehalldance/website/main/file/events">Edit the dance schedule</a>
+          <a class="btn btn-outline" data-cms-file="weekly" href="https://app.pagescms.org/sagehalldance/website/main/file/weekly">Update Dancers of the Week &amp; photos</a>
+          <a class="btn btn-outline" data-cms-file="settings" href="https://app.pagescms.org/sagehalldance/website/main/file/settings">Edit reels, venues &amp; FAQ</a>
         </div>
 
         <section class="admin-section">
@@ -84,7 +84,7 @@
   <script>
     /* Where the editor lives: GitHub owner/repository/branch. After moving the repo
        to Sage Hall's GitHub account, change this one line (see LAUNCH.md). */
-    var CMS_REPO = "alejandro-usu/sagehall/main";
+    var CMS_REPO = "sagehalldance/website/main";
     document.querySelectorAll("[data-cms-file]").forEach(function (a) {
       a.href = "https://app.pagescms.org/" + CMS_REPO + "/file/" + a.getAttribute("data-cms-file");
     });

@@ -5,7 +5,7 @@
 
 media:
   input: assets/uploads
-  # no leading slash: the site lives under /sagehall/ on GitHub Pages, so paths stay relative
+  # no leading slash: the site lives under /website/ on GitHub Pages, so paths stay relative
   output: assets/uploads
   extensions: [jpg, jpeg, png, webp]
 
