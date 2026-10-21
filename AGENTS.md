@@ -60,6 +60,7 @@ Goals:
 ### Ideas / later
 - A plainer one-page launch summary for the owner (offered, not requested yet).
 - Google Calendar mode exists but isn't set up (README §3).
+- **Flyer → schedule import (next feature, after launch):** staff upload the monthly Instagram flyer in Pages CMS. A workflow has Gemini read it into `data/events.json` for that month only, with the same venue and time lists as the editor, and checks each date against the weekday printed on the flyer. Tested Oct 21 against the hand-entered Sept and Oct schedules: `gemini-3.5-flash-lite` and `gemini-3.8-flash` both got 120/120 fields right, with flash-lite about 10 s per flyer. The key is the repo secret `GEMINI_API_KEY` (free tier, from Google AI Studio). GitHub Models, the first idea, was retired on Jul 30, 2026. Still to decide: open a PR for review, or save straight to `main`.
 - Email for the domain: Cloudflare Email Routing (free forwarding) or a paid mailbox. See LAUNCH.md *Email (later)*.
 
 ## Confirmed facts (from the owner; don't change without asking)
