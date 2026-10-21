@@ -12,7 +12,7 @@ The goal: Sage Hall owns everything (the code, the domain and the hosting) in ac
 ## 1. Before you start: backups and the domain
 
 - [x] **Find out whether anyone uses an @sagehalldance.com email address.** Confirmed: no one does.
-- [ ] **Have the friend screenshot the domain's DNS records** in Hostinger (hPanel → Domains → sagehalldance.com → DNS). With no email this is low-stakes, but it catches any verification records (Google, Facebook, etc.) worth keeping.
+- [ ] **Have the friend screenshot the domain's DNS records** in Hostinger (hPanel → Domains → sagehalldance.com → DNS): an actual picture of the record list. Cloudflare's copy in step 4 is a best guess and can miss records; this is what you check it against. Low-stakes: a public lookup on Oct 21 found only Hostinger defaults (A `157.173.212.97`, `www` CNAME, Hostinger mail MX/SPF, DMARC `p=none`) and no verification records. It isn't needed before adding the domain to Cloudflare, only before the nameserver switch.
 - [ ] **Back up the current website** from the friend's server, just in case.
 - [ ] **Check the domain can be transferred.** It can't move within 60 days of being registered or transferred. The friend can see the date in Hostinger.
 
@@ -27,7 +27,7 @@ Use a shared business email that the owner controls, such as sagehallutah@gmail.
 
 - [x] Alejandro transfers the repository to the Sage Hall account. Done: `alejandro-usu/sagehall` is now **`sagehalldance/website`** (transferred, then renamed). Old repo links redirect automatically, but the old mock-up address `alejandro-usu.github.io/sagehall/` doesn't. The mock-up is now at <https://sagehalldance.github.io/website/>.
 - [x] Put the docs, `scripts/build.sh` and the editor-link setting on `main`, so Cloudflare can build from `main`.
-- [ ] Merge the rest of the launch branch (`ccr-b6d97a4a-1cdu41`) into `main` once the `website.sagehalldance.workers.dev` site checks out, right before the nameserver switch in step 4. This turns off the season switch, removes the "mock-up" footer note and drops the GitHub-Pages-only automation step.
+- [ ] Merge the rest of the launch branch (`ccr-b6d97a4a-1cdu41`) into `main` once the `website.sagehalldance.workers.dev` site checks out, after the nameserver switch in step 4 and right before attaching the domain to the Worker. This turns off the season switch, removes the "mock-up" footer note and drops the GitHub-Pages-only automation step.
 - [x] In `admin/index.html`, set `var CMS_REPO` to the new owner/repo/branch (`"sagehalldance/website/main"`). It's live on `main`.
 - [ ] Turn off GitHub Pages for the repo (**Settings → Pages → Unpublish**) once Cloudflare is live, so there's only one copy of the site.
 - [ ] **Make the repo private** (**Settings → General → Danger Zone → Change repository visibility**), once Cloudflare is live and GitHub Pages is off. On a free account a private repo can't serve GitHub Pages, so doing this sooner takes the mock-up offline. Cloudflare and Pages CMS both work with private repos.
@@ -35,10 +35,11 @@ Use a shared business email that the owner controls, such as sagehallutah@gmail.
 ## 4. Put the site on Cloudflare (still on the old domain setup)
 
 - [x] Cloudflare → **Workers & Pages → Create**, connect GitHub, pick `sagehalldance/website`, and set the build command to `sh scripts/build.sh` (the deploy command stays `npx wrangler deploy`). Cloudflare now sets these sites up as a **Worker**, and the screen doesn't ask for an output folder. `wrangler.jsonc` in the repo sets it to `dist`, so only the public site is published. Done Oct 21: the Worker is named `website`.
-- [ ] Open <https://website.sagehalldance.workers.dev> and check the site works: the schedule, `/admin` and a theme link such as `?theme=fall`. Also check that repo files like `/AGENTS.md` and `/.git/config` return "not found".
-- [ ] **Add the domain to Cloudflare:** dashboard → **Add a domain** → `sagehalldance.com` → Free plan. Cloudflare imports the existing DNS records. Compare them with the screenshot from step 1, and delete records that pointed at the old server (the Worker adds its own when you connect the domain).
-- [ ] In the `website` Worker → **Settings → Domains & Routes → Add → Custom domain**, add `sagehalldance.com` and `www.sagehalldance.com`. This works only after the domain is added above.
-- [ ] **The friend changes the nameservers** in Hostinger (Domains → sagehalldance.com → Nameservers) to the two Cloudflare gives you. Within a few hours, sagehalldance.com shows the new site.
+- [x] Open <https://website.sagehalldance.workers.dev> and check the site works: the schedule, `/admin` and a theme link such as `?theme=fall`. Also check that repo files like `/AGENTS.md` and `/.git/config` return "not found". Checked Oct 21 on desktop and phone.
+- [ ] **Add the domain to Cloudflare:** dashboard → **Add a domain** → `sagehalldance.com` → Free plan. Cloudflare copies the existing DNS records, gives you two nameservers, and shows the domain as "Pending". Nothing changes for visitors yet. Compare the copied records with the screenshot from step 1. **Keep the A record (`157.173.212.97`) and the `www` CNAME for now**, so the old site keeps working through the switch. You can delete the Hostinger MX and SPF (`v=spf1 include:_spf.mail.hostinger.com`) records, since nobody uses email.
+- [ ] **The friend changes the nameservers** in Hostinger (Domains → sagehalldance.com → Nameservers) to the two Cloudflare gave you. Cloudflare emails when the domain is **Active**, usually within an hour, at most a day. The old site stays up throughout.
+- [ ] **Merge the launch branch** (step 3), so the live version has no mock-up note or season switch.
+- [ ] In the `website` Worker → **Settings → Domains & Routes → Add → Custom domain**, add `sagehalldance.com`, then `www.sagehalldance.com`. This only works once the domain is Active. It replaces the old A and `www` records, and sagehalldance.com shows the new site within minutes.
 
 ## 5. Reconnect the staff editor
 
