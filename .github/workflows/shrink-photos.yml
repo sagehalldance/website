@@ -1,6 +1,6 @@
 # When staff upload photos through the editor, shrink them for the web
 # (see .github/scripts/shrink_photos.py) and commit the smaller files.
-# The host (Cloudflare Pages) redeploys on that commit by itself.
+# Cloudflare redeploys on that commit by itself.
 name: Shrink uploaded photos
 
 on:
