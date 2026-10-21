@@ -11,8 +11,8 @@ media:
 
 content:
   - name: flyer
-    label: Monthly flyer
-    description: Upload the month's schedule flyer (the one you post on Instagram) and save. Within a few minutes the dance schedule fills itself in from it. Check it afterwards, and fix anything under Dance schedule. Re-uploading keeps times and places you've already filled in by hand.
+    label: Monthly flyer (backup copy)
+    description: The website reads the schedule from the Sage Hall Dances Google Calendar. Upload the month's flyer here too, and the backup copy (Dance schedule) fills itself in from it within a few minutes. The website shows the backup only if Google Calendar can't be reached. Re-uploading keeps times and places you've already filled in by hand.
     type: file
     path: data/flyer.json
     format: json
@@ -23,8 +23,8 @@ content:
         required: true
 
   - name: events
-    label: Dance schedule
-    description: One row per dance night. Past nights can stay; the site greys them out automatically.
+    label: Dance schedule (backup copy)
+    description: The backup the website shows only if Google Calendar can't be reached. It's filled in from the monthly flyer; correct it here if needed. Edit the real schedule in the Sage Hall Dances Google Calendar. Past nights can stay; the site greys them out automatically.
     type: file
     path: data/events.json
     format: json
