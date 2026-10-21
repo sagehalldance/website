@@ -96,6 +96,7 @@ Opening `index.html` from disk won't work, because the browser blocks loading th
 
 ### Git workflow
 - `main` is what's published. **During launch, work directly on `main`.** Once feature requests start coming in, do each one on its own branch and merge (fast-forward) into `main` only when Alejandro says to ("merge it").
+- **Commit and push as `sagehalldance`.** On a new computer, set this repo's identity first: `git config user.name sagehalldance` and `git config user.email 345635088+sagehalldance@users.noreply.github.com`. Otherwise commits pick up the machine's global identity (that's how a few Oct 20–21 commits ended up as `alejandromontesinos-dev`).
 - Write clear commit messages explaining why. Push at the end of every session.
 
 ## Decision log
