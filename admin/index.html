@@ -12,12 +12,7 @@
   <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body class="admin-page">
-  <!--
-    The editor links below point at Pages CMS for this repository.
-    If the repo moves (e.g. transferred to Sage Hall's own GitHub account)
-    or the site publishes from a different branch, update OWNER/REPO/BRANCH
-    in these URLs:  https://app.pagescms.org/OWNER/REPO/BRANCH/file/events
-  -->
+  <!-- The editor links below are set from CMS_REPO at the bottom of this page. -->
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="../">
@@ -38,9 +33,9 @@
         </header>
 
         <div class="admin-actions">
-          <a class="btn btn-primary" href="https://app.pagescms.org/sagehalldance/website/main/file/events">Edit the dance schedule</a>
-          <a class="btn btn-outline" href="https://app.pagescms.org/sagehalldance/website/main/file/weekly">Update Dancers of the Week &amp; photos</a>
-          <a class="btn btn-outline" href="https://app.pagescms.org/sagehalldance/website/main/file/settings">Edit reels, venues &amp; FAQ</a>
+          <a class="btn btn-primary" data-cms-file="events" href="https://app.pagescms.org/sagehalldance/website/main/file/events">Edit the dance schedule</a>
+          <a class="btn btn-outline" data-cms-file="weekly" href="https://app.pagescms.org/sagehalldance/website/main/file/weekly">Update Dancers of the Week &amp; photos</a>
+          <a class="btn btn-outline" data-cms-file="settings" href="https://app.pagescms.org/sagehalldance/website/main/file/settings">Edit reels, venues &amp; FAQ</a>
         </div>
 
         <section class="admin-section">
@@ -86,5 +81,13 @@
       </div>
     </div>
   </main>
+  <script>
+    /* Where the editor lives: GitHub owner/repository/branch. After moving the repo
+       to Sage Hall's GitHub account, change this one line (see LAUNCH.md). */
+    var CMS_REPO = "sagehalldance/website/main";
+    document.querySelectorAll("[data-cms-file]").forEach(function (a) {
+      a.href = "https://app.pagescms.org/" + CMS_REPO + "/file/" + a.getAttribute("data-cms-file");
+    });
+  </script>
 </body>
 </html>

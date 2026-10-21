@@ -1,4 +1,6 @@
-# Sage Hall: website mock-up
+# Sage Hall website
+
+> **Working on this project (person or AI agent)?** Start with [`AGENTS.md`](AGENTS.md): scope, current status, to-do list and decision log.
 
 A concept redesign for [Sage Hall](https://sagehalldance.com), the country swing dance in Logan, Utah. It's a plain static site (HTML, CSS, a little JavaScript, no build step), so it runs on GitHub Pages as is.
 
@@ -40,7 +42,7 @@ Do this once, as the repo owner:
 
 From then on, staff go to `/admin` on the site and tap **Edit the dance schedule**. Each save commits to the repo, and GitHub Pages republishes within a minute or two.
 
-> If the repo is renamed, moves to another account, or publishes from another branch, update the three editor links in `admin/index.html`.
+> If the repo is renamed, moves to another account, or publishes from another branch, update the `CMS_REPO` line near the bottom of `admin/index.html`.
 
 **Adding a new venue:** add it under **Site settings → Venues**, then add the same name to the `venue` options in `.pages.yml` so it shows in the schedule dropdown.
 
