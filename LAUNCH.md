@@ -36,8 +36,17 @@ Use a shared business email that the owner controls, such as sagehallutah@gmail.
 
 - [x] Cloudflare → **Workers & Pages → Create**, connect GitHub, pick `sagehalldance/website`, and set the build command to `sh scripts/build.sh` (the deploy command stays `npx wrangler deploy`). Cloudflare now sets these sites up as a **Worker**, and the screen doesn't ask for an output folder. `wrangler.jsonc` in the repo sets it to `dist`, so only the public site is published. Done Oct 21: the Worker is named `website`.
 - [x] Open <https://website.sagehalldance.workers.dev> and check the site works: the schedule, `/admin` and a theme link such as `?theme=fall`. Also check that repo files like `/AGENTS.md` and `/.git/config` return "not found". Checked Oct 21 on desktop and phone.
-- [ ] **Add the domain to Cloudflare:** dashboard → **Add a domain** → `sagehalldance.com` → Free plan. Cloudflare copies the existing DNS records, gives you two nameservers, and shows the domain as "Pending". Nothing changes for visitors yet. Compare the copied records with the screenshot from step 1. **Keep the A record (`157.173.212.97`) and the `www` CNAME for now**, so the old site keeps working through the switch. You can delete the Hostinger MX and SPF (`v=spf1 include:_spf.mail.hostinger.com`) records, since nobody uses email.
-- [ ] **The friend changes the nameservers** in Hostinger (Domains → sagehalldance.com → Nameservers) to the two Cloudflare gave you. Cloudflare emails when the domain is **Active**, usually within an hour, at most a day. The old site stays up throughout.
+- [x] **Add the domain to Cloudflare:** dashboard → **Add a domain** → `sagehalldance.com` → Free plan. Done Oct 21, and it shows as "Pending" until the nameservers change. The records are trimmed to four:
+
+  | Record | Value | Notes |
+  | --- | --- | --- |
+  | A `sagehalldance.com` | `157.173.212.97` | Old site. DNS only (grey cloud) until the domain moves to the Worker |
+  | CNAME `www` | `sagehalldance.com` | DNS only, same reason |
+  | TXT `sagehalldance.com` | `v=spf1 -all` | The domain sends no email, so spoofed mail gets rejected |
+  | TXT `_dmarc` | `v=DMARC1; p=reject` | Same reason |
+
+  The Hostinger mail records were deleted (2 MX, SPF, `autoconfig`, `autodiscover`, and 3 `hostingermail-*` DKIM CNAMEs) because nobody uses email. For email later, see *Email (later)* below. The scan can miss records, so compare this list with the friend's screenshot from step 1.
+- [ ] **The friend changes the nameservers** in Hostinger (Domains → sagehalldance.com → Nameservers): replace `ns1.dns-parking.com` and `ns2.dns-parking.com` with **`carol.ns.cloudflare.com`** and **`terin.ns.cloudflare.com`**. DNSSEC is already off (checked Oct 21), so nothing else needs changing in Hostinger. After they save, click **I updated my nameservers** in Cloudflare (Domains → sagehalldance.com → Overview), which just makes it check sooner. Cloudflare emails when the domain is **Active**, usually within an hour, at most a day. The old site stays up throughout.
 - [ ] **Merge the launch branch** (step 3), so the live version has no mock-up note or season switch.
 - [ ] In the `website` Worker → **Settings → Domains & Routes → Add → Custom domain**, add `sagehalldance.com`, then `www.sagehalldance.com`. This only works once the domain is Active. It replaces the old A and `www` records, and sagehalldance.com shows the new site within minutes.
 
@@ -63,3 +72,10 @@ The site is already live at this point; this step moves who owns the domain.
 - [ ] Set the default look under **Site settings → Site theme** (spring, summer, fall or winter).
 - [ ] Confirm the facts on the README's "Before showing this to Sage Hall" list: prices, venue addresses, the Fairgrounds address (450 vs 490 S 500 W) and the about-section facts.
 - [ ] Keep a note of which email owns the GitHub and Cloudflare accounts, and turn on two-factor sign-in for both.
+
+## Email (later)
+
+Nobody uses @sagehalldance.com email today. Set it up only after the domain is Active on Cloudflare.
+
+- **Forwarding only (free):** Cloudflare → sagehalldance.com → **Email → Email Routing**. For example, forward `info@` to the shared Gmail. Cloudflare adds its own MX and SPF records and replaces `v=spf1 -all`. Replies come from the Gmail address.
+- **Send and receive as @sagehalldance.com (paid):** Google Workspace, Microsoft 365 or Zoho. Add the provider's MX, SPF and DKIM records in Cloudflare. Set `_dmarc` to `v=DMARC1; p=none` while testing, then back to `p=reject` once mail flows.

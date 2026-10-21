@@ -39,7 +39,8 @@ Goals:
 - [ ] Merge the rest of the launch branch into `main` (footer note, season switch, photo workflow), after the nameserver switch and right before attaching the domain.
 - [x] Cloudflare: repo connected as the Worker `website` (build `sh scripts/build.sh`; `wrangler.jsonc` publishes `dist/`). Test URL: <https://website.sagehalldance.workers.dev>.
 - [x] Check the workers.dev site on desktop and phone.
-- [ ] Cloudflare: add the domain (keep the old A and `www` records), friend switches nameservers, then attach the domain to the Worker as a custom domain once it's Active.
+- [x] Cloudflare: domain added (Pending). Old A and `www` records kept as DNS only; email records removed; SPF `-all` and DMARC `p=reject` set.
+- [ ] Friend switches nameservers to `carol.ns.cloudflare.com` and `terin.ns.cloudflare.com`. Once Cloudflare says Active, merge the launch branch, then attach the domain to the Worker as a custom domain.
 - [x] Install the Pages CMS app on `sagehalldance/website` under the Sage Hall account.
 - [ ] Pages CMS: invite (or re-invite) staff; test an edit and a photo upload (check the Actions tab).
 - [ ] Transfer the domain from Hostinger to Cloudflare Registrar; turn on auto-renew.
@@ -59,6 +60,7 @@ Goals:
 ### Ideas / later
 - A plainer one-page launch summary for the owner (offered, not requested yet).
 - Google Calendar mode exists but isn't set up (README §3).
+- Email for the domain: Cloudflare Email Routing (free forwarding) or a paid mailbox. See LAUNCH.md *Email (later)*.
 
 ## Confirmed facts (from the owner; don't change without asking)
 
