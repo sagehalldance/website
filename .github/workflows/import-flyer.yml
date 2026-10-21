@@ -1,0 +1,70 @@
+# When staff upload the monthly flyer in the editor (data/flyer.json), read it
+# with Gemini and fill in that month's schedule (see .github/scripts/import_flyer.py).
+# If the flyer can't be read safely, nothing changes and an issue is opened.
+name: Fill in the schedule from the flyer
+
+on:
+  push:
+    branches: [main]
+    paths: ["data/flyer.json"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+
+concurrency:
+  group: import-flyer
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Pillow and PyYAML
+        run: pip install --quiet pillow pyyaml
+
+      - name: Read the flyer
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          FLYER_COMMIT_MSG: ${{ runner.temp }}/commit-msg.txt
+        run: python .github/scripts/import_flyer.py
+
+      - name: Commit the schedule
+        id: commit
+        run: |
+          if git diff --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -a -F "${{ runner.temp }}/commit-msg.txt"
+          git pull --rebase origin "${{ github.ref_name }}"
+          git push
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      # Pushes made by this workflow don't trigger a Pages build on their own.
+      - name: Republish the site
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || echo "Pages will pick it up on the next change."
+
+      - name: Report a failed import
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "Couldn't fill in the schedule from the flyer" --body "The latest flyer upload ($(jq -r .image data/flyer.json)) couldn't be read safely, so the schedule wasn't changed.
+
+          See why: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          Fix it by entering the nights by hand under **Dance schedule** in the editor, or upload a clearer flyer under **Monthly flyer**."
