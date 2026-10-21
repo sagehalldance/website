@@ -8,7 +8,7 @@ Briefing for any coding agent (Claude Code, Codex, Cursor, Copilot…) or person
 
 ## What this is
 
-A redesign of the website for **Sage Hall**, a country swing dance in Logan / Cache Valley, Utah (Instagram/Facebook `@sage.hall.utah`; current domain sagehalldance.com). Alejandro (GitHub `alejandro-usu`) is building it as a volunteer for the owner.
+A redesign of the website for **Sage Hall**, a country swing dance in Logan / Cache Valley, Utah (Instagram/Facebook `@sage.hall.utah`; current domain sagehalldance.com). Alejandro (GitHub `alejandro-usu`) is building it as a volunteer for the owner. The repo belongs to Sage Hall's GitHub account: `sagehalldance/website`.
 
 Goals:
 1. An easy-to-update dance schedule (the monthly flyer, but live).
@@ -20,8 +20,9 @@ Goals:
 
 *Last updated: 2026-10-21*
 
-- **Mock-up is live** on GitHub Pages at <https://alejandro-usu.github.io/sagehall/>, served from `main` (commit `52f33b9`). It shows a "concept mock-up" footer note and the season switch, for demos.
-- **The launch version is ready but NOT on `main`.** It's commit `bc3b287` on branch `ccr-b6d97a4a-1cdu41` (a name left over from the cloud session). It removes the mock-up note, hides the season switch, adds `scripts/build.sh` and `LAUNCH.md`, and drops the GitHub-Pages-only workflow step. Merge it into `main` only when the move to Cloudflare starts (LAUNCH.md step 3), because it changes the live demo.
+- **Repo moved (Oct 20):** `alejandro-usu/sagehall` was transferred to Sage Hall's account and renamed **`sagehalldance/website`**. GitHub Pages carried over. The Pages CMS app is installed on the new repo, and the `/admin` editor links point to it.
+- **Mock-up is live** on GitHub Pages at <https://sagehalldance.github.io/website/>, served from `main` (commit `e595c04`). It shows a "concept mock-up" footer note and the season switch, for demos. The old `alejandro-usu.github.io/sagehall/` address is gone and doesn't redirect.
+- **The launch version is ready but NOT on `main`.** It's the tip of branch `ccr-b6d97a4a-1cdu41` (a name left over from the cloud session). `main` has been merged into it, so it already has the repo-move changes and `CMS_REPO` set to `sagehalldance/website/main`. It removes the mock-up note, hides the season switch, adds `scripts/build.sh` and `LAUNCH.md`, and drops the GitHub-Pages-only workflow step. Merge it into `main` only when the move to Cloudflare starts (LAUNCH.md step 3), because it changes the live demo.
 - **Hosting decision:** move everything to Sage Hall-owned accounts. Code goes to GitHub, and hosting, DNS and the domain go to Cloudflare. Today the domain sits on the owner's friend's personal Hostinger account and server.
 - **Owner-provided content** is in: September and October 2026 schedules, the high-res logo, and the confirmed facts listed below.
 
@@ -31,12 +32,15 @@ Goals:
 - [x] Confirm whether anyone uses @sagehalldance.com email. Nobody does.
 - [x] Create Sage Hall GitHub and Cloudflare accounts.
 - [ ] Friend: screenshot Hostinger DNS records; back up the old site; check the domain is more than 60 days past its last registration or transfer.
-- [ ] Transfer the repo `alejandro-usu/sagehall` to the Sage Hall GitHub account.
-- [ ] Merge the launch version into `main`; set `CMS_REPO` in `admin/index.html` to the new owner/repo/branch.
+- [x] Transfer the repo to the Sage Hall GitHub account. It's now `sagehalldance/website`.
+- [x] Set `CMS_REPO` in `admin/index.html` to `sagehalldance/website/main` (on the launch branch).
+- [ ] Merge the launch version into `main`.
 - [ ] Cloudflare Pages: connect the repo (build `sh scripts/build.sh`, output `dist`), add the domain, friend switches nameservers.
-- [ ] Reconnect Pages CMS under the Sage Hall account; invite staff; test an edit and a photo upload (check the Actions tab).
+- [x] Install the Pages CMS app on `sagehalldance/website` under the Sage Hall account.
+- [ ] Pages CMS: invite (or re-invite) staff; test an edit and a photo upload (check the Actions tab).
 - [ ] Transfer the domain from Hostinger to Cloudflare Registrar; turn on auto-renew.
 - [ ] Unpublish GitHub Pages; friend cancels the old hosting; set the default season; turn on 2FA everywhere.
+- [ ] Make the repo private, only after Cloudflare is live and GitHub Pages is unpublished. A private repo on a free account can't serve GitHub Pages.
 
 ### Content to confirm with the owner
 - [ ] Admission ($6 students / $7 general, from older listings).
@@ -80,7 +84,7 @@ Opening `index.html` from disk won't work, because the browser blocks loading th
 - `?theme=fall` forces a season.
 
 ### Conventions and gotchas
-- **Keep paths relative.** No leading `/`: the mock-up lives under `/sagehall/` on GitHub Pages. Pages CMS media output is `assets/uploads` (no slash) for the same reason.
+- **Keep paths relative.** No leading `/`: the mock-up lives under `/website/` on GitHub Pages. Pages CMS media output is `assets/uploads` (no slash) for the same reason.
 - **Text from JSON goes in via `textContent`** (the `h()` helper in `main.js`), never `innerHTML`. Image URLs pass through `mediaUrl()`, which allows only relative paths and https.
 - **Color tokens:** `--primary` / `--accent` are UI accents that themes change. `--denim`, `--sage`, `--copper`, `--gold` and `--rose` are **venue colors** and must look the same in every theme. Don't recolor a venue to theme the UI.
 - **Dates and times are Cache Valley wall-clock (America/Denver)**, stored as `date` `YYYY-MM-DD` plus `time` `HH:MM` or `"TBA"`. Venue `"Location TBA"` is allowed.
@@ -98,6 +102,7 @@ Newest first. Record decisions and the reasons behind them here, not a running c
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-21 | Repo transferred to the `sagehalldance` account and renamed `website`; to be made private after launch | Sage Hall owns the code (LAUNCH.md step 3). Private waits until GitHub Pages is no longer needed |
 | 2026-10-21 | Move code to a Sage Hall GitHub account; host on Cloudflare Pages; transfer domain to Cloudflare Registrar | Get off the friend's personal Hostinger account/server; static site needs no paid hosting; at-cost domain renewals; one business-owned account |
 | 2026-10-21 | Launch build copies only public files to `dist/` | Keep `.pages.yml`, README and workflows off the live site |
 | 2026-10-04 | Dancers of the Week and weekly photos added; ship empty | New tradition, no fake names. Photos auto-shrunk with GPS stripped; consent and takedown note on the site |

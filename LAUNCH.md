@@ -5,7 +5,7 @@ The goal: Sage Hall owns everything (the code, the domain and the hosting) in ac
 **Who's needed:** the owner (to create accounts), whoever is helping with the setup, and the friend who holds the current Hostinger account (for steps 4 and 6).
 **Cost:** the domain only, about $10–11 a year at Cloudflare. Hosting is free.
 **Downtime:** none if you follow the order below.
-**Status (Oct 21, 2026):** steps 1–2 partly done (marked below). Nobody uses @sagehalldance.com email, so there are no email records to protect.
+**Status (Oct 21, 2026):** steps 1–3 partly done and step 5 started (marked below). The repo now lives at `sagehalldance/website`. Nobody uses @sagehalldance.com email, so there are no email records to protect.
 
 ---
 
@@ -25,14 +25,15 @@ Use a shared business email that the owner controls, such as sagehallutah@gmail.
 
 ## 3. Move the code to Sage Hall's GitHub
 
-- [ ] Alejandro transfers the repository: GitHub → `alejandro-usu/sagehall` → **Settings → General → Danger Zone → Transfer ownership**, to the Sage Hall account. Old links redirect automatically.
+- [x] Alejandro transfers the repository to the Sage Hall account. Done: `alejandro-usu/sagehall` is now **`sagehalldance/website`** (transferred, then renamed). Old repo links redirect automatically, but the old mock-up address `alejandro-usu.github.io/sagehall/` doesn't. The mock-up is now at <https://sagehalldance.github.io/website/>.
 - [ ] Merge the launch version into `main`. This turns off the season switch, removes the "mock-up" footer note and drops the GitHub-Pages-only automation step.
-- [ ] In `admin/index.html`, change the one line `var CMS_REPO = "alejandro-usu/sagehall/main";` to the new owner, e.g. `"sagehall/sagehall/main"`.
+- [x] In `admin/index.html`, set `var CMS_REPO` to the new owner/repo/branch. Done on the launch branch (`"sagehalldance/website/main"`), so it goes live with the merge above. `main` already has the same links hard-coded.
 - [ ] Turn off GitHub Pages for the repo (**Settings → Pages → Unpublish**) once Cloudflare is live, so there's only one copy of the site.
+- [ ] **Make the repo private** (**Settings → General → Danger Zone → Change repository visibility**), once Cloudflare is live and GitHub Pages is off. On a free account a private repo can't serve GitHub Pages, so doing this sooner takes the mock-up offline. Cloudflare Pages and Pages CMS both work with private repos.
 
 ## 4. Put the site on Cloudflare (still on the old domain setup)
 
-- [ ] Cloudflare → **Workers & Pages → Create → Pages → Connect to Git**, then pick the `sagehall` repo and these settings:
+- [ ] Cloudflare → **Workers & Pages → Create → Pages → Connect to Git**, then pick the `website` repo and these settings:
 
   | Setting | Value |
   | --- | --- |
@@ -48,7 +49,7 @@ Use a shared business email that the owner controls, such as sagehallutah@gmail.
 
 ## 5. Reconnect the staff editor
 
-- [ ] Go to app.pagescms.org and sign in with the Sage Hall GitHub account. Install the Pages CMS app on the `sagehall` repo.
+- [x] Go to app.pagescms.org and sign in with the Sage Hall GitHub account. Install the Pages CMS app on the `website` repo. Done Oct 20.
 - [ ] Open the repo → **Collaborators**, and invite each staff member by email. Re-invite anyone who was invited before the move.
 - [ ] Do a test edit, such as a word in the announcement. Save, and check it shows on sagehalldance.com within a minute or two.
 - [ ] Upload one test photo under **Dancers of the Week & photos**. Then check the repo's **Actions** tab: "Shrink uploaded photos" should run and finish green. Delete the test photo afterwards.
