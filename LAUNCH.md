@@ -26,8 +26,9 @@ Use a shared business email that the owner controls, such as sagehallutah@gmail.
 ## 3. Move the code to Sage Hall's GitHub
 
 - [x] Alejandro transfers the repository to the Sage Hall account. Done: `alejandro-usu/sagehall` is now **`sagehalldance/website`** (transferred, then renamed). Old repo links redirect automatically, but the old mock-up address `alejandro-usu.github.io/sagehall/` doesn't. The mock-up is now at <https://sagehalldance.github.io/website/>.
-- [ ] Merge the launch version into `main`. This turns off the season switch, removes the "mock-up" footer note and drops the GitHub-Pages-only automation step.
-- [x] In `admin/index.html`, set `var CMS_REPO` to the new owner/repo/branch. Done on the launch branch (`"sagehalldance/website/main"`), so it goes live with the merge above. `main` already has the same links hard-coded.
+- [x] Put the docs, `scripts/build.sh` and the editor-link setting on `main`, so Cloudflare can build from `main`.
+- [ ] Merge the rest of the launch branch (`ccr-b6d97a4a-1cdu41`) into `main` once the Cloudflare `*.pages.dev` site checks out, right before the nameserver switch in step 4. This turns off the season switch, removes the "mock-up" footer note and drops the GitHub-Pages-only automation step.
+- [x] In `admin/index.html`, set `var CMS_REPO` to the new owner/repo/branch (`"sagehalldance/website/main"`). It's live on `main`.
 - [ ] Turn off GitHub Pages for the repo (**Settings → Pages → Unpublish**) once Cloudflare is live, so there's only one copy of the site.
 - [ ] **Make the repo private** (**Settings → General → Danger Zone → Change repository visibility**), once Cloudflare is live and GitHub Pages is off. On a free account a private repo can't serve GitHub Pages, so doing this sooner takes the mock-up offline. Cloudflare Pages and Pages CMS both work with private repos.
 

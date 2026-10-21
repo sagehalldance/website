@@ -21,8 +21,8 @@ Goals:
 *Last updated: 2026-10-21*
 
 - **Repo moved (Oct 20):** `alejandro-usu/sagehall` was transferred to Sage Hall's account and renamed **`sagehalldance/website`**. GitHub Pages carried over. The Pages CMS app is installed on the new repo, and the `/admin` editor links point to it.
-- **Mock-up is live** on GitHub Pages at <https://sagehalldance.github.io/website/>, served from `main` (commit `e595c04`). It shows a "concept mock-up" footer note and the season switch, for demos. The old `alejandro-usu.github.io/sagehall/` address is gone and doesn't redirect.
-- **The launch version is ready but NOT on `main`.** It's the tip of branch `ccr-b6d97a4a-1cdu41` (a name left over from the cloud session). `main` has been merged into it, so it already has the repo-move changes and `CMS_REPO` set to `sagehalldance/website/main`. It removes the mock-up note, hides the season switch, adds `scripts/build.sh` and `LAUNCH.md`, and drops the GitHub-Pages-only workflow step. Merge it into `main` only when the move to Cloudflare starts (LAUNCH.md step 3), because it changes the live demo.
+- **Mock-up is live** on GitHub Pages at <https://sagehalldance.github.io/website/>, served from `main`. It shows a "concept mock-up" footer note and the season switch, for demos. The old `alejandro-usu.github.io/sagehall/` address is gone and doesn't redirect.
+- **Most of the launch version is on `main`:** the docs (`AGENTS.md`, `CLAUDE.md`, `LAUNCH.md`), `scripts/build.sh` for Cloudflare, and `CMS_REPO` in `admin/index.html`. **Three changes still wait** on branch `ccr-b6d97a4a-1cdu41` (a name left over from the cloud session): removing the mock-up footer note (`index.html`), hiding the season switch (`data/site.json`), and dropping the GitHub-Pages republish step from `.github/workflows/shrink-photos.yml`. Merge that branch into `main` once Cloudflare is serving the site, right before the nameserver switch (LAUNCH.md step 4). Merging earlier changes the live demo and stops uploaded photos from republishing on GitHub Pages. Don't edit docs on that branch; edit them on `main`.
 - **Hosting decision:** move everything to Sage Hall-owned accounts. Code goes to GitHub, and hosting, DNS and the domain go to Cloudflare. Today the domain sits on the owner's friend's personal Hostinger account and server.
 - **Owner-provided content** is in: September and October 2026 schedules, the high-res logo, and the confirmed facts listed below.
 
@@ -34,7 +34,8 @@ Goals:
 - [ ] Friend: screenshot Hostinger DNS records; back up the old site; check the domain is more than 60 days past its last registration or transfer.
 - [x] Transfer the repo to the Sage Hall GitHub account. It's now `sagehalldance/website`.
 - [x] Set `CMS_REPO` in `admin/index.html` to `sagehalldance/website/main` (on the launch branch).
-- [ ] Merge the launch version into `main`.
+- [x] Put the docs, `scripts/build.sh` and the `CMS_REPO` change on `main`.
+- [ ] Merge the rest of the launch branch into `main` (footer note, season switch, photo workflow), right before the nameserver switch.
 - [ ] Cloudflare Pages: connect the repo (build `sh scripts/build.sh`, output `dist`), add the domain, friend switches nameservers.
 - [x] Install the Pages CMS app on `sagehalldance/website` under the Sage Hall account.
 - [ ] Pages CMS: invite (or re-invite) staff; test an edit and a photo upload (check the Actions tab).
@@ -93,7 +94,7 @@ Opening `index.html` from disk won't work, because the browser blocks loading th
 - **Content honesty:** don't invent facts about Sage Hall, such as prices, claims or names. Mark anything unverified in *Content to confirm*.
 
 ### Git workflow
-- `main` is what's published. Do work on a branch, and merge (fast-forward) into `main` only when Alejandro says to ("merge it").
+- `main` is what's published. **During launch, work directly on `main`.** Once feature requests start coming in, do each one on its own branch and merge (fast-forward) into `main` only when Alejandro says to ("merge it").
 - Write clear commit messages explaining why. Push at the end of every session.
 
 ## Decision log
@@ -102,6 +103,7 @@ Newest first. Record decisions and the reasons behind them here, not a running c
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-21 | Work directly on `main` during launch; use feature branches once requests come in. Docs, build script and `CMS_REPO` moved to `main`; footer, season switch and photo workflow wait for the Cloudflare cutover | Launching as we go. The held changes would alter the live demo or break photo republishing on GitHub Pages |
 | 2026-10-21 | Repo transferred to the `sagehalldance` account and renamed `website`; to be made private after launch | Sage Hall owns the code (LAUNCH.md step 3). Private waits until GitHub Pages is no longer needed |
 | 2026-10-21 | Move code to a Sage Hall GitHub account; host on Cloudflare Pages; transfer domain to Cloudflare Registrar | Get off the friend's personal Hostinger account/server; static site needs no paid hosting; at-cost domain renewals; one business-owned account |
 | 2026-10-21 | Launch build copies only public files to `dist/` | Keep `.pages.yml`, README and workflows off the live site |
