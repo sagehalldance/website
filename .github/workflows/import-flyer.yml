@@ -12,7 +12,6 @@ on:
 permissions:
   contents: write
   issues: write
-  pages: write
 
 concurrency:
   group: import-flyer
@@ -37,8 +36,8 @@ jobs:
           FLYER_COMMIT_MSG: ${{ runner.temp }}/commit-msg.txt
         run: python .github/scripts/import_flyer.py
 
+      # Cloudflare redeploys on this commit by itself.
       - name: Commit the schedule
-        id: commit
         run: |
           if git diff --quiet; then
             echo "Nothing to commit."
@@ -49,14 +48,6 @@ jobs:
           git commit -a -F "${{ runner.temp }}/commit-msg.txt"
           git pull --rebase origin "${{ github.ref_name }}"
           git push
-          echo "pushed=true" >> "$GITHUB_OUTPUT"
-
-      # Pushes made by this workflow don't trigger a Pages build on their own.
-      - name: Republish the site
-        if: steps.commit.outputs.pushed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || echo "Pages will pick it up on the next change."
 
       - name: Report a failed import
         if: failure()
