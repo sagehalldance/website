@@ -1,4 +1,4 @@
-# Sage Hall: website mock-up
+# Sage Hall website
 
 A concept redesign for [Sage Hall](https://sagehalldance.com), the country swing dance in Logan, Utah. It's a plain static site (HTML, CSS, a little JavaScript, no build step), so it runs on GitHub Pages as is.
 
