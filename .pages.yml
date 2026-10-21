@@ -10,6 +10,18 @@ media:
   extensions: [jpg, jpeg, png, webp]
 
 content:
+  - name: flyer
+    label: Monthly flyer
+    description: Upload the month's schedule flyer (the one you post on Instagram) and save. Within a few minutes the dance schedule fills itself in from it. Check it afterwards, and fix anything under Dance schedule. Re-uploading keeps times and places you've already filled in by hand.
+    type: file
+    path: data/flyer.json
+    format: json
+    fields:
+      - name: image
+        label: Flyer
+        type: image
+        required: true
+
   - name: events
     label: Dance schedule
     description: One row per dance night. Past nights can stay; the site greys them out automatically.

@@ -22,7 +22,7 @@ Goals:
 
 - **Repo moved (Oct 20):** `alejandro-usu/sagehall` was transferred to Sage Hall's account and renamed **`sagehalldance/website`**. GitHub Pages carried over. The Pages CMS app is installed on the new repo, and the `/admin` editor links point to it.
 - **Mock-up is live** on GitHub Pages at <https://sagehalldance.github.io/website/>, served from `main`. It shows a "concept mock-up" footer note and the season switch, for demos. The old `alejandro-usu.github.io/sagehall/` address is gone and doesn't redirect.
-- **Most of the launch version is on `main`:** the docs (`AGENTS.md`, `CLAUDE.md`, `LAUNCH.md`), `scripts/build.sh` for Cloudflare, and `CMS_REPO` in `admin/index.html`. **Three changes still wait** on branch `ccr-b6d97a4a-1cdu41` (a name left over from the cloud session): removing the mock-up footer note (`index.html`), hiding the season switch (`data/site.json`), and dropping the GitHub-Pages republish step from `.github/workflows/shrink-photos.yml`. Merge that branch into `main` once Cloudflare is serving the site, right before the nameserver switch (LAUNCH.md step 4). Merging earlier changes the live demo and stops uploaded photos from republishing on GitHub Pages. Don't edit docs on that branch; edit them on `main`.
+- **Most of the launch version is on `main`:** the docs (`AGENTS.md`, `CLAUDE.md`, `LAUNCH.md`), `scripts/build.sh` for Cloudflare, and `CMS_REPO` in `admin/index.html`. **Three changes still wait** on branch `ccr-b6d97a4a-1cdu41` (a name left over from the cloud session): removing the mock-up footer note (`index.html`), hiding the season switch (`data/site.json`), and dropping the GitHub-Pages republish step from `.github/workflows/shrink-photos.yml`. Merge that branch into `main` after the nameserver switch, right before attaching sagehalldance.com to the Worker (LAUNCH.md step 4). Merging earlier changes the live demo and stops uploaded photos from republishing on GitHub Pages. Don't edit docs on that branch; edit them on `main`.
 - **Hosting decision:** move everything to Sage Hall-owned accounts. Code goes to GitHub, and hosting, DNS and the domain go to Cloudflare. Today the domain sits on the owner's friend's personal Hostinger account and server.
 - **Owner-provided content** is in: September and October 2026 schedules, the high-res logo, and the confirmed facts listed below.
 
@@ -31,13 +31,16 @@ Goals:
 ### Launch (details in LAUNCH.md)
 - [x] Confirm whether anyone uses @sagehalldance.com email. Nobody does.
 - [x] Create Sage Hall GitHub and Cloudflare accounts.
-- [ ] Friend: screenshot Hostinger DNS records; back up the old site; check the domain is more than 60 days past its last registration or transfer.
+- [x] Domain is clear to transfer: registered at Hostinger May 15, 2025; expires May 15, 2027.
+- [ ] Friend: screenshot Hostinger DNS records; back up the old site.
 - [x] Transfer the repo to the Sage Hall GitHub account. It's now `sagehalldance/website`.
 - [x] Set `CMS_REPO` in `admin/index.html` to `sagehalldance/website/main` (on the launch branch).
 - [x] Put the docs, `scripts/build.sh` and the `CMS_REPO` change on `main`.
-- [ ] Merge the rest of the launch branch into `main` (footer note, season switch, photo workflow), right before the nameserver switch.
+- [ ] Merge the rest of the launch branch into `main` (footer note, season switch, photo workflow), after the nameserver switch and right before attaching the domain.
 - [x] Cloudflare: repo connected as the Worker `website` (build `sh scripts/build.sh`; `wrangler.jsonc` publishes `dist/`). Test URL: <https://website.sagehalldance.workers.dev>.
-- [ ] Cloudflare: add the domain, attach it to the Worker as a custom domain, friend switches nameservers.
+- [x] Check the workers.dev site on desktop and phone.
+- [x] Cloudflare: domain added (Pending). Old A and `www` records kept as DNS only; email records removed; SPF `-all` and DMARC `p=reject` set.
+- [ ] Friend switches nameservers to `carol.ns.cloudflare.com` and `terin.ns.cloudflare.com`. Once Cloudflare says Active, merge the launch branch, then attach the domain to the Worker as a custom domain.
 - [x] Install the Pages CMS app on `sagehalldance/website` under the Sage Hall account.
 - [ ] Pages CMS: invite (or re-invite) staff; test an edit and a photo upload (check the Actions tab).
 - [ ] Transfer the domain from Hostinger to Cloudflare Registrar; turn on auto-renew.
@@ -57,6 +60,7 @@ Goals:
 ### Ideas / later
 - A plainer one-page launch summary for the owner (offered, not requested yet).
 - Google Calendar mode exists but isn't set up (README §3).
+- Email for the domain: Cloudflare Email Routing (free forwarding) or a paid mailbox. See LAUNCH.md *Email (later)*.
 
 ## Confirmed facts (from the owner; don't change without asking)
 
@@ -74,6 +78,7 @@ Goals:
   - `data/events.json`: the schedule.
   - `data/site.json`: announcement, theme, venues, reels, FAQ, Google Calendar.
   - `data/weekly.json`: Dancers of the Week and weekly photos.
+  - `data/flyer.json`: the monthly flyer. Saving it runs `.github/workflows/import-flyer.yml`, which has Gemini read the flyer and rewrite that month in `data/events.json`, committing straight to `main` as github-actions[bot]. The safety rules are in the docstring of `.github/scripts/import_flyer.py`. On failure nothing changes, and a GitHub issue is opened. It needs the repo secret `GEMINI_API_KEY` (free tier, Google AI Studio). Models are set by `FLYER_MODELS`, default `gemini-flash-lite-latest,gemini-flash-latest`.
 - **Uploads** land in `assets/uploads/`. `.github/workflows/shrink-photos.yml` resizes them to 1600px and strips EXIF/GPS.
 - **Themes:** summer is the base `styles.css`. `theme-spring.css`, `theme-fall.css` and `theme-winter.css` layer on top, scoped to `html[data-theme=...]`. An inline script in `index.html` applies the theme before first paint.
 
@@ -96,6 +101,7 @@ Opening `index.html` from disk won't work, because the browser blocks loading th
 
 ### Git workflow
 - `main` is what's published. **During launch, work directly on `main`.** Once feature requests start coming in, do each one on its own branch and merge (fast-forward) into `main` only when Alejandro says to ("merge it").
+- **Commit and push as `sagehalldance`.** On a new computer, set this repo's identity first: `git config user.name sagehalldance` and `git config user.email 345635088+sagehalldance@users.noreply.github.com`. Otherwise commits pick up the machine's global identity (that's how a few Oct 20–21 commits ended up as `alejandromontesinos-dev`).
 - Write clear commit messages explaining why. Push at the end of every session.
 
 ## Decision log
@@ -104,6 +110,7 @@ Newest first. Record decisions and the reasons behind them here, not a running c
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-21 | Monthly flyer → schedule import with Gemini, committing straight to `main` (no PR review) | The owner already posts a flyer on Instagram each month, so uploading it once in the editor replaces typing the nights in by hand. Gemini's free tier is enough; GitHub Models was retired Jul 30, 2026. Tested live: Sept and Oct flyers read 120/120 fields right, a re-upload kept hand edits, and a non-flyer was refused. The checks are why no review step is needed |
 | 2026-10-21 | Host on a Cloudflare **Worker** with static assets, not a Pages project | Cloudflare's Git import now creates Workers. It's free for a static site and supports custom domains. `wrangler.jsonc` pins the published folder to `dist/`, because the first auto-configured deploy published the whole repo, `.git/` included |
 | 2026-10-21 | Work directly on `main` during launch; use feature branches once requests come in. Docs, build script and `CMS_REPO` moved to `main`; footer, season switch and photo workflow wait for the Cloudflare cutover | Launching as we go. The held changes would alter the live demo or break photo republishing on GitHub Pages |
 | 2026-10-21 | Repo transferred to the `sagehalldance` account and renamed `website`; to be made private after launch | Sage Hall owns the code (LAUNCH.md step 3). Private waits until GitHub Pages is no longer needed |
