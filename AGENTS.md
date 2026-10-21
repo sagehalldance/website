@@ -36,7 +36,8 @@ Goals:
 - [x] Set `CMS_REPO` in `admin/index.html` to `sagehalldance/website/main` (on the launch branch).
 - [x] Put the docs, `scripts/build.sh` and the `CMS_REPO` change on `main`.
 - [ ] Merge the rest of the launch branch into `main` (footer note, season switch, photo workflow), right before the nameserver switch.
-- [ ] Cloudflare Pages: connect the repo (build `sh scripts/build.sh`, output `dist`), add the domain, friend switches nameservers.
+- [x] Cloudflare: repo connected as the Worker `website` (build `sh scripts/build.sh`; `wrangler.jsonc` publishes `dist/`). Test URL: <https://website.sagehalldance.workers.dev>.
+- [ ] Cloudflare: add the domain, attach it to the Worker as a custom domain, friend switches nameservers.
 - [x] Install the Pages CMS app on `sagehalldance/website` under the Sage Hall account.
 - [ ] Pages CMS: invite (or re-invite) staff; test an edit and a photo upload (check the Actions tab).
 - [ ] Transfer the domain from Hostinger to Cloudflare Registrar; turn on auto-renew.
@@ -103,6 +104,7 @@ Newest first. Record decisions and the reasons behind them here, not a running c
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-21 | Host on a Cloudflare **Worker** with static assets, not a Pages project | Cloudflare's Git import now creates Workers. It's free for a static site and supports custom domains. `wrangler.jsonc` pins the published folder to `dist/`, because the first auto-configured deploy published the whole repo, `.git/` included |
 | 2026-10-21 | Work directly on `main` during launch; use feature branches once requests come in. Docs, build script and `CMS_REPO` moved to `main`; footer, season switch and photo workflow wait for the Cloudflare cutover | Launching as we go. The held changes would alter the live demo or break photo republishing on GitHub Pages |
 | 2026-10-21 | Repo transferred to the `sagehalldance` account and renamed `website`; to be made private after launch | Sage Hall owns the code (LAUNCH.md step 3). Private waits until GitHub Pages is no longer needed |
 | 2026-10-21 | Move code to a Sage Hall GitHub account; host on Cloudflare Pages; transfer domain to Cloudflare Registrar | Get off the friend's personal Hostinger account/server; static site needs no paid hosting; at-cost domain renewals; one business-owned account |
