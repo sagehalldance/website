@@ -58,13 +58,19 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || echo "Pages will pick it up on the next change."
 
+      # Assigned to whoever looks after the site, so they get a notification.
+      # Change it with the repo variable FLYER_ISSUE_ASSIGNEE.
       - name: Report a failed import
         if: failure()
         env:
           GH_TOKEN: ${{ github.token }}
+          ASSIGNEE: ${{ vars.FLYER_ISSUE_ASSIGNEE || 'amontesinos' }}
         run: |
-          gh issue create --title "Couldn't fill in the schedule from the flyer" --body "The latest flyer upload ($(jq -r .image data/flyer.json)) couldn't be read safely, so the schedule wasn't changed.
+          title="Couldn't fill in the schedule from the flyer"
+          body="The latest flyer upload ($(jq -r .image data/flyer.json)) couldn't be read safely, so the schedule wasn't changed.
 
           See why: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
           Fix it by entering the nights by hand under **Dance schedule** in the editor, or upload a clearer flyer under **Monthly flyer**."
+          # If the assignee no longer has access, still open the issue.
+          gh issue create --title "$title" --body "$body" --assignee "$ASSIGNEE" || gh issue create --title "$title" --body "$body"
