@@ -8,7 +8,7 @@ Briefing for any coding agent (Claude Code, Codex, Cursor, Copilot…) or person
 
 ## What this is
 
-A redesign of the website for **Sage Hall**, a country swing dance in Logan / Cache Valley, Utah (Instagram/Facebook `@sage.hall.utah`; current domain sagehalldance.com). Alejandro (GitHub `alejandro-usu`) is building it as a volunteer for the owner. The repo belongs to Sage Hall's GitHub account: `sagehalldance/website`.
+A redesign of the website for **Sage Hall**, a country swing dance in Logan / Cache Valley, Utah (Instagram/Facebook `@sage.hall.utah`; current domain sagehalldance.com). Alejandro (GitHub `amontesinos`, a collaborator) is building it as a volunteer for the owner. The repo belongs to Sage Hall's GitHub account: `sagehalldance/website`.
 
 Goals:
 1. An easy-to-update dance schedule (the monthly flyer, but live).
