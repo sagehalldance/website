@@ -1,5 +1,7 @@
 # Sage Hall website
 
+> **Working on this project (person or AI agent)?** Start with [`AGENTS.md`](AGENTS.md): scope, current status, to-do list and decision log.
+
 A concept redesign for [Sage Hall](https://sagehalldance.com), the country swing dance in Logan, Utah. It's a plain static site (HTML, CSS, a little JavaScript, no build step), so it runs on GitHub Pages as is.
 
 **What's in it**

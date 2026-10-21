@@ -5,13 +5,14 @@ The goal: Sage Hall owns everything (the code, the domain and the hosting) in ac
 **Who's needed:** the owner (to create accounts), whoever is helping with the setup, and the friend who holds the current Hostinger account (for steps 4 and 6).
 **Cost:** the domain only, about $10–11 a year at Cloudflare. Hosting is free.
 **Downtime:** none if you follow the order below.
+**Status (Oct 21, 2026):** steps 1–2 partly done (marked below). Nobody uses @sagehalldance.com email, so there are no email records to protect.
 
 ---
 
-## 1. Before you start: email and backups
+## 1. Before you start: backups and the domain
 
-- [ ] **Find out whether anyone uses an @sagehalldance.com email address.** If so, find out where that email is hosted (Hostinger, Google Workspace, etc.).
-- [ ] **Have the friend send you a copy of the domain's DNS records** from Hostinger (hPanel → Domains → sagehalldance.com → DNS / Nameservers). A screenshot is fine. You'll need the **MX**, **TXT** (SPF/DKIM/verification) and any **CNAME** records for email or other services. Skip this and email can break.
+- [x] **Find out whether anyone uses an @sagehalldance.com email address.** Confirmed: no one does.
+- [ ] **Have the friend screenshot the domain's DNS records** in Hostinger (hPanel → Domains → sagehalldance.com → DNS). With no email this is low-stakes, but it catches any verification records (Google, Facebook, etc.) worth keeping.
 - [ ] **Back up the current website** from the friend's server, just in case.
 - [ ] **Check the domain can be transferred.** It can't move within 60 days of being registered or transferred. The friend can see the date in Hostinger.
 
@@ -19,8 +20,8 @@ The goal: Sage Hall owns everything (the code, the domain and the hosting) in ac
 
 Use a shared business email that the owner controls, such as sagehallutah@gmail.com, not anyone's personal address.
 
-- [ ] **GitHub:** create an account (or a free organization) for Sage Hall.
-- [ ] **Cloudflare:** create an account at dash.cloudflare.com.
+- [x] **GitHub:** account created for Sage Hall.
+- [x] **Cloudflare:** account created.
 
 ## 3. Move the code to Sage Hall's GitHub
 
@@ -41,10 +42,9 @@ Use a shared business email that the owner controls, such as sagehallutah@gmail.
   | Build output directory | `dist` |
 
 - [ ] Open the `*.pages.dev` address Cloudflare gives you and check the site works.
-- [ ] **Add the domain to Cloudflare:** dashboard → **Add a domain** → `sagehalldance.com` → Free plan. Cloudflare imports the existing DNS records. **Compare them with the copy from step 1** and add any email records that are missing.
+- [ ] **Add the domain to Cloudflare:** dashboard → **Add a domain** → `sagehalldance.com` → Free plan. Cloudflare imports the existing DNS records. Compare them with the screenshot from step 1, and delete records that pointed at the old server (Cloudflare Pages adds its own when you connect the domain).
 - [ ] In the Pages project → **Custom domains**, add `sagehalldance.com` and `www.sagehalldance.com`.
 - [ ] **The friend changes the nameservers** in Hostinger (Domains → sagehalldance.com → Nameservers) to the two Cloudflare gives you. Within a few hours, sagehalldance.com shows the new site.
-- [ ] Send a test email to and from any @sagehalldance.com address.
 
 ## 5. Reconnect the staff editor
 
