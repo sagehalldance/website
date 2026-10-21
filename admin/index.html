@@ -29,35 +29,37 @@
         <header>
           <img src="../assets/img/sage-hall-logo.png" alt="" width="120" height="117">
           <h1>Staff sign-in</h1>
-          <p>Update the dance schedule, Dancers of the Week, photos, reels and venue info. Changes go live on the website about a minute after you hit save.</p>
+          <p>The dance schedule comes from the <b>Sage Hall Dances</b> Google Calendar. Everything else (Dancers of the Week, photos, reels and venue info) is edited here. Changes go live on the website about a minute after you save.</p>
         </header>
 
         <div class="admin-actions">
-          <a class="btn btn-primary" data-cms-file="flyer" href="https://app.pagescms.org/sagehalldance/website/main/file/flyer">Upload the monthly flyer</a>
-          <a class="btn btn-outline" data-cms-file="events" href="https://app.pagescms.org/sagehalldance/website/main/file/events">Edit the dance schedule</a>
+          <a class="btn btn-primary" href="https://calendar.google.com/calendar/r">Open the dance calendar</a>
           <a class="btn btn-outline" data-cms-file="weekly" href="https://app.pagescms.org/sagehalldance/website/main/file/weekly">Update Dancers of the Week &amp; photos</a>
           <a class="btn btn-outline" data-cms-file="settings" href="https://app.pagescms.org/sagehalldance/website/main/file/settings">Edit reels, venues &amp; FAQ</a>
+          <a class="btn btn-outline" data-cms-file="flyer" href="https://app.pagescms.org/sagehalldance/website/main/file/flyer">Upload the monthly flyer (backup copy)</a>
         </div>
 
         <section class="admin-section">
           <h2>Post the monthly schedule</h2>
           <ol>
-            <li>Tap <b>Upload the monthly flyer</b>, upload the same flyer image you post on Instagram, and hit <b>Save</b>.</li>
-            <li>Within about five minutes, the website's schedule fills in that month's nights from the flyer. Nights marked TBD come in as <b>Time TBA</b> or <b>Location TBA</b>.</li>
-            <li>Check the schedule on the website. If anything's off, fix it under <b>Edit the dance schedule</b>.</li>
+            <li>Open <a href="https://gemini.google.com/">Gemini</a>, signed in with the Sage Hall Google account. Attach the flyer and paste this:
+              <blockquote>Add each night on this flyer to my <b>Sage Hall Dances</b> calendar. Title: "Country Swing Dancing", or the event's name for special nights (like a fundraiser or club night). Location: exactly the venue name from the flyer, or leave it empty if there's no venue or it says TBD. Start at the time on the flyer. If no time is given, make it an all-day event; never guess a time. End at midnight for Fairgrounds and Mountain Valley Athletics nights, and 3 hours after the start for Cache Bar. Don't add anything that isn't on the flyer.</blockquote>
+            </li>
+            <li>Open the calendar and check the new nights against the flyer, especially any marked TBD. Those should be all-day events with no location.</li>
+            <li>The website picks them up within a minute.</li>
           </ol>
-          <p>Only the flyer's month changes. If you re-upload a flyer, times and places you've already filled in by hand stay, unless the new flyer gives different ones. If the flyer can't be read clearly, the schedule stays as it was, so add the nights by hand instead.</p>
+          <p>Then upload the same flyer under <b>Upload the monthly flyer (backup copy)</b>. That keeps a copy of the schedule the website falls back to if Google Calendar can't be reached. It doesn't change what the website shows.</p>
         </section>
 
         <section class="admin-section">
-          <h2>Add a dance night</h2>
+          <h2>Add, change or cancel a dance night</h2>
           <ol>
-            <li>Tap <b>Edit the dance schedule</b> and sign in with the email you were invited with.</li>
-            <li>Scroll to the bottom of the list and tap <b>Add an item</b>.</li>
-            <li>Pick the date, start time and venue. If the time or place hasn't been announced yet, choose <b>Time TBA</b> or <b>Location TBA</b>.</li>
-            <li>For a special night (a fundraiser, a club night), add a title. Add a short note if there's anything else people should know.</li>
-            <li>Hit <b>Save</b>. The website updates in about a minute.</li>
+            <li>Tap <b>Open the dance calendar</b> and make sure the event is in the <b>Sage Hall Dances</b> calendar, not your personal one.</li>
+            <li>Title it "Country Swing Dancing", or the event's name for a special night. Put the venue name in <b>Location</b>, spelled as on the website (for example "Fairgrounds Indoor Barn").</li>
+            <li>If the time hasn't been announced, make it <b>All day</b>. It shows as Time TBA. If the place hasn't been announced, leave <b>Location</b> empty. It shows as Location TBA.</li>
+            <li>To cancel a night, start its title with "Cancelled", e.g. "Cancelled: Country Swing Dancing". It stays on the website with a Cancelled tag. Use the <b>Announcement banner</b> in settings to explain why.</li>
           </ol>
+          <p>Staff who don't use the Sage Hall Google account need the calendar shared with them. In Google Calendar's settings for <b>Sage Hall Dances</b>, add them under <b>Share with specific people</b> with <b>Make changes to events</b>.</p>
         </section>
 
         <section class="admin-section">
@@ -81,13 +83,8 @@
         </section>
 
         <section class="admin-section">
-          <h2>Cancelling a night</h2>
-          <p>Open the night in the schedule and turn on <b>Cancelled</b>. It stays on the calendar with a “Cancelled” tag so people who saw the flyer know. Use the <b>Announcement banner</b> in settings to explain why.</p>
-        </section>
-
-        <section class="admin-section">
-          <h2>Using Google Calendar instead?</h2>
-          <p>If the site is connected to Google Calendar, skip the editor: add, move or cancel dances in <a href="https://calendar.google.com/">Google Calendar</a> and the website picks them up automatically. Put the venue name in the event’s location, and start the title with “Cancelled” to mark a night as cancelled.</p>
+          <h2>About the backup copy</h2>
+          <p>The website reads the schedule from Google Calendar. If Google can't be reached, it shows the backup copy instead, which is filled in from the uploaded flyer. You can also correct it under <a data-cms-file="events" href="https://app.pagescms.org/sagehalldance/website/main/file/events">Dance schedule</a> in the editor. Edits there don't change the website while Google Calendar is working.</p>
         </section>
       </div>
     </div>

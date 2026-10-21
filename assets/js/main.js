@@ -797,7 +797,13 @@
     let raw = [];
     const gc = state.site.google_calendar || {};
     if (gc.calendar_id && gc.api_key) {
-      try { raw = await fromGoogleCalendar(gc); state.source = "google"; }
+      try {
+        raw = await fromGoogleCalendar(gc);
+        // An empty calendar is more likely a mistake (events deleted, or added to the
+        // wrong calendar) than a month with no dances, so show the backup instead.
+        if (raw.length) state.source = "google";
+        else console.warn("Google Calendar has no events, falling back to data/events.json");
+      }
       catch (err) { console.warn("Google Calendar unavailable, falling back to data/events.json", err); }
     }
     if (state.source !== "google") {

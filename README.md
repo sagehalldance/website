@@ -48,7 +48,10 @@ From then on, staff go to `/admin` on the site and tap **Edit the dance schedule
 
 **Filling in the schedule from the flyer:** staff upload the monthly flyer under **Monthly flyer** (`data/flyer.json`). The **Fill in the schedule from the flyer** workflow (`.github/workflows/import-flyer.yml`) sends it to Google Gemini and rewrites that month in `data/events.json`. It only picks venues and start times the schedule form offers, so a new venue has to be in `.pages.yml` before a flyer can use it. It checks every date against the weekday printed on the flyer, and it keeps hand-filled times and places when a re-uploaded flyer still says TBA. If a check fails, the schedule stays as it was and the workflow opens a GitHub issue. Setup: a Gemini API key from [Google AI Studio](https://aistudio.google.com/apikey) stored as the repo secret `GEMINI_API_KEY`. The free tier covers this easily. To try different models, set `FLYER_MODELS` (default `gemini-flash-lite-latest,gemini-flash-latest`). In Google Calendar mode (below) the website reads the calendar instead, so the flyer only updates the fallback schedule.
 
-## 3. Optional: run the schedule from Google Calendar
+## 3. Run the schedule from Google Calendar (in use)
+
+> **Live setup:** the site reads the public **Sage Hall Dances** calendar on the Sage Hall Google account. Its Calendar ID and browser API key are in `data/site.json`. The key is restricted to the site's addresses and to the Calendar API, so it's safe to be public. Staff add each month's nights by giving the flyer to Gemini (gemini.google.com) with the prompt on the `/admin` page. `data/events.json`, filled in from the flyer upload, is only the fallback.
+
 
 If staff would rather use the Google Calendar app on their phones:
 
