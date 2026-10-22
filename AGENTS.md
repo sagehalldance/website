@@ -60,7 +60,6 @@ Goals:
 
 ### Ideas / later
 - A plainer one-page launch summary for the owner (offered, not requested yet).
-- Google Calendar mode exists but isn't set up (README §3).
 - Email for the domain: Cloudflare Email Routing (free forwarding) or a paid mailbox. See LAUNCH.md *Email (later)*.
 
 ## Confirmed facts (from the owner; don't change without asking)
