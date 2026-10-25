@@ -50,7 +50,7 @@ Goals:
 - [ ] Make the repo private, only after Cloudflare is live and GitHub Pages is unpublished. A private repo on a free account can't serve GitHub Pages.
 
 ### Content to confirm with the owner
-- [ ] Admission ($6 students / $7 general, from older listings).
+- [ ] Admission ($5 students / $7 general).
 - [ ] Addresses for Mountain Valley Athletics and Cache Bar (blank, so Directions searches by name).
 - [ ] Fairgrounds address: 450 S 500 W (one source) vs 490 S 500 W (2023 Cache Valley Daily). Also whether the Indoor Barn is at the same fairgrounds.
 - [ ] About-section facts: opened 2021, founders Josh Lyman and Manuel Carias-Pineda.

@@ -173,7 +173,7 @@ content:
       - name: admission
         label: Admission
         type: string
-        description: e.g. "$6 students · $7 general"
+        description: e.g. "$5 students · $7 general"
       - name: reels
         label: Instagram reels
         type: string
