@@ -443,22 +443,10 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
 }
 .steps h3 { font: 700 1.5rem/1.1 var(--font-cond); margin-bottom: 0.5rem; }
 .steps p { margin: 0; color: var(--ink-soft); }
-.ft-bottom { display: grid; grid-template-columns: minmax(220px, 0.6fr) 1.4fr; gap: 1.25rem; margin-top: 1.25rem; align-items: start; }
-.ft-bottom.no-admission { grid-template-columns: 1fr; }
-.admission { padding: 1.5rem; border-radius: var(--radius); background: var(--ink); color: var(--paper); text-align: center; }
+.admission { max-width: 460px; margin: 1.25rem auto 0; padding: 1.5rem; border-radius: var(--radius); background: var(--ink); color: var(--paper); text-align: center; }
 .admission-label { margin: 0 0 0.3rem; font: 600 0.95rem/1 var(--font-cond); letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-light); }
 .admission-price { margin: 0; font: 700 1.7rem/1.2 var(--font-cond); text-wrap: balance; }
-.faq { display: grid; gap: 0.6rem; }
-.faq details { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm); }
-.faq summary {
-  cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-  padding: 0.95rem 1.1rem; font: 600 1.25rem/1.2 var(--font-cond);
-}
-.faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; font: 1.4rem/1 var(--font-display); color: var(--primary); transition: transform 0.2s; }
-.faq details[open] summary::after { transform: rotate(45deg); }
-.faq details p { margin: 0; padding: 0 1.1rem 1rem; color: var(--ink-soft); }
-@media (max-width: 760px) { .ft-bottom { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .admission { max-width: none; } }
 
 /* ---------- venues ---------- */
 .venues { padding-block: var(--section-pad); }

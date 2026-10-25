@@ -18,7 +18,7 @@ Goals:
 
 ## Status (update every session)
 
-*Last updated: 2026-10-21*
+*Last updated: 2026-10-25*
 
 - **Repo moved (Oct 20):** `alejandro-usu/sagehall` was transferred to Sage Hall's account and renamed **`sagehalldance/website`**. GitHub Pages carried over. The Pages CMS app is installed on the new repo, and the `/admin` editor links point to it.
 - **Mock-up is live** on GitHub Pages at <https://sagehalldance.github.io/website/>, served from `main`. It shows a "concept mock-up" footer note and the season switch, for demos. The old `alejandro-usu.github.io/sagehall/` address is gone and doesn't redirect.
@@ -52,7 +52,7 @@ Goals:
 - [ ] Addresses for Mountain Valley Athletics and Cache Bar (blank, so Directions searches by name).
 - [ ] Fairgrounds address: 450 S 500 W (one source) vs 490 S 500 W (2023 Cache Valley Daily). Also whether the Indoor Barn is at the same fairgrounds.
 - [ ] About-section facts: opened 2021, founders Josh Lyman and Manuel Carias-Pineda.
-- [ ] Remaining first-timer and FAQ copy (placeholder wording).
+- [ ] Remaining first-timer copy (placeholder wording).
 - [ ] Times and places for the Whispering Canyon Fundraiser (Oct 15) and USU Swing Club (Oct 22), which were TBA on the flyer.
 - [ ] Instagram handle `@sage.hall.utah` and the Facebook link.
 - [ ] November schedule, when the flyer comes out.
@@ -75,7 +75,7 @@ Goals:
 - **Plain static site, no build step for development.** `index.html`, `assets/css/*.css`, `assets/js/main.js`, and `admin/index.html` (staff sign-in page).
 - **Content is JSON** that staff edit through **Pages CMS** (app.pagescms.org; config in `.pages.yml`):
   - `data/events.json`: the schedule.
-  - `data/site.json`: announcement, theme, venues, reels, FAQ, Google Calendar.
+  - `data/site.json`: announcement, theme, venues, reels, Google Calendar.
   - `data/weekly.json`: Dancers of the Week and weekly photos.
   - `data/flyer.json`: the monthly flyer. Saving it runs `.github/workflows/import-flyer.yml`, which has Gemini read the flyer and rewrite that month in `data/events.json`, committing straight to `main` as github-actions[bot]. The safety rules are in the docstring of `.github/scripts/import_flyer.py`. On failure nothing changes, and a GitHub issue is opened. It needs the repo secret `GEMINI_API_KEY` (free tier, Google AI Studio). Models are set by `FLYER_MODELS`, default `gemini-flash-lite-latest,gemini-flash-latest`.
 - **Uploads** land in `assets/uploads/`. `.github/workflows/shrink-photos.yml` resizes them to 1600px and strips EXIF/GPS.
@@ -109,6 +109,7 @@ Newest first. Record decisions and the reasons behind them here, not a running c
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-25 | Removed the three FAQ question blocks; centered the Admission card below the First Time step cards | The three FAQ questions repeated details already covered in the first-timer cards, admission box, and venue badges |
 | 2026-10-21 | Simplified cutover: the friend switches nameservers, unlocks the domain and sends the transfer code in one visit; no DNS screenshot | Neither the old site nor the mock-up is in use, so downtime doesn't matter. Cloudflare Registrar needs the domain Active on Cloudflare before a transfer, so the nameservers still change first |
 | 2026-10-21 | Schedule comes from the public Sage Hall Dances Google Calendar, filled by the owner through the Gemini app; the flyer import is kept as a fallback | The owner already uses Google and Gemini on their phone, and dancers get Subscribe links. The fallback keeps the site working if Google is unreachable. The trade-off: the Gemini app's output isn't checked automatically |
 | 2026-10-21 | Alejandro is a collaborator (`amontesinos`, write access); Sage Hall's `sagehalldance` account stays the owner | Sage Hall owns the code and secrets and can remove access with one click; Alejandro's commits and issue assignments are under his own name; no shared password |

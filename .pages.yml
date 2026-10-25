@@ -240,20 +240,6 @@ content:
           - name: text
             label: Text
             type: text
-      - name: faq
-        label: FAQ
-        type: object
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{question}"
-        fields:
-          - name: question
-            label: Question
-            type: string
-          - name: answer
-            label: Answer
-            type: text
       - name: google_calendar
         label: Google Calendar (optional)
         description: Fill both to pull the schedule straight from a public Google Calendar instead of the Dance schedule list. See README for setup.

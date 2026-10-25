@@ -3,7 +3,7 @@
  * Content lives in two JSON files that staff edit through Pages CMS
  * (see .pages.yml):
  *   data/events.json  -> the dance schedule
- *   data/site.json    -> announcement, venues, reels, FAQ, Google Calendar
+ *   data/site.json    -> announcement, venues, reels, Google Calendar
  *
  * If site.json has a Google Calendar ID + API key, the schedule is pulled
  * from that public Google Calendar instead of events.json.
@@ -491,9 +491,6 @@
     const price = String(state.site.admission || "").trim();
     $("#admission").hidden = !price;
     $("#admission-price").textContent = price;
-    $(".ft-bottom").classList.toggle("no-admission", !price);
-    const faq = (state.site.faq || []).filter((f) => f?.question);
-    $("#faq").replaceChildren(...faq.map((f) => h("details", null, h("summary", { text: f.question }), h("p", { text: f.answer || "" }))));
   }
 
   function renderVenues() {

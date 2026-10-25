@@ -8,10 +8,10 @@ A concept redesign for [Sage Hall](https://sagehalldance.com), the country swing
 
 - **Schedule** with a flyer-style list view and a month calendar. Past nights grey out automatically. Visitors can add any night, or the whole month, to Google, Apple or Outlook calendars.
 - **Next dance** ticket at the top of the page, with directions and the next few nights.
-- **Staff sign-in** at `/admin` for editing the schedule, reels, venues and FAQ through simple forms ([Pages CMS](https://pagescms.org)). No code, no GitHub account needed.
+- **Staff sign-in** at `/admin` for editing the schedule, reels and venues through simple forms ([Pages CMS](https://pagescms.org)). No code, no GitHub account needed.
 - **Optional Google Calendar sync.** Paste a calendar ID and the site reads the schedule live from Google Calendar instead.
 - **On the floor**: a weekly *Dancers of the Week* spotlight, up to three Instagram reels, and a *This week's photos* gallery with a full-screen viewer.
-- First-timer guide, FAQ, venues, and an about section.
+- First-timer guide, admission, venues, and an about section.
 - **Four seasonal looks** that share the same schedule and content:
   - *Spring*: Cache Valley mountains and forest, with snow on the peaks, topo-map lines, a trail-sign ribbon and drifting aspen leaves.
   - *Summer*: cream and denim, from the September flyer.
@@ -109,7 +109,7 @@ Some details came from older public listings and should be confirmed:
 - [ ] Addresses for Mountain Valley Athletics and Cache Bar (blank for now, so Directions searches by name)
 - [ ] About-section facts (opened 2021, founders). These come from a January 2023 Cache Valley Daily article.
 - [ ] Fairgrounds street address: one source says 450 S 500 W, the 2023 Cache Valley Daily article says 490 S 500 W
-- [ ] Remaining first-timer and FAQ copy (lesson nights and end times are confirmed)
+- [ ] Remaining first-timer copy (lesson nights and end times are confirmed)
 - [ ] Fairgrounds Indoor Barn address (assumed to be at the Cache County Fairgrounds)
 - [ ] Time and location for the Whispering Canyon Fundraiser (Oct 15) and USU Swing Club (Oct 22), both TBA on the flyer
 
@@ -120,7 +120,7 @@ Some details came from older public listings and should be confirmed:
 | `index.html` | The page |
 | `admin/index.html` | Staff sign-in page with links to the editor and how-tos |
 | `data/events.json` | The dance schedule (edited through Pages CMS) |
-| `data/site.json` | Announcement, theme, social links, venues, reels, FAQ, Google Calendar settings |
+| `data/site.json` | Announcement, theme, social links, venues, reels, Google Calendar settings |
 | `data/weekly.json` | Dancers of the Week and this week's photos |
 | `assets/uploads/` | Photos uploaded through the editor |
 | `.github/workflows/shrink-photos.yml` | Shrinks uploaded photos and strips their location data |
