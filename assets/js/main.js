@@ -54,6 +54,7 @@
   const store = {
     get(k) { try { return localStorage.getItem(k); } catch { return null; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch { /* private mode etc. */ } },
+    del(k) { try { localStorage.removeItem(k); } catch { /* private mode etc. */ } },
   };
 
   /* ---------------- dates (all wall-clock strings, no tz math) ---------------- */
@@ -717,9 +718,9 @@
               colors: ["#a7c66b", "#8fbf6a", "#c9de8f", "#6fa86a"] },
   };
 
-  function chosenTheme() {
+  function chosenTheme(switcherOn) {
     const fromUrl = themeName(new URLSearchParams(location.search).get("theme"));
-    return fromUrl || themeName(store.get("sagehall:theme"));
+    return fromUrl || (switcherOn ? themeName(store.get("sagehall:theme")) : null);
   }
 
   function applyTheme(theme) {
@@ -753,11 +754,13 @@
 
   function initTheme() {
     const fallback = themeName(state.site.theme) || "summer";
+    const switcherOn = state.site.theme_switcher !== false;
+    if (!switcherOn) store.del("sagehall:theme");
     store.set("sagehall:default-theme", fallback); // lets the inline script avoid a flash next visit
-    applyTheme(chosenTheme() || fallback);
+    applyTheme(chosenTheme(switcherOn) || fallback);
 
     const sw = $("#theme-switch");
-    sw.hidden = state.site.theme_switcher === false;
+    sw.hidden = !switcherOn;
     for (const b of sw.querySelectorAll("[data-theme-choice]")) {
       b.addEventListener("click", () => {
         const t = b.dataset.themeChoice;

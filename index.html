@@ -21,7 +21,7 @@
       var names = { spring: "spring", summer: "summer", fall: "fall", winter: "winter", classic: "summer" };
       var t = names[new URLSearchParams(location.search).get("theme")];
       try { t = t || names[localStorage.getItem("sagehall:theme")] || names[localStorage.getItem("sagehall:default-theme")]; } catch (e) {}
-      document.documentElement.setAttribute("data-theme", t || "summer");
+      document.documentElement.setAttribute("data-theme", t || "fall");
     })();
   </script>
   <link rel="stylesheet" href="assets/css/styles.css">
