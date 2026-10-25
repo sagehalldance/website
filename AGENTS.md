@@ -2,6 +2,8 @@
 
 Briefing for any coding agent (Claude Code, Codex, Cursor, Copilot…) or person picking this project up on any computer. Read this first, then `README.md` (how the site works) and `LAUNCH.md` (go-live checklist).
 
+**At the start of every work session:** run `git pull --rebase` before editing any files, in case staff saved changes through Pages CMS, a GitHub Action committed shrunk photos/flyer updates, or work happened on another machine.
+
 **At the end of every work session:** update the *Status*, *To do* and *Decision log* sections below, commit, and push. That's what makes the project resumable from another machine.
 
 ---
