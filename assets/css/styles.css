@@ -468,12 +468,23 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
 .reels .section-head h2 { color: var(--paper); }
 .reels .section-head .script { color: var(--accent-light); }
 .reel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; align-items: start; justify-items: center; }
-.reel { width: 100%; max-width: 380px; }
-.reel .instagram-media {
-  background: #fff; border: 0; border-radius: 12px; margin: 0 !important; min-width: 0 !important;
-  width: 100% !important; max-width: 380px; padding: 0; box-shadow: 0 12px 30px rgb(0 0 0 / 0.35);
+.reel {
+  width: 100%; max-width: 340px;
+  border-radius: 18px; overflow: hidden; background: #000;
+  box-shadow: 0 12px 30px rgb(0 0 0 / 0.35);
 }
-.reel .instagram-media a { display: block; padding: 2rem 1rem; text-align: center; color: var(--primary); font-weight: 600; }
+.reel .instagram-media {
+  background: #000 !important; border: 0 !important; border-radius: 0 !important;
+  margin: 0 !important; min-width: 0 !important;
+  width: 100% !important; max-width: none !important; padding: 0 !important;
+  box-shadow: none !important;
+}
+/* Crop Instagram's white header and footer chrome so only the video shows. */
+.reel iframe.instagram-media {
+  margin: -68px -2px -172px !important;
+  width: calc(100% + 4px) !important;
+}
+.reel .instagram-media a { display: block; padding: 2rem 1rem; text-align: center; color: #fff; font-weight: 600; }
 .reel-placeholder {
   position: relative; aspect-ratio: 9 / 16; width: 100%; max-width: 300px; margin-inline: auto;
   border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end;
