@@ -541,18 +541,50 @@
     document.body.append(s);
   }
 
+  function videoUrl(raw) {
+    const u = mediaUrl(raw);
+    return /\.(mp4|mov|webm)(?:[?#].*)?$/i.test(u) ? u : null;
+  }
+
+  function reelVideoCard(src, { className = "reel reel-video" } = {}) {
+    const vid = h("video", { src: `${src}#t=0.001`, playsinline: true, loop: true, preload: "metadata" });
+    const btn = h("button", {
+      type: "button", class: "reel-play-btn", "aria-label": "Play reel video",
+      onclick: () => {
+        for (const other of document.querySelectorAll("video")) if (other !== vid) other.pause();
+        vid.controls = true;
+        vid.play().catch(() => {});
+      },
+    }, h("span", { class: "play" }, icon("play")));
+    const wrap = h("div", { class: className }, vid, btn);
+    vid.addEventListener("play", () => wrap.classList.add("is-playing"));
+    vid.addEventListener("pause", () => { if (vid.currentTime === 0 || vid.ended) wrap.classList.remove("is-playing"); });
+    return wrap;
+  }
+
   function renderReels() {
     const grid = $("#reel-grid");
-    const urls = (state.site.reels || []).map(normalizeInstagram).filter(Boolean).slice(0, MAX_REELS);
-    if (!urls.length) {
+    const rawVideos = [state.site.reel_videos].flat().filter(Boolean);
+    const rawLinks = [state.site.reels].flat().filter(Boolean);
+    const items = [];
+    for (const r of [...rawVideos, ...rawLinks]) {
+      if (items.length >= MAX_REELS) break;
+      const v = videoUrl(r);
+      if (v) { items.push({ kind: "video", url: v }); continue; }
+      const ig = normalizeInstagram(r);
+      if (ig) items.push({ kind: "ig", url: ig });
+    }
+    if (!items.length) {
       grid.replaceChildren(...[1, 2, 3].map((i) => h("div", { class: "reel-placeholder" },
         h("span", { class: "play" }, icon("play")),
         h("strong", { text: `Reel slot ${i}` }),
-        h("span", { text: "Paste an Instagram reel link in Site settings to fill this spot." }))));
+        h("span", { text: "Upload a reel video or paste an Instagram reel link in Site settings to fill this spot." }))));
       return;
     }
-    grid.replaceChildren(...urls.map((u) => h("div", { class: "reel" }, reelEmbed(u))));
-    whenNear(grid, loadInstagramEmbeds);
+    grid.replaceChildren(...items.map((it) =>
+      it.kind === "video" ? reelVideoCard(it.url) : h("div", { class: "reel" }, reelEmbed(it.url))
+    ));
+    if (items.some((it) => it.kind === "ig")) whenNear(grid, loadInstagramEmbeds);
   }
 
   const reelEmbed = (url) => h("blockquote", { class: "instagram-media", "data-instgrm-permalink": url, "data-instgrm-version": "14" },
@@ -588,7 +620,8 @@
   function renderSpotlight() {
     const d = state.weekly.dancers || {};
     const names = String(d.names || "").trim();
-    const photo = mediaUrl(d.photo);
+    const video = videoUrl(d.video) || videoUrl(d.photo);
+    const photo = video ? "" : mediaUrl(d.photo);
     const reel = normalizeInstagram(d.reel || "");
     const kicker = () => h("p", { class: "spot-kicker" }, icon("star"), "Dancers of the Week");
     const badge = () => h("div", { class: "spot-media is-empty", "aria-hidden": "true" }, h("span", { class: "spot-badge" }, icon("star")));
@@ -604,7 +637,8 @@
           nominate)));
       return;
     }
-    const media = photo ? h("div", { class: "spot-media" }, h("img", { src: photo, alt: `${names}, Sage Hall Dancers of the Week`, loading: "lazy" }))
+    const media = video ? reelVideoCard(video, { className: "spot-media reel-video" })
+      : photo ? h("div", { class: "spot-media" }, h("img", { src: photo, alt: `${names}, Sage Hall Dancers of the Week`, loading: "lazy" }))
       : reel ? h("div", { class: "spot-media has-reel" }, reelEmbed(reel))
       : badge();
     const week = weekOf(d.week_of);
