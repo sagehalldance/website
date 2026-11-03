@@ -580,7 +580,8 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
   font: 600 1.1rem/1 var(--font-cond); letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent-light);
 }
 .floor-subhead::before, .floor-subhead::after { content: ""; flex: 1; height: 1px; background: rgb(255 255 255 / 0.18); }
-.photos-head { margin-top: clamp(40px, 6vw, 64px); }
+.photos-head { margin-top: 0; }
+:is(#spotlight, #reel-grid):not([hidden]) ~ .photos-head { margin-top: clamp(40px, 6vw, 64px); }
 .photos-head .floor-subhead { margin-bottom: 0.5rem; }
 .photos-week { margin: 0 0 1.25rem; text-align: center; font: 500 1rem/1 var(--font-cond); letter-spacing: 0.12em; text-transform: uppercase; color: rgb(255 255 255 / 0.72); }
 .photos-head .floor-subhead:last-child { margin-bottom: 1.25rem; }

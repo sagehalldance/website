@@ -564,6 +564,7 @@
 
   function renderReels() {
     const grid = $("#reel-grid");
+    const subhead = $("#reels-subhead");
     const rawVideos = [state.site.reel_videos].flat().filter(Boolean);
     const rawLinks = [state.site.reels].flat().filter(Boolean);
     const items = [];
@@ -574,11 +575,11 @@
       const ig = normalizeInstagram(r);
       if (ig) items.push({ kind: "ig", url: ig });
     }
-    if (!items.length) {
-      grid.replaceChildren(...[1, 2, 3].map((i) => h("div", { class: "reel-placeholder" },
-        h("span", { class: "play" }, icon("play")),
-        h("strong", { text: `Reel slot ${i}` }),
-        h("span", { text: "Upload a reel video or paste an Instagram reel link in Site settings to fill this spot." }))));
+    const hasReels = items.length > 0;
+    subhead.hidden = !hasReels;
+    grid.hidden = !hasReels;
+    if (!hasReels) {
+      grid.replaceChildren();
       return;
     }
     grid.replaceChildren(...items.map((it) =>
@@ -618,6 +619,7 @@
   }
 
   function renderSpotlight() {
+    const slot = $("#spotlight");
     const d = state.weekly.dancers || {};
     const names = String(d.names || "").trim();
     const video = videoUrl(d.video) || videoUrl(d.photo);
@@ -629,14 +631,11 @@
       h("a", { href: igUrl(), target: "_blank", rel: "noopener", text: "Tell us on Instagram" }), ".");
 
     if (!names) {
-      // A new tradition: no pick yet.
-      $("#spotlight").replaceChildren(h("article", { class: "spotlight is-empty" }, badge(),
-        h("div", { class: "spot-body" }, kicker(),
-          h("h3", { class: "spot-names", text: "Our first pick is coming soon" }),
-          h("p", { class: "spot-text", text: "A new Sage Hall tradition: every week we'll shout out dancers who lit up the floor." }),
-          nominate)));
+      slot.hidden = true;
+      slot.replaceChildren();
       return;
     }
+    slot.hidden = false;
     const media = video ? reelVideoCard(video, { className: "spot-media reel-video" })
       : photo ? h("div", { class: "spot-media" }, h("img", { src: photo, alt: `${names}, Sage Hall Dancers of the Week`, loading: "lazy" }))
       : reel ? h("div", { class: "spot-media has-reel" }, reelEmbed(reel))
