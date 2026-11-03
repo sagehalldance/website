@@ -166,30 +166,40 @@
   /* Match an event's venue text to a configured venue. Google Calendar
      events may put the venue in the location or the title. */
   const GENERIC_TITLE = /^(sage hall[\s:–—-]*)?((country )?swing( dance| dancing| night)?|dance( night)?|dancing|night)?$/i;
-  const TBA = /^(location\s+)?(tba|tbd)$/i;
+  const TBA = /^(location\s+)?(tba|tbd)|^sage hall$/i;
+  const normVenue = (s) => String(s || "").toLowerCase().replace(/\bfairground\b/g, "fairgrounds");
   function resolveVenues(events, venues) {
     const byName = venues.map((v) => ({
       ...v,
-      key: v.name.toLowerCase(),
+      key: normVenue(v.name),
       // place name + street from the address, e.g. "cache county fairgrounds", "450 s 500 w"
       addrKeys: v.address.toLowerCase().split(",").slice(0, 2).map((s) => s.trim()).filter((s) => s.length > 4),
     }));
     return events.map((ev) => {
+      const noDance = /\bno\s+dance\b/i.test(`${ev.title} ${ev.note}`);
+      if (noDance) {
+        const v = { name: "", address: "", color: "ink", ages21: false, note: "", tba: true };
+        return { ...ev, time: null, v, ages21: false, noDance: true };
+      }
       if (!ev.venue || TBA.test(ev.venue.trim())) {
         const v = { name: "Location TBA", address: "", color: "ink", ages21: false, note: "", tba: true };
         return { ...ev, v, ages21: /\b21\s*\+/.test(`${ev.title} ${ev.note}`) };
       }
-      const loc = ev.venue.toLowerCase();
-      const ttl = ev.title.toLowerCase();
+      const loc = normVenue(ev.venue);
+      const ttl = normVenue(ev.title);
       let v = byName.find((x) => x.key === loc)
         || byName.find((x) => loc && (loc.includes(x.key) || x.key.includes(loc.split(",")[0].trim())))
         || byName.find((x) => loc && x.addrKeys.some((k) => loc.includes(k)))
         || (ev.fromGoogle ? byName.find((x) => ttl.includes(x.key)) : null);
       let title = ev.title;
-      if (ev.fromGoogle && v && ttl.includes(v.key)) title = title.replace(new RegExp(v.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"), "").replace(/^[\s·:–—-]+|[\s·:–—-]+$/g, "");
+      const ages21 = Boolean(v?.ages21) || /\b21\s*\+/.test(`${title} ${ev.note}`);
+      if (ev.fromGoogle && v && ttl.includes(v.key)) {
+        const vPat = v.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/fairgrounds/i, "fairgrounds?");
+        title = title.replace(new RegExp(vPat, "i"), "");
+      }
+      if (ev.fromGoogle) title = title.replace(/\(\s*21\s*\+\s*\)|\b21\s*\+/gi, "").replace(/^[\s·:–—-]+|[\s·:–—-]+$/g, "");
       if (ev.fromGoogle && GENERIC_TITLE.test(title.trim())) title = "";
       if (!v) v = { name: ev.venue || "Location TBA", address: ev.venue, color: "ink", ages21: false, note: "" };
-      const ages21 = Boolean(v.ages21) || /\b21\s*\+/.test(`${title} ${ev.note}`);
       return { ...ev, title, v, ages21 };
     }).sort((a, b) => (a.date + (a.time || "")).localeCompare(b.date + (b.time || "")));
   }
@@ -288,7 +298,7 @@
 
   const state = { site: {}, weekly: {}, photos: [], venues: [], events: [], today: "", month: "", minMonth: "", maxMonth: "", view: "list", source: "json" };
 
-  const upcoming = () => state.events.filter((e) => e.date >= state.today && !e.cancelled);
+  const upcoming = () => state.events.filter((e) => e.date >= state.today && !e.cancelled && !e.noDance);
   const igHandle = () => String(state.site.instagram || "").replace(/^@/, "").trim();
   const igUrl = () => (igHandle() ? `https://www.instagram.com/${encodeURIComponent(igHandle())}/` : "https://www.instagram.com/");
 
@@ -391,7 +401,7 @@
     $("#month-next").disabled = key >= state.maxMonth;
 
     const monthEvents = state.events.filter((e) => monthKey(e.date) === key);
-    const future = monthEvents.filter((e) => e.date >= state.today && !e.cancelled);
+    const future = monthEvents.filter((e) => e.date >= state.today && !e.cancelled && !e.noDance);
     const notice = $("#sched-notice");
     notice.textContent = "";
     const follow = () => h("a", { href: igUrl(), target: "_blank", rel: "noopener", text: igHandle() ? `@${igHandle()}` : "Instagram" });
@@ -419,16 +429,16 @@
       const past = ev.date < state.today;
       const cls = ["sched-row", `v-${ev.v.color}`, past && "is-past", ev.cancelled && "is-cancelled", ev.date === state.today && "is-today"].filter(Boolean).join(" ");
       // A special night leads with its title; the venue moves to the sub-line.
-      const sub = [ev.title ? ev.v.name : "", ev.note].filter(Boolean).join(" · ");
+      const sub = [ev.title && !ev.noDance ? ev.v.name : "", ev.note].filter(Boolean).join(" · ");
       return h("li", { class: cls, id: ev.id },
         h("span", { class: "d-num" }, n, h("sup", { text: suf })),
         h("span", { class: "d-dow", text: DOW[dowOf(ev.date)] }),
         h("div", { class: "d-main" },
           h("div", { class: "d-venue" }, h("span", { class: "dot" }), h("span", { class: `v-name${ev.title ? " is-special" : ""}`, text: ev.title || ev.v.name }), venueBadges(ev),
-            ev.date === state.today && !ev.cancelled ? h("span", { class: "badge badge-today", text: "Tonight" }) : null),
+            ev.date === state.today && !ev.cancelled && !ev.noDance ? h("span", { class: "badge badge-today", text: "Tonight" }) : null),
           sub ? h("div", { class: "d-sub", text: sub }) : null),
-        h("span", { class: "d-time", text: fmtTime(ev.time) }),
-        h("span", { class: "addcal-slot" }, !past && !ev.cancelled ? addToCalendar(ev, { compact: true }) : null),
+        h("span", { class: "d-time", text: ev.noDance ? "" : fmtTime(ev.time) }),
+        h("span", { class: "addcal-slot" }, !past && !ev.cancelled && !ev.noDance ? addToCalendar(ev, { compact: true }) : null),
       );
     }));
   }
@@ -448,9 +458,9 @@
         h("span", { class: "cal-day", text: String(day) }),
         todays.map((ev) => h("button", {
           type: "button", class: `chip v-${ev.v.color}${ev.cancelled ? " is-cancelled" : ""}`,
-          "aria-label": `${fmtShort(ev.date)}, ${fmtTime(ev.time)}, ${ev.v.name}${ev.cancelled ? ", cancelled" : ""}. Show in list.`,
+          "aria-label": `${fmtShort(ev.date)}${ev.noDance ? "" : `, ${fmtTime(ev.time)}`}, ${ev.title || ev.v.name}${ev.cancelled ? ", cancelled" : ""}. Show in list.`,
           onclick: () => showInList(ev.id),
-        }, h("span", { class: "ct", text: ev.time ? fmtTime(ev.time) : "TBA" }), h("span", { class: "cv", text: ev.title || ev.v.name })))));
+        }, ev.noDance ? null : h("span", { class: "ct", text: ev.time ? fmtTime(ev.time) : "TBA" }), h("span", { class: "cv", text: ev.title || ev.v.name })))));
     }
     const trail = (7 - ((lead + days) % 7)) % 7;
     for (let i = 0; i < trail; i++) cells.push(h("div", { class: "cal-cell is-out", "aria-hidden": "true" }));
