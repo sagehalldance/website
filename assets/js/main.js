@@ -659,20 +659,28 @@
       .filter((p) => p.src).slice(0, 12);
     const n = state.photos.length;
     const week = weekOf(state.weekly.photos_week_of);
+    const head = $("#photos-head");
+    const grid = $("#photo-grid");
+    head.hidden = !n;
+    grid.hidden = !n;
     $("#photos-week").textContent = week;
     $("#photos-week").hidden = !(week && n);
     $("#photos-note").hidden = !n;
     if (!n) {
-      $("#photo-grid").replaceChildren(h("div", { class: "photos-empty" }, icon("camera"),
-        h("p", { text: "Photos from this week's dances will show up here." }),
-        h("small", { text: "Staff: add them under Dancers of the Week & photos." })));
+      grid.replaceChildren();
       return;
     }
-    $("#photo-grid").replaceChildren(...state.photos.map((p, i) => h("button", {
+    grid.replaceChildren(...state.photos.map((p, i) => h("button", {
       type: "button", class: "photo",
       "aria-label": `Open photo ${i + 1} of ${n}${p.caption ? `: ${p.caption}` : ""}`,
       onclick: () => openPhoto(i),
     }, h("img", { src: p.src, alt: p.caption || "Dancers at Sage Hall", loading: "lazy" }))));
+  }
+
+  function updateFloorVisibility() {
+    const hasFloor = !$("#spotlight").hidden || !$("#reel-grid").hidden || !$("#photo-grid").hidden;
+    $("#reels").hidden = !hasFloor;
+    for (const a of document.querySelectorAll('a[href="#reels"]')) a.hidden = !hasFloor;
   }
 
   let photoIndex = 0;
@@ -876,6 +884,7 @@
     state.weekly = (await weekly) || {};
     renderSpotlight();
     renderPhotos();
+    updateFloorVisibility();
     wireLightbox();
   }
 

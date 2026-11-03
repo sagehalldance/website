@@ -20,7 +20,7 @@ Goals:
 
 ## Status (update every session)
 
-*Last updated: 2026-10-25*
+*Last updated: 2026-11-02*
 
 - **Repo moved (Oct 20):** `alejandro-usu/sagehall` was transferred to Sage Hall's account and renamed **`sagehalldance/website`**. GitHub Pages carried over. The Pages CMS app is installed on the new repo, and the `/admin` editor links point to it.
 - **Mock-up is live** on GitHub Pages at <https://sagehalldance.github.io/website/>, served from `main`. It shows a "concept mock-up" footer note and the season switch, for demos. The old `alejandro-usu.github.io/sagehall/` address is gone and doesn't redirect.
@@ -111,6 +111,7 @@ Newest first. Record decisions and the reasons behind them here, not a running c
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-11-02 | Added native video upload support (`reel_videos` in `site.json`, `video` in `weekly.json`), cropped Instagram embed chrome, and hid empty On the Floor subsections (and the whole section when all three are empty) | Instagram embeds block major-label audio and stop after one play; native `<video>` uploads loop cleanly in 9:16, and hiding empty subsections avoids showing empty placeholder boxes to visitors |
 | 2026-10-25 | Removed the three FAQ question blocks; centered the Admission card below the First Time step cards | The three FAQ questions repeated details already covered in the first-timer cards, admission box, and venue badges |
 | 2026-10-21 | Simplified cutover: the friend switches nameservers, unlocks the domain and sends the transfer code in one visit; no DNS screenshot | Neither the old site nor the mock-up is in use, so downtime doesn't matter. Cloudflare Registrar needs the domain Active on Cloudflare before a transfer, so the nameservers still change first |
 | 2026-10-21 | Schedule comes from the public Sage Hall Dances Google Calendar, filled by the owner through the Gemini app; the flyer import is kept as a fallback | The owner already uses Google and Gemini on their phone, and dancers get Subscribe links. The fallback keeps the site working if Google is unreachable. The trade-off: the Gemini app's output isn't checked automatically |
