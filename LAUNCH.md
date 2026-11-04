@@ -5,7 +5,7 @@ The goal: Sage Hall owns everything (the code, the domain and the hosting) in ac
 **Who's needed:** the owner (to create accounts), whoever is helping with the setup, and the friend who holds the current Hostinger account (one visit to Hostinger, step 5).
 **Cost:** the domain only, about $10–11 a year at Cloudflare. Hosting is free.
 **Downtime:** fine. Neither the old site nor the mock-up is in use, so the steps below skip the precautions that would keep the old site up during the switch.
-**Status (Oct 21, 2026):** steps 1–4 are done. Next is the friend's visit to Hostinger (step 5). The repo lives at `sagehalldance/website`, and the schedule comes from the Sage Hall Dances Google Calendar.
+**Status (Nov 4, 2026):** steps 1–4 are done. The nameservers point to Cloudflare, the domain is Active, and the launch version is on `main`. Next: attach the domain to the Worker, and the friend removes the domain lock and sends the transfer code. The repo lives at `sagehalldance/website`, and the schedule comes from the Sage Hall Dances Google Calendar.
 
 ---
 
@@ -49,8 +49,8 @@ Use a shared business email that the owner controls, such as sagehallutah@gmail.
 
 Everything the friend needs to do, in one sitting (hPanel → Domains → sagehalldance.com):
 
-- [ ] **Change the nameservers:** replace `ns1.dns-parking.com` and `ns2.dns-parking.com` with **`carol.ns.cloudflare.com`** and **`terin.ns.cloudflare.com`**. DNSSEC is already off (checked Oct 21), so nothing else needs changing.
-- [ ] **Turn off the domain lock** (also called transfer lock).
+- [x] **Change the nameservers** (done Nov 4): replace `ns1.dns-parking.com` and `ns2.dns-parking.com` with **`carol.ns.cloudflare.com`** and **`terin.ns.cloudflare.com`**. DNSSEC is already off (checked Oct 21), so nothing else needs changing.
+- [ ] **Turn off the domain lock** (also called transfer lock). Still on as of Nov 4: the public registry record at <https://rdap.verisign.com/com/v1/domain/sagehalldance.com> shows "client transfer prohibited" until it's removed.
 - [ ] **Copy the transfer code** (EPP or auth code) and send it to you privately. Treat it like a password.
 
 Message you can send them:
@@ -64,7 +64,7 @@ The nameserver change has to happen first: Cloudflare only accepts a transfer fo
 Cloudflare emails when it's Active, usually within an hour, at most a day. These can then happen in any order:
 
 - [ ] **Start the transfer:** Cloudflare → **Domain Registration → Transfer Domains** → select sagehalldance.com, enter the code, and pay (it includes a year of renewal). Approve the confirmation email if one arrives.
-- [ ] **Merge the launch branch** (`ccr-b6d97a4a-1cdu41`) into `main`. It removes the "mock-up" footer note, hides the season switch, and drops the GitHub Pages republish steps from the photo and flyer workflows.
+- [x] **Merge the launch branch** (`ccr-b6d97a4a-1cdu41`) into `main` (done Nov 4). It removes the "mock-up" footer note, hides the season switch, and drops the GitHub Pages republish steps from the photo and flyer workflows.
 - [ ] **Attach the domain:** `website` Worker → **Settings → Domains & Routes → Add → Custom domain**, add `sagehalldance.com`, then `www.sagehalldance.com`. This replaces the old A and `www` records, and sagehalldance.com shows the new site within minutes.
 - [ ] **Check the live site:** the schedule loads from Google Calendar (the "Subscribe" links appear under it), `/admin` opens, and the themes work.
 
