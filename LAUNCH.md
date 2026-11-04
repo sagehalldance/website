@@ -50,8 +50,8 @@ Use a shared business email that the owner controls, such as sagehallutah@gmail.
 Everything the friend needs to do, in one sitting (hPanel → Domains → sagehalldance.com):
 
 - [x] **Change the nameservers** (done Nov 4): replace `ns1.dns-parking.com` and `ns2.dns-parking.com` with **`carol.ns.cloudflare.com`** and **`terin.ns.cloudflare.com`**. DNSSEC is already off (checked Oct 21), so nothing else needs changing.
-- [ ] **Turn off the domain lock** (also called transfer lock). Still on as of Nov 4: the public registry record at <https://rdap.verisign.com/com/v1/domain/sagehalldance.com> shows "client transfer prohibited" until it's removed.
-- [ ] **Copy the transfer code** (EPP or auth code) and send it to you privately. Treat it like a password.
+- [x] **Turn off the domain lock** (also called transfer lock). Done Nov 4. The public registry record at <https://rdap.verisign.com/com/v1/domain/sagehalldance.com> shows the status.
+- [x] **Copy the transfer code** (EPP or auth code) and send it to you privately. Treat it like a password.
 
 Message you can send them:
 
@@ -63,7 +63,7 @@ The nameserver change has to happen first: Cloudflare only accepts a transfer fo
 
 Cloudflare emails when it's Active, usually within an hour, at most a day. These can then happen in any order:
 
-- [ ] **Start the transfer:** Cloudflare → **Domain Registration → Transfer Domains** → select sagehalldance.com, enter the code, and pay (it includes a year of renewal). Approve the confirmation email if one arrives.
+- [x] **Start the transfer** (started Nov 4; the registry shows "pending transfer". If the friend approves it in Hostinger or by email it finishes in hours, otherwise automatically within about 5 days. They must not reject it): Cloudflare → **Domain Registration → Transfer Domains** → select sagehalldance.com, enter the code, and pay (it includes a year of renewal). Approve the confirmation email if one arrives.
 - [x] **Merge the launch branch** (`ccr-b6d97a4a-1cdu41`) into `main` (done Nov 4). It removes the "mock-up" footer note, hides the season switch, and drops the GitHub Pages republish steps from the photo and flyer workflows.
 - [x] **Attach the domain** (done Nov 4; first delete the old A and `www` records in DNS → Records, or Cloudflare refuses): `website` Worker → **Settings → Domains & Routes → Add → Custom domain**, add `sagehalldance.com`, then `www.sagehalldance.com`. This replaces the old A and `www` records, and sagehalldance.com shows the new site within minutes.
 - [x] **Check the live site** (done Nov 4): the schedule loads from Google Calendar (the "Subscribe" links appear under it), `/admin` opens, and the themes work.
@@ -84,7 +84,7 @@ The site is already live on sagehalldance.com; this only changes who owns the do
 
 ## 9. Wrap up
 
-- [ ] Cloudflare → sagehalldance.com → **SSL/TLS → Edge Certificates → Always Use HTTPS**: on, so `http://` links redirect. Optionally add a redirect rule from `www` to `sagehalldance.com` (Rules → Redirect Rules → "Redirect from WWW to root" template).
+- [x] Cloudflare → sagehalldance.com → **SSL/TLS → Edge Certificates → Always Use HTTPS**: on (Nov 4; `http://` now redirects with a 301). Leave **SSL/TLS → Overview** on Automatic; the Worker has no origin server, so that setting doesn't apply. Optionally add a redirect rule from `www` to `sagehalldance.com` (Rules → Redirect Rules → "Redirect from WWW to root" template).
 - [ ] Turn off GitHub Pages (**Settings → Pages → Unpublish**), so there's only one copy of the site.
 - [ ] **Make the repo private** (**Settings → General → Danger Zone → Change repository visibility**). Do this only after GitHub Pages is off: on a free account a private repo can't serve GitHub Pages. Cloudflare and Pages CMS both work with private repos.
 - [ ] Set the default look under **Site settings → Site theme** (spring, summer, fall or winter).

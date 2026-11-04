@@ -24,7 +24,7 @@ Goals:
 
 - **Repo moved (Oct 20):** `alejandro-usu/sagehall` was transferred to Sage Hall's account and renamed **`sagehalldance/website`**. GitHub Pages carried over. The Pages CMS app is installed on the new repo, and the `/admin` editor links point to it.
 - **GitHub Pages copy** at <https://sagehalldance.github.io/website/> still serves `main` until it's unpublished (LAUNCH.md step 9). Photos uploaded now won't republish there; Cloudflare is the live copy. The old `alejandro-usu.github.io/sagehall/` address is gone and doesn't redirect.
-- **Launch version is on `main` (Nov 4):** the launch branch `ccr-b6d97a4a-1cdu41` is merged (the branch can be deleted). The mock-up footer note is gone, the season switch is off, and the photo and flyer workflows no longer ask GitHub Pages to republish. Cloudflare serves it at <https://website.sagehalldance.workers.dev>. The nameservers point to Cloudflare and the domain is **Active** there (Nov 4). **sagehalldance.com is live on the new site (Nov 4)**: `sagehalldance.com` and `www` are custom domains on the Worker, with a Cloudflare-managed Let's Encrypt certificate. Next: transfer the domain once the friend removes the lock and sends the code.
+- **Launch version is on `main` (Nov 4):** the launch branch `ccr-b6d97a4a-1cdu41` is merged (the branch can be deleted). The mock-up footer note is gone, the season switch is off, and the photo and flyer workflows no longer ask GitHub Pages to republish. Cloudflare serves it at <https://website.sagehalldance.workers.dev>. The nameservers point to Cloudflare and the domain is **Active** there (Nov 4). **sagehalldance.com is live on the new site (Nov 4)**: `sagehalldance.com` and `www` are custom domains on the Worker, with a Cloudflare-managed Let's Encrypt certificate. The domain transfer to Cloudflare Registrar is in progress (started Nov 4).
 - **Schedule source: Google Calendar.** The site reads the public **Sage Hall Dances** calendar (Sage Hall Google account; ID and browser API key in `data/site.json` → `google_calendar`). The owner adds nights by giving the flyer to Gemini (gemini.google.com) with the prompt on `/admin`. Gemini app output goes unchecked: on the first try it invented 9 PM starts for both October TBD nights and put the fundraiser in the location, so someone has to check TBD nights. `data/events.json` and the flyer import are now only the fallback, shown if Google can't be reached. If the calendar is unreachable *or* comes back with no events in its window (the last 100 days and the next 400), the site shows the fallback and hides the Subscribe links.
 - **Hosting decision:** move everything to Sage Hall-owned accounts. Code goes to GitHub, and hosting, DNS and the domain go to Cloudflare. Today the domain sits on the owner's friend's personal Hostinger account and server.
 - **Owner-provided content** is in: September and October 2026 schedules, the high-res logo, and the confirmed facts listed below.
@@ -36,14 +36,14 @@ Goals:
 - [x] Create Sage Hall GitHub and Cloudflare accounts.
 - [x] Domain is clear to transfer: registered at Hostinger May 15, 2025; expires May 15, 2027.
 - [x] Friend switched the nameservers to Cloudflare (Nov 4); the domain is Active.
-- [ ] Friend: turn off the domain lock in Hostinger and send the transfer (EPP/auth) code. On Nov 4 the registry still showed "client transfer prohibited".
+- [x] Friend turned off the domain lock and sent the transfer code (Nov 4).
 - [x] Transfer the repo to the Sage Hall GitHub account. It's now `sagehalldance/website`.
 - [x] Set `CMS_REPO` in `admin/index.html` to `sagehalldance/website/main` (on the launch branch).
 - [x] Put the docs, `scripts/build.sh` and the `CMS_REPO` change on `main`.
 - [x] Merge the launch branch into `main` (Nov 4).
 - [x] Attach `sagehalldance.com` and `www.sagehalldance.com` to the `website` Worker as custom domains (Nov 4; old A and `www` records deleted first). Checked HTTPS, the calendar and blocked repo files.
-- [ ] Cloudflare: turn on **Always Use HTTPS** (SSL/TLS → Edge Certificates); optionally redirect `www` to the root domain.
-- [ ] Start the transfer to Cloudflare Registrar once the lock is off and you have the code.
+- [x] Cloudflare: Always Use HTTPS is on (Nov 4). Optional: redirect `www` to the root domain.
+- [x] Transfer to Cloudflare Registrar started (Nov 4; registry status "pending transfer"). It finishes when the friend approves it in Hostinger, or automatically within about 5 days.
 - [x] Cloudflare: repo connected as the Worker `website` (build `sh scripts/build.sh`; `wrangler.jsonc` publishes `dist/`). Test URL: <https://website.sagehalldance.workers.dev>.
 - [x] Check the workers.dev site on desktop and phone.
 - [x] Cloudflare: domain added (Pending). Old A and `www` records kept as DNS only; email records removed; SPF `-all` and DMARC `p=reject` set.
