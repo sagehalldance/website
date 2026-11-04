@@ -3,7 +3,7 @@
  * Content lives in two JSON files that staff edit through Pages CMS
  * (see .pages.yml):
  *   data/events.json  -> the dance schedule
- *   data/site.json    -> announcement, venues, reels, FAQ, Google Calendar
+ *   data/site.json    -> announcement, venues, reels, Google Calendar
  *
  * If site.json has a Google Calendar ID + API key, the schedule is pulled
  * from that public Google Calendar instead of events.json.
@@ -54,6 +54,7 @@
   const store = {
     get(k) { try { return localStorage.getItem(k); } catch { return null; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch { /* private mode etc. */ } },
+    del(k) { try { localStorage.removeItem(k); } catch { /* private mode etc. */ } },
   };
 
   /* ---------------- dates (all wall-clock strings, no tz math) ---------------- */
@@ -165,30 +166,40 @@
   /* Match an event's venue text to a configured venue. Google Calendar
      events may put the venue in the location or the title. */
   const GENERIC_TITLE = /^(sage hall[\s:–—-]*)?((country )?swing( dance| dancing| night)?|dance( night)?|dancing|night)?$/i;
-  const TBA = /^(location\s+)?(tba|tbd)$/i;
+  const TBA = /^(location\s+)?(tba|tbd)|^sage hall$/i;
+  const normVenue = (s) => String(s || "").toLowerCase().replace(/\bfairground\b/g, "fairgrounds");
   function resolveVenues(events, venues) {
     const byName = venues.map((v) => ({
       ...v,
-      key: v.name.toLowerCase(),
+      key: normVenue(v.name),
       // place name + street from the address, e.g. "cache county fairgrounds", "450 s 500 w"
       addrKeys: v.address.toLowerCase().split(",").slice(0, 2).map((s) => s.trim()).filter((s) => s.length > 4),
     }));
     return events.map((ev) => {
+      const noDance = /\bno\s+dance\b/i.test(`${ev.title} ${ev.note}`);
+      if (noDance) {
+        const v = { name: "", address: "", color: "ink", ages21: false, note: "", tba: true };
+        return { ...ev, time: null, v, ages21: false, noDance: true };
+      }
       if (!ev.venue || TBA.test(ev.venue.trim())) {
         const v = { name: "Location TBA", address: "", color: "ink", ages21: false, note: "", tba: true };
         return { ...ev, v, ages21: /\b21\s*\+/.test(`${ev.title} ${ev.note}`) };
       }
-      const loc = ev.venue.toLowerCase();
-      const ttl = ev.title.toLowerCase();
+      const loc = normVenue(ev.venue);
+      const ttl = normVenue(ev.title);
       let v = byName.find((x) => x.key === loc)
         || byName.find((x) => loc && (loc.includes(x.key) || x.key.includes(loc.split(",")[0].trim())))
         || byName.find((x) => loc && x.addrKeys.some((k) => loc.includes(k)))
         || (ev.fromGoogle ? byName.find((x) => ttl.includes(x.key)) : null);
       let title = ev.title;
-      if (ev.fromGoogle && v && ttl.includes(v.key)) title = title.replace(new RegExp(v.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"), "").replace(/^[\s·:–—-]+|[\s·:–—-]+$/g, "");
+      const ages21 = Boolean(v?.ages21) || /\b21\s*\+/.test(`${title} ${ev.note}`);
+      if (ev.fromGoogle && v && ttl.includes(v.key)) {
+        const vPat = v.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/fairgrounds/i, "fairgrounds?");
+        title = title.replace(new RegExp(vPat, "i"), "");
+      }
+      if (ev.fromGoogle) title = title.replace(/\(\s*21\s*\+\s*\)|\b21\s*\+/gi, "").replace(/^[\s·:–—-]+|[\s·:–—-]+$/g, "");
       if (ev.fromGoogle && GENERIC_TITLE.test(title.trim())) title = "";
       if (!v) v = { name: ev.venue || "Location TBA", address: ev.venue, color: "ink", ages21: false, note: "" };
-      const ages21 = Boolean(v.ages21) || /\b21\s*\+/.test(`${title} ${ev.note}`);
       return { ...ev, title, v, ages21 };
     }).sort((a, b) => (a.date + (a.time || "")).localeCompare(b.date + (b.time || "")));
   }
@@ -287,7 +298,7 @@
 
   const state = { site: {}, weekly: {}, photos: [], venues: [], events: [], today: "", month: "", minMonth: "", maxMonth: "", view: "list", source: "json" };
 
-  const upcoming = () => state.events.filter((e) => e.date >= state.today && !e.cancelled);
+  const upcoming = () => state.events.filter((e) => e.date >= state.today && !e.cancelled && !e.noDance);
   const igHandle = () => String(state.site.instagram || "").replace(/^@/, "").trim();
   const igUrl = () => (igHandle() ? `https://www.instagram.com/${encodeURIComponent(igHandle())}/` : "https://www.instagram.com/");
 
@@ -390,7 +401,7 @@
     $("#month-next").disabled = key >= state.maxMonth;
 
     const monthEvents = state.events.filter((e) => monthKey(e.date) === key);
-    const future = monthEvents.filter((e) => e.date >= state.today && !e.cancelled);
+    const future = monthEvents.filter((e) => e.date >= state.today && !e.cancelled && !e.noDance);
     const notice = $("#sched-notice");
     notice.textContent = "";
     const follow = () => h("a", { href: igUrl(), target: "_blank", rel: "noopener", text: igHandle() ? `@${igHandle()}` : "Instagram" });
@@ -418,16 +429,16 @@
       const past = ev.date < state.today;
       const cls = ["sched-row", `v-${ev.v.color}`, past && "is-past", ev.cancelled && "is-cancelled", ev.date === state.today && "is-today"].filter(Boolean).join(" ");
       // A special night leads with its title; the venue moves to the sub-line.
-      const sub = [ev.title ? ev.v.name : "", ev.note].filter(Boolean).join(" · ");
+      const sub = [ev.title && !ev.noDance ? ev.v.name : "", ev.note].filter(Boolean).join(" · ");
       return h("li", { class: cls, id: ev.id },
         h("span", { class: "d-num" }, n, h("sup", { text: suf })),
         h("span", { class: "d-dow", text: DOW[dowOf(ev.date)] }),
         h("div", { class: "d-main" },
           h("div", { class: "d-venue" }, h("span", { class: "dot" }), h("span", { class: `v-name${ev.title ? " is-special" : ""}`, text: ev.title || ev.v.name }), venueBadges(ev),
-            ev.date === state.today && !ev.cancelled ? h("span", { class: "badge badge-today", text: "Tonight" }) : null),
+            ev.date === state.today && !ev.cancelled && !ev.noDance ? h("span", { class: "badge badge-today", text: "Tonight" }) : null),
           sub ? h("div", { class: "d-sub", text: sub }) : null),
-        h("span", { class: "d-time", text: fmtTime(ev.time) }),
-        h("span", { class: "addcal-slot" }, !past && !ev.cancelled ? addToCalendar(ev, { compact: true }) : null),
+        h("span", { class: "d-time", text: ev.noDance ? "" : fmtTime(ev.time) }),
+        h("span", { class: "addcal-slot" }, !past && !ev.cancelled && !ev.noDance ? addToCalendar(ev, { compact: true }) : null),
       );
     }));
   }
@@ -447,9 +458,9 @@
         h("span", { class: "cal-day", text: String(day) }),
         todays.map((ev) => h("button", {
           type: "button", class: `chip v-${ev.v.color}${ev.cancelled ? " is-cancelled" : ""}`,
-          "aria-label": `${fmtShort(ev.date)}, ${fmtTime(ev.time)}, ${ev.v.name}${ev.cancelled ? ", cancelled" : ""}. Show in list.`,
+          "aria-label": `${fmtShort(ev.date)}${ev.noDance ? "" : `, ${fmtTime(ev.time)}`}, ${ev.title || ev.v.name}${ev.cancelled ? ", cancelled" : ""}. Show in list.`,
           onclick: () => showInList(ev.id),
-        }, h("span", { class: "ct", text: ev.time ? fmtTime(ev.time) : "TBA" }), h("span", { class: "cv", text: ev.title || ev.v.name })))));
+        }, ev.noDance ? null : h("span", { class: "ct", text: ev.time ? fmtTime(ev.time) : "TBA" }), h("span", { class: "cv", text: ev.title || ev.v.name })))));
     }
     const trail = (7 - ((lead + days) % 7)) % 7;
     for (let i = 0; i < trail; i++) cells.push(h("div", { class: "cal-cell is-out", "aria-hidden": "true" }));
@@ -491,9 +502,6 @@
     const price = String(state.site.admission || "").trim();
     $("#admission").hidden = !price;
     $("#admission-price").textContent = price;
-    $(".ft-bottom").classList.toggle("no-admission", !price);
-    const faq = (state.site.faq || []).filter((f) => f?.question);
-    $("#faq").replaceChildren(...faq.map((f) => h("details", null, h("summary", { text: f.question }), h("p", { text: f.answer || "" }))));
   }
 
   function renderVenues() {
@@ -533,18 +541,51 @@
     document.body.append(s);
   }
 
+  function videoUrl(raw) {
+    const u = mediaUrl(raw);
+    return /\.(mp4|mov|webm)(?:[?#].*)?$/i.test(u) ? u : null;
+  }
+
+  function reelVideoCard(src, { className = "reel reel-video" } = {}) {
+    const vid = h("video", { src: `${src}#t=0.001`, playsinline: true, loop: true, preload: "metadata" });
+    const btn = h("button", {
+      type: "button", class: "reel-play-btn", "aria-label": "Play reel video",
+      onclick: () => {
+        for (const other of document.querySelectorAll("video")) if (other !== vid) other.pause();
+        vid.controls = true;
+        vid.play().catch(() => {});
+      },
+    }, h("span", { class: "play" }, icon("play")));
+    const wrap = h("div", { class: className }, vid, btn);
+    vid.addEventListener("play", () => wrap.classList.add("is-playing"));
+    vid.addEventListener("pause", () => { if (vid.currentTime === 0 || vid.ended) wrap.classList.remove("is-playing"); });
+    return wrap;
+  }
+
   function renderReels() {
     const grid = $("#reel-grid");
-    const urls = (state.site.reels || []).map(normalizeInstagram).filter(Boolean).slice(0, MAX_REELS);
-    if (!urls.length) {
-      grid.replaceChildren(...[1, 2, 3].map((i) => h("div", { class: "reel-placeholder" },
-        h("span", { class: "play" }, icon("play")),
-        h("strong", { text: `Reel slot ${i}` }),
-        h("span", { text: "Paste an Instagram reel link in Site settings to fill this spot." }))));
+    const subhead = $("#reels-subhead");
+    const rawVideos = [state.site.reel_videos].flat().filter(Boolean);
+    const rawLinks = [state.site.reels].flat().filter(Boolean);
+    const items = [];
+    for (const r of [...rawVideos, ...rawLinks]) {
+      if (items.length >= MAX_REELS) break;
+      const v = videoUrl(r);
+      if (v) { items.push({ kind: "video", url: v }); continue; }
+      const ig = normalizeInstagram(r);
+      if (ig) items.push({ kind: "ig", url: ig });
+    }
+    const hasReels = items.length > 0;
+    subhead.hidden = !hasReels;
+    grid.hidden = !hasReels;
+    if (!hasReels) {
+      grid.replaceChildren();
       return;
     }
-    grid.replaceChildren(...urls.map((u) => h("div", { class: "reel" }, reelEmbed(u))));
-    whenNear(grid, loadInstagramEmbeds);
+    grid.replaceChildren(...items.map((it) =>
+      it.kind === "video" ? reelVideoCard(it.url) : h("div", { class: "reel" }, reelEmbed(it.url))
+    ));
+    if (items.some((it) => it.kind === "ig")) whenNear(grid, loadInstagramEmbeds);
   }
 
   const reelEmbed = (url) => h("blockquote", { class: "instagram-media", "data-instgrm-permalink": url, "data-instgrm-version": "14" },
@@ -578,9 +619,11 @@
   }
 
   function renderSpotlight() {
+    const slot = $("#spotlight");
     const d = state.weekly.dancers || {};
     const names = String(d.names || "").trim();
-    const photo = mediaUrl(d.photo);
+    const video = videoUrl(d.video) || videoUrl(d.photo);
+    const photo = video ? "" : mediaUrl(d.photo);
     const reel = normalizeInstagram(d.reel || "");
     const kicker = () => h("p", { class: "spot-kicker" }, icon("star"), "Dancers of the Week");
     const badge = () => h("div", { class: "spot-media is-empty", "aria-hidden": "true" }, h("span", { class: "spot-badge" }, icon("star")));
@@ -588,15 +631,13 @@
       h("a", { href: igUrl(), target: "_blank", rel: "noopener", text: "Tell us on Instagram" }), ".");
 
     if (!names) {
-      // A new tradition: no pick yet.
-      $("#spotlight").replaceChildren(h("article", { class: "spotlight is-empty" }, badge(),
-        h("div", { class: "spot-body" }, kicker(),
-          h("h3", { class: "spot-names", text: "Our first pick is coming soon" }),
-          h("p", { class: "spot-text", text: "A new Sage Hall tradition: every week we'll shout out dancers who lit up the floor." }),
-          nominate)));
+      slot.hidden = true;
+      slot.replaceChildren();
       return;
     }
-    const media = photo ? h("div", { class: "spot-media" }, h("img", { src: photo, alt: `${names}, Sage Hall Dancers of the Week`, loading: "lazy" }))
+    slot.hidden = false;
+    const media = video ? reelVideoCard(video, { className: "spot-media reel-video" })
+      : photo ? h("div", { class: "spot-media" }, h("img", { src: photo, alt: `${names}, Sage Hall Dancers of the Week`, loading: "lazy" }))
       : reel ? h("div", { class: "spot-media has-reel" }, reelEmbed(reel))
       : badge();
     const week = weekOf(d.week_of);
@@ -618,20 +659,28 @@
       .filter((p) => p.src).slice(0, 12);
     const n = state.photos.length;
     const week = weekOf(state.weekly.photos_week_of);
+    const head = $("#photos-head");
+    const grid = $("#photo-grid");
+    head.hidden = !n;
+    grid.hidden = !n;
     $("#photos-week").textContent = week;
     $("#photos-week").hidden = !(week && n);
     $("#photos-note").hidden = !n;
     if (!n) {
-      $("#photo-grid").replaceChildren(h("div", { class: "photos-empty" }, icon("camera"),
-        h("p", { text: "Photos from this week's dances will show up here." }),
-        h("small", { text: "Staff: add them under Dancers of the Week & photos." })));
+      grid.replaceChildren();
       return;
     }
-    $("#photo-grid").replaceChildren(...state.photos.map((p, i) => h("button", {
+    grid.replaceChildren(...state.photos.map((p, i) => h("button", {
       type: "button", class: "photo",
       "aria-label": `Open photo ${i + 1} of ${n}${p.caption ? `: ${p.caption}` : ""}`,
       onclick: () => openPhoto(i),
     }, h("img", { src: p.src, alt: p.caption || "Dancers at Sage Hall", loading: "lazy" }))));
+  }
+
+  function updateFloorVisibility() {
+    const hasFloor = !$("#spotlight").hidden || !$("#reel-grid").hidden || !$("#photo-grid").hidden;
+    $("#reels").hidden = !hasFloor;
+    for (const a of document.querySelectorAll('a[href="#reels"]')) a.hidden = !hasFloor;
   }
 
   let photoIndex = 0;
@@ -720,9 +769,9 @@
               colors: ["#a7c66b", "#8fbf6a", "#c9de8f", "#6fa86a"] },
   };
 
-  function chosenTheme() {
+  function chosenTheme(switcherOn) {
     const fromUrl = themeName(new URLSearchParams(location.search).get("theme"));
-    return fromUrl || themeName(store.get("sagehall:theme"));
+    return fromUrl || (switcherOn ? themeName(store.get("sagehall:theme")) : null);
   }
 
   function applyTheme(theme) {
@@ -756,11 +805,13 @@
 
   function initTheme() {
     const fallback = themeName(state.site.theme) || "summer";
+    const switcherOn = state.site.theme_switcher !== false;
+    if (!switcherOn) store.del("sagehall:theme");
     store.set("sagehall:default-theme", fallback); // lets the inline script avoid a flash next visit
-    applyTheme(chosenTheme() || fallback);
+    applyTheme(chosenTheme(switcherOn) || fallback);
 
     const sw = $("#theme-switch");
-    sw.hidden = state.site.theme_switcher === false;
+    sw.hidden = !switcherOn;
     for (const b of sw.querySelectorAll("[data-theme-choice]")) {
       b.addEventListener("click", () => {
         const t = b.dataset.themeChoice;
@@ -833,6 +884,7 @@
     state.weekly = (await weekly) || {};
     renderSpotlight();
     renderPhotos();
+    updateFloorVisibility();
     wireLightbox();
   }
 

@@ -191,6 +191,86 @@
       "title": "",
       "note": "",
       "cancelled": false
+    },
+    {
+      "date": "2026-11-03",
+      "time": "20:00",
+      "venue": "Mountain Valley Athletics",
+      "title": "",
+      "note": "",
+      "cancelled": false
+    },
+    {
+      "date": "2026-11-05",
+      "time": "21:00",
+      "venue": "Mountain Valley Athletics",
+      "title": "",
+      "note": "",
+      "cancelled": false
+    },
+    {
+      "date": "2026-11-10",
+      "time": "20:00",
+      "venue": "Fairgrounds Event Center",
+      "title": "",
+      "note": "",
+      "cancelled": false
+    },
+    {
+      "date": "2026-11-11",
+      "time": "19:00",
+      "venue": "Cache Bar",
+      "title": "",
+      "note": "",
+      "cancelled": false
+    },
+    {
+      "date": "2026-11-12",
+      "time": "21:00",
+      "venue": "Mountain Valley Athletics",
+      "title": "",
+      "note": "",
+      "cancelled": false
+    },
+    {
+      "date": "2026-11-17",
+      "time": "20:00",
+      "venue": "Mountain Valley Athletics",
+      "title": "",
+      "note": "",
+      "cancelled": false
+    },
+    {
+      "date": "2026-11-19",
+      "time": "21:00",
+      "venue": "Mountain Valley Athletics",
+      "title": "",
+      "note": "",
+      "cancelled": false
+    },
+    {
+      "date": "2026-11-21",
+      "time": "21:00",
+      "venue": "Mountain Valley Athletics",
+      "title": "",
+      "note": "",
+      "cancelled": false
+    },
+    {
+      "date": "2026-11-24",
+      "time": "20:00",
+      "venue": "Fairgrounds Event Center",
+      "title": "",
+      "note": "",
+      "cancelled": false
+    },
+    {
+      "date": "2026-11-26",
+      "time": "TBA",
+      "venue": "Location TBA",
+      "title": "Happy Thanksgiving! No Dance Tonight",
+      "note": "",
+      "cancelled": false
     }
   ]
 }

@@ -21,7 +21,7 @@
       var names = { spring: "spring", summer: "summer", fall: "fall", winter: "winter", classic: "summer" };
       var t = names[new URLSearchParams(location.search).get("theme")];
       try { t = t || names[localStorage.getItem("sagehall:theme")] || names[localStorage.getItem("sagehall:default-theme")]; } catch (e) {}
-      document.documentElement.setAttribute("data-theme", t || "summer");
+      document.documentElement.setAttribute("data-theme", t || "fall");
     })();
   </script>
   <link rel="stylesheet" href="assets/css/styles.css">
@@ -149,12 +149,9 @@
           <h2 id="first-time-h">First time at Sage Hall</h2>
         </header>
         <ol class="steps" id="first-time-list"></ol>
-        <div class="ft-bottom">
-          <div class="admission" id="admission" hidden>
-            <p class="admission-label">Admission</p>
-            <p class="admission-price" id="admission-price"></p>
-          </div>
-          <div class="faq" id="faq"></div>
+        <div class="admission" id="admission" hidden>
+          <p class="admission-label">Admission</p>
+          <p class="admission-price" id="admission-price"></p>
         </div>
       </div>
     </section>
@@ -171,23 +168,23 @@
     </section>
 
     <!-- ============ ON THE FLOOR: dancers of the week, reels, photos ============ -->
-    <section class="reels" id="reels" aria-labelledby="reels-h">
+    <section class="reels" id="reels" aria-labelledby="reels-h" hidden>
       <div class="wrap">
         <header class="section-head">
           <p class="script">this week at Sage Hall</p>
           <h2 id="reels-h">On the floor</h2>
         </header>
 
-        <div class="spotlight-slot" id="spotlight"></div>
+        <div class="spotlight-slot" id="spotlight" hidden></div>
 
-        <h3 class="floor-subhead">Reels</h3>
-        <div class="reel-grid" id="reel-grid"></div>
+        <h3 class="floor-subhead" id="reels-subhead" hidden>Reels</h3>
+        <div class="reel-grid" id="reel-grid" hidden></div>
 
-        <div class="photos-head">
+        <div class="photos-head" id="photos-head" hidden>
           <h3 class="floor-subhead" id="photos-h">This week's photos</h3>
           <p class="photos-week" id="photos-week" hidden></p>
         </div>
-        <div class="photo-grid" id="photo-grid" role="group" aria-labelledby="photos-h"></div>
+        <div class="photo-grid" id="photo-grid" role="group" aria-labelledby="photos-h" hidden></div>
         <p class="photos-note" id="photos-note" hidden>
           In a photo and want it taken down? <a data-instagram-link href="https://www.instagram.com/sage.hall.utah/" target="_blank" rel="noopener">Message us on Instagram</a>.
         </p>

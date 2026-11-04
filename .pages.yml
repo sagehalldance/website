@@ -7,7 +7,7 @@ media:
   input: assets/uploads
   # no leading slash: the site lives under /website/ on GitHub Pages, so paths stay relative
   output: assets/uploads
-  extensions: [jpg, jpeg, png, webp]
+  extensions: [jpg, jpeg, png, webp, mp4, mov, webm]
 
 content:
   - name: flyer
@@ -114,6 +114,12 @@ content:
             label: Photo
             type: image
             description: Upload straight from your phone; the site shrinks it automatically.
+          - name: video
+            label: Video (optional)
+            type: file
+            description: Upload a short .mp4 / .mov clip to play and loop directly on the site.
+            options:
+              extensions: [mp4, mov, webm]
           - name: reel
             label: Instagram reel link (optional)
             type: string
@@ -173,11 +179,19 @@ content:
       - name: admission
         label: Admission
         type: string
-        description: e.g. "$6 students · $7 general"
+        description: e.g. "$5 students · $7 general"
+      - name: reel_videos
+        label: Uploaded reel videos (optional)
+        type: file
+        description: Upload up to 3 reel videos (.mp4, .mov, .webm) to play and loop directly on the site without sending visitors to Instagram.
+        options:
+          extensions: [mp4, mov, webm]
+          multiple:
+            max: 3
       - name: reels
         label: Instagram reels
         type: string
-        description: Paste reel links (Share → Copy link in Instagram). The first three show on the home page.
+        description: Paste reel links (Share → Copy link in Instagram). Shown after any uploaded reel videos above (up to 3 total).
         list: true
       - name: venues
         label: Venues
@@ -239,20 +253,6 @@ content:
             type: string
           - name: text
             label: Text
-            type: text
-      - name: faq
-        label: FAQ
-        type: object
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{question}"
-        fields:
-          - name: question
-            label: Question
-            type: string
-          - name: answer
-            label: Answer
             type: text
       - name: google_calendar
         label: Google Calendar (optional)

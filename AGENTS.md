@@ -2,6 +2,8 @@
 
 Briefing for any coding agent (Claude Code, Codex, Cursor, Copilot…) or person picking this project up on any computer. Read this first, then `README.md` (how the site works) and `LAUNCH.md` (go-live checklist).
 
+**At the start of every work session:** run `git pull --rebase` before editing any files, in case staff saved changes through Pages CMS, a GitHub Action committed shrunk photos/flyer updates, or work happened on another machine.
+
 **At the end of every work session:** update the *Status*, *To do* and *Decision log* sections below, commit, and push. That's what makes the project resumable from another machine.
 
 ---
@@ -18,11 +20,11 @@ Goals:
 
 ## Status (update every session)
 
-*Last updated: 2026-10-21*
+*Last updated: 2026-11-02*
 
 - **Repo moved (Oct 20):** `alejandro-usu/sagehall` was transferred to Sage Hall's account and renamed **`sagehalldance/website`**. GitHub Pages carried over. The Pages CMS app is installed on the new repo, and the `/admin` editor links point to it.
 - **Mock-up is live** on GitHub Pages at <https://sagehalldance.github.io/website/>, served from `main`. It shows a "concept mock-up" footer note and the season switch, for demos. The old `alejandro-usu.github.io/sagehall/` address is gone and doesn't redirect.
-- **Most of the launch version is on `main`:** the docs (`AGENTS.md`, `CLAUDE.md`, `LAUNCH.md`), `scripts/build.sh` for Cloudflare, and `CMS_REPO` in `admin/index.html`. **Four changes still wait** on branch `ccr-b6d97a4a-1cdu41` (a name left over from the cloud session): removing the mock-up footer note (`index.html`), hiding the season switch (`data/site.json`), and dropping the GitHub-Pages republish step from `.github/workflows/shrink-photos.yml` and `.github/workflows/import-flyer.yml`. Merge that branch into `main` after the nameserver switch, right before attaching sagehalldance.com to the Worker (LAUNCH.md step 4). Merging earlier changes the live demo and stops uploaded photos from republishing on GitHub Pages. Don't edit docs on that branch; edit them on `main`.
+- **Most of the launch version is on `main`:** the docs (`AGENTS.md`, `CLAUDE.md`, `LAUNCH.md`), `scripts/build.sh` for Cloudflare, and `CMS_REPO` in `admin/index.html`. **Four changes still wait** on branch `ccr-b6d97a4a-1cdu41` (a name left over from the cloud session): removing the mock-up footer note (`index.html`), hiding the season switch (`data/site.json`), and dropping the GitHub-Pages republish step from `.github/workflows/shrink-photos.yml` and `.github/workflows/import-flyer.yml`. Merge that branch into `main` once the domain is Active on Cloudflare (LAUNCH.md step 6). Merging earlier changes the live demo and stops uploaded photos from republishing on GitHub Pages. Don't edit docs on that branch; edit them on `main`.
 - **Schedule source: Google Calendar.** The site reads the public **Sage Hall Dances** calendar (Sage Hall Google account; ID and browser API key in `data/site.json` → `google_calendar`). The owner adds nights by giving the flyer to Gemini (gemini.google.com) with the prompt on `/admin`. Gemini app output goes unchecked: on the first try it invented 9 PM starts for both October TBD nights and put the fundraiser in the location, so someone has to check TBD nights. `data/events.json` and the flyer import are now only the fallback, shown if Google can't be reached. If the calendar is unreachable *or* comes back with no events in its window (the last 100 days and the next 400), the site shows the fallback and hides the Subscribe links.
 - **Hosting decision:** move everything to Sage Hall-owned accounts. Code goes to GitHub, and hosting, DNS and the domain go to Cloudflare. Today the domain sits on the owner's friend's personal Hostinger account and server.
 - **Owner-provided content** is in: September and October 2026 schedules, the high-res logo, and the confirmed facts listed below.
@@ -33,34 +35,32 @@ Goals:
 - [x] Confirm whether anyone uses @sagehalldance.com email. Nobody does.
 - [x] Create Sage Hall GitHub and Cloudflare accounts.
 - [x] Domain is clear to transfer: registered at Hostinger May 15, 2025; expires May 15, 2027.
-- [ ] Friend: screenshot Hostinger DNS records; back up the old site.
+- [ ] Friend, one Hostinger visit (LAUNCH.md step 5): switch the nameservers to `carol.ns.cloudflare.com` and `terin.ns.cloudflare.com`, turn off the domain lock, and send the transfer code. The DNS screenshot was skipped (downtime is fine); backing up the old site is optional.
 - [x] Transfer the repo to the Sage Hall GitHub account. It's now `sagehalldance/website`.
 - [x] Set `CMS_REPO` in `admin/index.html` to `sagehalldance/website/main` (on the launch branch).
 - [x] Put the docs, `scripts/build.sh` and the `CMS_REPO` change on `main`.
-- [ ] Merge the rest of the launch branch into `main` (footer note, season switch, republish steps in the photo and flyer workflows), after the nameserver switch and right before attaching the domain.
+- [ ] Once Cloudflare says the domain is Active (LAUNCH.md step 6, in any order): start the transfer to Cloudflare Registrar, merge the rest of the launch branch into `main` (footer note, season switch, republish steps in the photo and flyer workflows), and attach the domain to the Worker as a custom domain.
 - [x] Cloudflare: repo connected as the Worker `website` (build `sh scripts/build.sh`; `wrangler.jsonc` publishes `dist/`). Test URL: <https://website.sagehalldance.workers.dev>.
 - [x] Check the workers.dev site on desktop and phone.
 - [x] Cloudflare: domain added (Pending). Old A and `www` records kept as DNS only; email records removed; SPF `-all` and DMARC `p=reject` set.
-- [ ] Friend switches nameservers to `carol.ns.cloudflare.com` and `terin.ns.cloudflare.com`. Once Cloudflare says Active, merge the launch branch, then attach the domain to the Worker as a custom domain.
 - [x] Install the Pages CMS app on `sagehalldance/website` under the Sage Hall account.
 - [ ] Pages CMS: invite (or re-invite) staff; test an edit and a photo upload (check the Actions tab).
-- [ ] Transfer the domain from Hostinger to Cloudflare Registrar; turn on auto-renew.
-- [ ] Unpublish GitHub Pages; friend cancels the old hosting; set the default season; turn on 2FA everywhere.
+- [ ] When the transfer finishes (up to 5 days): turn on auto-renew; the friend cancels the old hosting.
+- [ ] Unpublish GitHub Pages; set the default season; turn on 2FA for the GitHub, Cloudflare and Google accounts; share the Sage Hall Dances calendar with staff.
 - [ ] Make the repo private, only after Cloudflare is live and GitHub Pages is unpublished. A private repo on a free account can't serve GitHub Pages.
 
 ### Content to confirm with the owner
-- [ ] Admission ($6 students / $7 general, from older listings).
+- [ ] Admission ($5 students / $7 general).
 - [ ] Addresses for Mountain Valley Athletics and Cache Bar (blank, so Directions searches by name).
 - [ ] Fairgrounds address: 450 S 500 W (one source) vs 490 S 500 W (2023 Cache Valley Daily). Also whether the Indoor Barn is at the same fairgrounds.
 - [ ] About-section facts: opened 2021, founders Josh Lyman and Manuel Carias-Pineda.
-- [ ] Remaining first-timer and FAQ copy (placeholder wording).
+- [ ] Remaining first-timer copy (placeholder wording).
 - [ ] Times and places for the Whispering Canyon Fundraiser (Oct 15) and USU Swing Club (Oct 22), which were TBA on the flyer.
 - [ ] Instagram handle `@sage.hall.utah` and the Facebook link.
 - [ ] November schedule, when the flyer comes out.
 
 ### Ideas / later
 - A plainer one-page launch summary for the owner (offered, not requested yet).
-- Google Calendar mode exists but isn't set up (README §3).
 - Email for the domain: Cloudflare Email Routing (free forwarding) or a paid mailbox. See LAUNCH.md *Email (later)*.
 
 ## Confirmed facts (from the owner; don't change without asking)
@@ -77,7 +77,7 @@ Goals:
 - **Plain static site, no build step for development.** `index.html`, `assets/css/*.css`, `assets/js/main.js`, and `admin/index.html` (staff sign-in page).
 - **Content is JSON** that staff edit through **Pages CMS** (app.pagescms.org; config in `.pages.yml`):
   - `data/events.json`: the schedule.
-  - `data/site.json`: announcement, theme, venues, reels, FAQ, Google Calendar.
+  - `data/site.json`: announcement, theme, venues, reels, Google Calendar.
   - `data/weekly.json`: Dancers of the Week and weekly photos.
   - `data/flyer.json`: the monthly flyer. Saving it runs `.github/workflows/import-flyer.yml`, which has Gemini read the flyer and rewrite that month in `data/events.json`, committing straight to `main` as github-actions[bot]. The safety rules are in the docstring of `.github/scripts/import_flyer.py`. On failure nothing changes, and a GitHub issue is opened. It needs the repo secret `GEMINI_API_KEY` (free tier, Google AI Studio). Models are set by `FLYER_MODELS`, default `gemini-flash-lite-latest,gemini-flash-latest`.
 - **Uploads** land in `assets/uploads/`. `.github/workflows/shrink-photos.yml` resizes them to 1600px and strips EXIF/GPS.
@@ -111,6 +111,9 @@ Newest first. Record decisions and the reasons behind them here, not a running c
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-11-02 | Added native video upload support (`reel_videos` in `site.json`, `video` in `weekly.json`), cropped Instagram embed chrome, and hid empty On the Floor subsections (and the whole section when all three are empty) | Instagram embeds block major-label audio and stop after one play; native `<video>` uploads loop cleanly in 9:16, and hiding empty subsections avoids showing empty placeholder boxes to visitors |
+| 2026-10-25 | Removed the three FAQ question blocks; centered the Admission card below the First Time step cards | The three FAQ questions repeated details already covered in the first-timer cards, admission box, and venue badges |
+| 2026-10-21 | Simplified cutover: the friend switches nameservers, unlocks the domain and sends the transfer code in one visit; no DNS screenshot | Neither the old site nor the mock-up is in use, so downtime doesn't matter. Cloudflare Registrar needs the domain Active on Cloudflare before a transfer, so the nameservers still change first |
 | 2026-10-21 | Schedule comes from the public Sage Hall Dances Google Calendar, filled by the owner through the Gemini app; the flyer import is kept as a fallback | The owner already uses Google and Gemini on their phone, and dancers get Subscribe links. The fallback keeps the site working if Google is unreachable. The trade-off: the Gemini app's output isn't checked automatically |
 | 2026-10-21 | Alejandro is a collaborator (`amontesinos`, write access); Sage Hall's `sagehalldance` account stays the owner | Sage Hall owns the code and secrets and can remove access with one click; Alejandro's commits and issue assignments are under his own name; no shared password |
 | 2026-10-21 | Monthly flyer → schedule import with Gemini, committing straight to `main` (no PR review) | The owner already posts a flyer on Instagram each month, so uploading it once in the editor replaces typing the nights in by hand. Gemini's free tier is enough; GitHub Models was retired Jul 30, 2026. Tested live: Sept and Oct flyers read 120/120 fields right, a re-upload kept hand edits, and a non-flyer was refused. The checks are why no review step is needed |

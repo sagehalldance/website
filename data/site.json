@@ -1,43 +1,39 @@
 {
-  "announcement": "The October schedule is up! Don't miss the Whispering Canyon Fundraiser on Thursday, Oct 15.",
-  "theme": "summer",
+  "theme": "fall",
   "theme_switcher": false,
   "instagram": "sage.hall.utah",
   "facebook": "https://www.facebook.com/sage.hall.utah/",
-  "admission": "$6 students · $7 general",
-  "reels": [],
+  "admission": "$5 students · $7 general",
   "venues": [
     {
       "name": "Fairgrounds Event Center",
       "address": "Cache County Fairgrounds, 450 S 500 W, Logan, UT 84321",
       "color": "denim",
       "ages21": false,
-      "note": "The home floor. Tuesday nights start with a lesson.",
-      "ends": "00:00"
+      "ends": "00:00",
+      "note": "The home floor. Tuesday nights start with a lesson."
     },
     {
       "name": "Fairgrounds Indoor Barn",
       "address": "Cache County Fairgrounds, 450 S 500 W, Logan, UT 84321",
       "color": "gold",
       "ages21": false,
-      "note": "The indoor barn at the fairgrounds.",
-      "ends": "00:00"
+      "ends": "00:00",
+      "note": "The indoor barn at the fairgrounds."
     },
     {
       "name": "Mountain Valley Athletics",
-      "address": "",
       "color": "sage",
       "ages21": false,
-      "note": "Late-night dances that go until midnight.",
-      "ends": "00:00"
+      "ends": "00:00",
+      "note": "Late-night dances that go until midnight."
     },
     {
       "name": "Cache Bar",
-      "address": "",
       "color": "copper",
       "ages21": true,
-      "note": "Wednesday dances that start with instruction. Bring your ID.",
-      "ends": "varies"
+      "ends": "varies",
+      "note": "Wednesday dances that start with instruction. Bring your ID."
     }
   ],
   "first_time": [
@@ -52,20 +48,6 @@
     {
       "title": "Wear something you can move in",
       "text": "Boots are fun but not required. Pick shoes that are easy to dance in."
-    }
-  ],
-  "faq": [
-    {
-      "question": "How much does it cost?",
-      "answer": "$6 for students and $7 general admission."
-    },
-    {
-      "question": "Do I need to know how to dance?",
-      "answer": "Nope. Tuesday and Cache Bar nights start with instruction. Come at the start time and you'll know enough to get on the floor."
-    },
-    {
-      "question": "Are all nights all-ages?",
-      "answer": "Nights at Cache Bar are 21+. Every other venue on the schedule is open to everyone."
     }
   ],
   "google_calendar": {
