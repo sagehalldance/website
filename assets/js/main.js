@@ -415,6 +415,7 @@
 
     renderList(monthEvents);
     renderCalendar(key, monthEvents);
+    renderVenues();
 
     const btn = $("#ics-month");
     btn.hidden = !future.length;
@@ -504,9 +505,16 @@
     $("#admission-price").textContent = price;
   }
 
+  /* Only venues with a night in the month the schedule is showing. If that
+     month has none (schedule not posted yet), show them all. */
   function renderVenues() {
     const list = upcoming();
-    $("#venue-grid").replaceChildren(...state.venues.map((v) => {
+    const key = state.month;
+    const used = new Set(state.events.filter((e) => monthKey(e.date) === key && !e.cancelled && !e.noDance).map((e) => e.v.name));
+    const thisMonth = state.venues.filter((v) => used.has(v.name));
+    const venues = thisMonth.length ? thisMonth : state.venues;
+    $("#venues-kicker").textContent = thisMonth.length ? `where we dance in ${MONTHS[Number(key.slice(5)) - 1]}` : "where we dance";
+    $("#venue-grid").replaceChildren(...venues.map((v) => {
       const next = list.find((e) => e.v.name === v.name);
       return h("article", { class: `venue v-${v.color}` },
         h("h3", null, v.name, v.ages21 ? h("span", { class: "badge", text: "21+" }) : null),
@@ -879,7 +887,6 @@
     renderMonth();
     renderSubscribe();
     renderFirstTime();
-    renderVenues();
     renderReels();
     state.weekly = (await weekly) || {};
     renderSpotlight();

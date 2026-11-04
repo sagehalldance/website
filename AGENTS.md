@@ -50,7 +50,8 @@ Goals:
 - [x] Install the Pages CMS app on `sagehalldance/website` under the Sage Hall account.
 - [ ] Pages CMS: invite (or re-invite) staff; test an edit and a photo upload (check the Actions tab).
 - [ ] When the transfer finishes (up to 5 days): turn on auto-renew; the friend cancels the old hosting.
-- [ ] Unpublish GitHub Pages; set the default season; turn on 2FA for the GitHub, Cloudflare and Google accounts; share the Sage Hall Dances calendar with staff.
+- [x] GitHub Pages unpublished and turned off (Nov 4).
+- [ ] Set the default season; turn on 2FA for the GitHub, Cloudflare and Google accounts; share the Sage Hall Dances calendar with staff.
 - [ ] Make the repo private, only after Cloudflare is live and GitHub Pages is unpublished. A private repo on a free account can't serve GitHub Pages.
 
 ### Content to confirm with the owner
@@ -115,6 +116,7 @@ Newest first. Record decisions and the reasons behind them here, not a running c
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-11-04 | Venues section shows only venues with a night in the month the schedule is showing (not cancelled or No Dance); it follows the month arrows, and shows all venues if that month has none | Unused venues (e.g. the Indoor Barn in November) shouldn't look like they're in rotation |
 | 2026-11-02 | Added native video upload support (`reel_videos` in `site.json`, `video` in `weekly.json`), cropped Instagram embed chrome, and hid empty On the Floor subsections (and the whole section when all three are empty) | Instagram embeds block major-label audio and stop after one play; native `<video>` uploads loop cleanly in 9:16, and hiding empty subsections avoids showing empty placeholder boxes to visitors |
 | 2026-10-25 | Removed the three FAQ question blocks; centered the Admission card below the First Time step cards | The three FAQ questions repeated details already covered in the first-timer cards, admission box, and venue badges |
 | 2026-10-21 | Simplified cutover: the friend switches nameservers, unlocks the domain and sends the transfer code in one visit; no DNS screenshot | Neither the old site nor the mock-up is in use, so downtime doesn't matter. Cloudflare Registrar needs the domain Active on Cloudflare before a transfer, so the nameservers still change first |

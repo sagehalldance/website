@@ -85,7 +85,7 @@ The site is already live on sagehalldance.com; this only changes who owns the do
 ## 9. Wrap up
 
 - [x] Cloudflare → sagehalldance.com → **SSL/TLS → Edge Certificates → Always Use HTTPS**: on (Nov 4; `http://` now redirects with a 301). Leave **SSL/TLS → Overview** on Automatic; the Worker has no origin server, so that setting doesn't apply. Optionally add a redirect rule from `www` to `sagehalldance.com` (Rules → Redirect Rules → "Redirect from WWW to root" template).
-- [ ] Turn off GitHub Pages (**Settings → Pages → Unpublish**), so there's only one copy of the site.
+- [x] Turn off GitHub Pages (done Nov 4: unpublished, then Pages switched off for the repo, so `main` no longer builds there).
 - [ ] **Make the repo private** (**Settings → General → Danger Zone → Change repository visibility**). Do this only after GitHub Pages is off: on a free account a private repo can't serve GitHub Pages. Cloudflare and Pages CMS both work with private repos.
 - [ ] Set the default look under **Site settings → Site theme** (spring, summer, fall or winter).
 - [ ] Confirm the facts on the README's "Before showing this to Sage Hall" list: prices, venue addresses, the Fairgrounds address (450 vs 490 S 500 W) and the about-section facts.
