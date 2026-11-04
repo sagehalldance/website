@@ -5,7 +5,7 @@ The goal: Sage Hall owns everything (the code, the domain and the hosting) in ac
 **Who's needed:** the owner (to create accounts), whoever is helping with the setup, and the friend who holds the current Hostinger account (one visit to Hostinger, step 5).
 **Cost:** the domain only, about $10–11 a year at Cloudflare. Hosting is free.
 **Downtime:** fine. Neither the old site nor the mock-up is in use, so the steps below skip the precautions that would keep the old site up during the switch.
-**Status (Nov 4, 2026):** steps 1–4 are done. The nameservers point to Cloudflare, the domain is Active, and the launch version is on `main`. Next: attach the domain to the Worker, and the friend removes the domain lock and sends the transfer code. The repo lives at `sagehalldance/website`, and the schedule comes from the Sage Hall Dances Google Calendar.
+**Status (Nov 4, 2026):** steps 1–4 are done. The nameservers point to Cloudflare, the domain is Active, and the launch version is on `main`. sagehalldance.com and `www` are live on the new site. Next: the friend removes the domain lock and sends the transfer code (step 5), then the transfer (step 6). The repo lives at `sagehalldance/website`, and the schedule comes from the Sage Hall Dances Google Calendar.
 
 ---
 
@@ -65,8 +65,8 @@ Cloudflare emails when it's Active, usually within an hour, at most a day. These
 
 - [ ] **Start the transfer:** Cloudflare → **Domain Registration → Transfer Domains** → select sagehalldance.com, enter the code, and pay (it includes a year of renewal). Approve the confirmation email if one arrives.
 - [x] **Merge the launch branch** (`ccr-b6d97a4a-1cdu41`) into `main` (done Nov 4). It removes the "mock-up" footer note, hides the season switch, and drops the GitHub Pages republish steps from the photo and flyer workflows.
-- [ ] **Attach the domain:** `website` Worker → **Settings → Domains & Routes → Add → Custom domain**, add `sagehalldance.com`, then `www.sagehalldance.com`. This replaces the old A and `www` records, and sagehalldance.com shows the new site within minutes.
-- [ ] **Check the live site:** the schedule loads from Google Calendar (the "Subscribe" links appear under it), `/admin` opens, and the themes work.
+- [x] **Attach the domain** (done Nov 4; first delete the old A and `www` records in DNS → Records, or Cloudflare refuses): `website` Worker → **Settings → Domains & Routes → Add → Custom domain**, add `sagehalldance.com`, then `www.sagehalldance.com`. This replaces the old A and `www` records, and sagehalldance.com shows the new site within minutes.
+- [x] **Check the live site** (done Nov 4): the schedule loads from Google Calendar (the "Subscribe" links appear under it), `/admin` opens, and the themes work.
 
 ## 7. When the transfer finishes (up to 5 days)
 
@@ -84,6 +84,7 @@ The site is already live on sagehalldance.com; this only changes who owns the do
 
 ## 9. Wrap up
 
+- [ ] Cloudflare → sagehalldance.com → **SSL/TLS → Edge Certificates → Always Use HTTPS**: on, so `http://` links redirect. Optionally add a redirect rule from `www` to `sagehalldance.com` (Rules → Redirect Rules → "Redirect from WWW to root" template).
 - [ ] Turn off GitHub Pages (**Settings → Pages → Unpublish**), so there's only one copy of the site.
 - [ ] **Make the repo private** (**Settings → General → Danger Zone → Change repository visibility**). Do this only after GitHub Pages is off: on a free account a private repo can't serve GitHub Pages. Cloudflare and Pages CMS both work with private repos.
 - [ ] Set the default look under **Site settings → Site theme** (spring, summer, fall or winter).
