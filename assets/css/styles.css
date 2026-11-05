@@ -424,8 +424,6 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
 }
 
 .sched-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.5rem; }
-.subscribe { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; font-weight: 500; color: var(--ink-soft); }
-.subscribe a { font-weight: 600; }
 
 /* ---------- section heads ---------- */
 .section-head { text-align: center; margin-bottom: clamp(28px, 4vw, 44px); }

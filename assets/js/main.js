@@ -488,15 +488,6 @@
     for (const b of document.querySelectorAll(".view-toggle button")) b.setAttribute("aria-pressed", String(b.dataset.view === state.view));
   }
 
-  function renderSubscribe() {
-    const box = $("#subscribe");
-    const id = state.site.google_calendar?.calendar_id;
-    if (state.source !== "google" || !id) { box.hidden = true; return; }
-    $("#sub-google").href = `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(id)}`;
-    $("#sub-ical").href = `webcal://calendar.google.com/calendar/ical/${encodeURIComponent(id)}/public/basic.ics`;
-    box.hidden = false;
-  }
-
   function renderFirstTime() {
     const steps = (state.site.first_time || []).filter((s) => s?.title || s?.text);
     $("#first-time-list").replaceChildren(...steps.map((s) => h("li", null, h("h3", { text: s.title || "" }), h("p", { text: s.text || "" }))));
@@ -885,7 +876,6 @@
     renderTicket();
     renderLegend();
     renderMonth();
-    renderSubscribe();
     renderFirstTime();
     renderReels();
     state.weekly = (await weekly) || {};

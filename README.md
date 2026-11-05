@@ -64,7 +64,7 @@ If staff would rather use the Google Calendar app on their phones:
    A browser key like this is meant to be public. The restrictions keep anyone else from using it.
 4. Paste the ID and key into **Site settings → Google Calendar** in the editor.
 
-The site then reads events from Google Calendar and shows "Subscribe" links under the schedule. Put the venue name, or its address, in each event's **location**. Start a title with "Cancelled" to mark a night as cancelled. If Google can't be reached, the site falls back to `data/events.json`.
+The site then reads events from Google Calendar. Put the venue name, or its address, in each event's **location**. Start a title with "Cancelled" to mark a night as cancelled. If Google can't be reached, the site falls back to `data/events.json`.
 
 ## 4. Seasonal themes
 

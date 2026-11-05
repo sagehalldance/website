@@ -66,7 +66,7 @@ Cloudflare emails when it's Active, usually within an hour, at most a day. These
 - [x] **Start the transfer** (started Nov 4; the registry shows "pending transfer". If the friend approves it in Hostinger or by email it finishes in hours, otherwise automatically within about 5 days. They must not reject it): Cloudflare → **Domain Registration → Transfer Domains** → select sagehalldance.com, enter the code, and pay (it includes a year of renewal). Approve the confirmation email if one arrives.
 - [x] **Merge the launch branch** (`ccr-b6d97a4a-1cdu41`) into `main` (done Nov 4). It removes the "mock-up" footer note, hides the season switch, and drops the GitHub Pages republish steps from the photo and flyer workflows.
 - [x] **Attach the domain** (done Nov 4; first delete the old A and `www` records in DNS → Records, or Cloudflare refuses): `website` Worker → **Settings → Domains & Routes → Add → Custom domain**, add `sagehalldance.com`, then `www.sagehalldance.com`. This replaces the old A and `www` records, and sagehalldance.com shows the new site within minutes.
-- [x] **Check the live site** (done Nov 4): the schedule loads from Google Calendar (the "Subscribe" links appear under it), `/admin` opens, and the themes work.
+- [x] **Check the live site** (done Nov 4): the schedule loads from Google Calendar, `/admin` opens, and the themes work.
 
 ## 7. When the transfer finishes (up to 5 days)
 
