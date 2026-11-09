@@ -135,7 +135,7 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
 .site-header.show-brand .brand,
 .site-header.menu-open .brand,
 .brand:focus-visible { opacity: 1; pointer-events: auto; transform: none; }
-.brand span { font: 1.15rem/1 var(--font-display); letter-spacing: 0.04em; text-transform: uppercase; }
+.brand-wordmark { height: 26px; width: auto; object-fit: contain; }
 
 .site-nav { display: flex; align-items: center; gap: 0.25rem; }
 .site-nav a {
