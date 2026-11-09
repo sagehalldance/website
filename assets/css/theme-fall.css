@@ -69,8 +69,8 @@
 :root[data-theme="fall"] .hero-lede { color: #e9d9c2; }
 :root[data-theme="fall"] .hero .btn-primary { background: var(--pumpkin); color: #2a170c; }
 :root[data-theme="fall"] .hero .btn-primary:hover { background: var(--harvest); color: #2a170c; }
-:root[data-theme="fall"] .hero .btn-ghost { background: var(--on-wood); border-color: var(--on-wood); color: #2a170c; }
-:root[data-theme="fall"] .hero .btn-ghost:hover { background: #fff; border-color: #fff; color: #2a170c; }
+:root[data-theme="fall"] .hero .btn-ghost { background: var(--card); border-color: var(--card); color: #2a170c; }
+:root[data-theme="fall"] .hero .btn-ghost:hover { background: var(--on-wood); border-color: var(--on-wood); color: #2a170c; }
 
 :root[data-theme="fall"] .sticker-fall { display: block; }
 /* ticket notches show the dark wood behind the ticket */

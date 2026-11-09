@@ -71,8 +71,8 @@
 }
 :root[data-theme="winter"] .hero-script { color: var(--frost); }
 :root[data-theme="winter"] .hero-lede { color: #c9d6e4; }
-:root[data-theme="winter"] .hero .btn-ghost { background: var(--frost); border-color: var(--frost); color: var(--navy); }
-:root[data-theme="winter"] .hero .btn-ghost:hover { background: #fff; border-color: #fff; color: var(--navy); }
+:root[data-theme="winter"] .hero .btn-ghost { background: var(--card); border-color: var(--card); color: var(--navy); }
+:root[data-theme="winter"] .hero .btn-ghost:hover { background: var(--frost); border-color: var(--frost); color: var(--navy); }
 :root[data-theme="winter"] .ticket-stub::before,
 :root[data-theme="winter"] .ticket-stub::after { background: #16304b; border-color: rgb(255 255 255 / 0.12); }
 

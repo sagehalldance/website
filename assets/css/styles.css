@@ -98,7 +98,7 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
 .btn:active { transform: translateY(1px); }
 .btn-primary { background: var(--primary); color: #fff; }
 .btn-primary:hover { background: var(--primary-dark); color: #fff; }
-.btn-ghost { border-color: var(--ink); color: var(--ink); background: #fff; }
+.btn-ghost { border-color: var(--ink); color: var(--ink); background: var(--card); }
 .btn-ghost:hover { background: var(--ink); color: var(--paper); }
 .btn-outline { border-color: var(--line); background: var(--card); color: var(--ink); }
 .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
