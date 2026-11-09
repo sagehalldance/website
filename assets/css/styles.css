@@ -120,8 +120,13 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
   border-bottom: 1px solid var(--line);
 }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: var(--header-h); }
-.brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--ink); }
-.brand img { width: 46px; height: 46px; object-fit: contain; }
+.brand {
+  display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--ink);
+  opacity: 0; pointer-events: none; transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.site-header.show-brand .brand,
+.brand:focus-visible { opacity: 1; pointer-events: auto; transform: none; }
 .brand span { font: 1.15rem/1 var(--font-display); letter-spacing: 0.04em; text-transform: uppercase; }
 
 .site-nav { display: flex; align-items: center; gap: 0.25rem; }

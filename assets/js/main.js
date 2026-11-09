@@ -726,6 +726,17 @@
     if ("ResizeObserver" in window) new ResizeObserver(setHeaderOffset).observe(header);
     else addEventListener("resize", setHeaderOffset);
 
+    // Keep the header brand hidden while the hero crest logo is visible on screen.
+    const logos = document.querySelectorAll(".hero-logo");
+    const syncBrand = () => {
+      const active = Array.from(logos).find((el) => el.getClientRects().length);
+      const pastLogo = active ? active.getBoundingClientRect().bottom <= header.getBoundingClientRect().bottom : window.scrollY > 120;
+      header.classList.toggle("show-brand", pastLogo);
+    };
+    syncBrand();
+    addEventListener("scroll", syncBrand, { passive: true });
+    addEventListener("resize", syncBrand, { passive: true });
+
     const btn = $(".menu-btn");
     const nav = $("#site-nav");
     const close = () => { nav.classList.remove("is-open"); btn.setAttribute("aria-expanded", "false"); };
