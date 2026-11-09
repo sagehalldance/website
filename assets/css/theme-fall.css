@@ -40,7 +40,8 @@
 :root[data-theme="fall"] .logo-light { display: block; }
 
 /* ---------- header ---------- */
-:root[data-theme="fall"] .site-header { background: rgb(34 22 15 / 0.93); border-bottom-color: rgb(255 255 255 / 0.08); }
+:root[data-theme="fall"] .site-header.show-brand,
+:root[data-theme="fall"] .site-header.menu-open { background: rgb(34 22 15 / 0.93); border-bottom-color: rgb(255 255 255 / 0.08); }
 :root[data-theme="fall"] .brand,
 :root[data-theme="fall"] .site-nav a { color: var(--on-wood); }
 :root[data-theme="fall"] .site-nav a:hover { background: rgb(255 255 255 / 0.08); color: var(--harvest); }

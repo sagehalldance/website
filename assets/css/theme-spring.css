@@ -37,7 +37,8 @@
 :root[data-theme="spring"] .sticker-spring { display: block; }
 
 /* ---------- header ---------- */
-:root[data-theme="spring"] .site-header { background: rgb(246 249 245 / 0.93); }
+:root[data-theme="spring"] .site-header.show-brand,
+:root[data-theme="spring"] .site-header.menu-open { background: rgb(246 249 245 / 0.93); }
 
 /* ---------- hero: morning over the mountains ---------- */
 :root[data-theme="spring"] .hero {

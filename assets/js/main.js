@@ -739,10 +739,15 @@
 
     const btn = $(".menu-btn");
     const nav = $("#site-nav");
-    const close = () => { nav.classList.remove("is-open"); btn.setAttribute("aria-expanded", "false"); };
+    const close = () => {
+      nav.classList.remove("is-open");
+      header.classList.remove("menu-open");
+      btn.setAttribute("aria-expanded", "false");
+    };
     btn.addEventListener("click", () => {
       const open = !nav.classList.contains("is-open");
       nav.classList.toggle("is-open", open);
+      header.classList.toggle("menu-open", open);
       btn.setAttribute("aria-expanded", String(open));
     });
     nav.addEventListener("click", (e) => { if (e.target.closest("a")) close(); });

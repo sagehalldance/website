@@ -37,7 +37,8 @@
 :root[data-theme="winter"] .sticker-winter { display: block; }
 
 /* ---------- header ---------- */
-:root[data-theme="winter"] .site-header { background: rgb(13 26 43 / 0.93); border-bottom-color: rgb(255 255 255 / 0.08); }
+:root[data-theme="winter"] .site-header.show-brand,
+:root[data-theme="winter"] .site-header.menu-open { background: rgb(13 26 43 / 0.93); border-bottom-color: rgb(255 255 255 / 0.08); }
 :root[data-theme="winter"] .brand,
 :root[data-theme="winter"] .site-nav a { color: var(--frost); }
 :root[data-theme="winter"] .site-nav a:hover { background: rgb(255 255 255 / 0.08); color: var(--ice); }
