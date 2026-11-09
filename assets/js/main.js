@@ -385,10 +385,16 @@
     }
   }
 
+  function monthVenues() {
+    const used = new Set(state.events.filter((e) => monthKey(e.date) === state.month && !e.cancelled && !e.noDance).map((e) => e.v.name));
+    return state.venues.filter((v) => used.has(v.name));
+  }
+
   function renderLegend() {
-    const used = new Set(state.events.map((e) => e.v.name));
-    const items = state.venues.filter((v) => used.has(v.name));
-    $("#legend").replaceChildren(...items.map((v) => h("li", { class: `v-${v.color}` }, h("span", { class: "dot" }), v.name + (v.ages21 ? " (21+)" : ""))));
+    const items = monthVenues();
+    const el = $("#legend");
+    el.hidden = !items.length;
+    el.replaceChildren(...items.map((v) => h("li", { class: `v-${v.color}` }, h("span", { class: "dot" }), v.name + (v.ages21 ? " (21+)" : ""))));
   }
 
   function renderMonth() {
@@ -413,6 +419,7 @@
       notice.hidden = false;
     } else notice.hidden = true;
 
+    renderLegend();
     renderList(monthEvents);
     renderCalendar(key, monthEvents);
     renderVenues();
@@ -500,11 +507,9 @@
      month has none (schedule not posted yet), show them all. */
   function renderVenues() {
     const list = upcoming();
-    const key = state.month;
-    const used = new Set(state.events.filter((e) => monthKey(e.date) === key && !e.cancelled && !e.noDance).map((e) => e.v.name));
-    const thisMonth = state.venues.filter((v) => used.has(v.name));
+    const thisMonth = monthVenues();
     const venues = thisMonth.length ? thisMonth : state.venues;
-    $("#venues-kicker").textContent = thisMonth.length ? `where we dance in ${MONTHS[Number(key.slice(5)) - 1]}` : "where we dance";
+    $("#venues-kicker").textContent = thisMonth.length ? `where we dance in ${MONTHS[Number(state.month.slice(5)) - 1]}` : "where we dance";
     $("#venue-grid").replaceChildren(...venues.map((v) => {
       const next = list.find((e) => e.v.name === v.name);
       return h("article", { class: `venue v-${v.color}` },
@@ -874,7 +879,6 @@
     renderAnnouncement();
     renderSocial();
     renderTicket();
-    renderLegend();
     renderMonth();
     renderFirstTime();
     renderReels();
