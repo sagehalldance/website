@@ -238,6 +238,8 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
 }
 .ticket-kicker svg { color: #f2c76e; }
 .ticket-body { padding: 1.25rem 1.4rem 0.5rem; }
+.ticket-body:last-child { padding-bottom: 1.25rem; }
+.ticket-body .btn-dir { width: 100%; justify-content: center; margin-top: 0.65rem; }
 .ticket-loading { color: var(--muted); }
 .ticket-when { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 0.6rem; }
 .ticket-date { font-family: var(--font-cond); line-height: 0.9; margin: 0; }
@@ -252,14 +254,13 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
   padding: 1.1rem 1.4rem 1.25rem; margin-top: 0.75rem;
   border-top: 2px dashed var(--line);
 }
-.ticket-stub .btn-dir { width: 100%; justify-content: center; }
 .ticket-stub::before, .ticket-stub::after {
   content: ""; position: absolute; top: -13px; width: 24px; height: 24px; border-radius: 50%;
   background: var(--paper); border: 1px solid var(--line);
 }
 .ticket-stub::before { left: -13px; clip-path: inset(0 0 0 50%); }
 .ticket-stub::after { right: -13px; clip-path: inset(0 50% 0 0); }
-.ticket-more { padding: 0 1.4rem 1.25rem; margin: 0; }
+.ticket-more { display: block; }
 .ticket-more h3 { font: 600 1.15rem/1 var(--font-cond); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
 .ticket-more ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; }
 .ticket-more li { display: flex; align-items: center; gap: 0.5rem; font: 500 1.08rem/1.3 var(--font-cond); }
