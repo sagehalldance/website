@@ -11,7 +11,7 @@ media:
 
 content:
   - name: guide
-    label: Staff guide & Gemini prompt
+    label: Staff Guide
     description: The dance schedule comes from the Sage Hall Dances Google Calendar. Everything else (Dancers of the Week, photos, reels and venue info) is edited in the tabs on the left. Changes go live on the website about a minute after you save.
     type: file
     path: docs/staff-guide.json
@@ -35,12 +35,25 @@ content:
         description: Reference rules for how the website reads events from the Sage Hall Dances Google Calendar.
 
   - name: weekly
-    label: Dancers of the Week & photos
-    description: Update once a week. Leave Dancers of the Week blank to show "first pick coming soon". Only feature people who are happy to be on the site.
+    label: Reels & Photos
+    description: Update reels, Dancers of the Week, and weekly photos here. Leave any section empty to hide it on the website. Only feature people who are happy to be on the site.
     type: file
     path: data/weekly.json
     format: json
     fields:
+      - name: reel_videos
+        label: Uploaded reel videos (optional)
+        type: file
+        description: Upload up to 3 reel videos (.mp4, .mov, .webm) to play and loop directly on the site without sending visitors to Instagram.
+        options:
+          extensions: [mp4, mov, webm]
+          multiple:
+            max: 3
+      - name: reels
+        label: Instagram reels (optional)
+        type: string
+        description: Paste reel links (Share → Copy link in Instagram). Shown after any uploaded reel videos above (up to 3 total).
+        list: true
       - name: dancers
         label: Dancers of the Week
         type: object
@@ -126,19 +139,6 @@ content:
         label: Admission
         type: string
         description: e.g. "$5 students · $7 general"
-      - name: reel_videos
-        label: Uploaded reel videos (optional)
-        type: file
-        description: Upload up to 3 reel videos (.mp4, .mov, .webm) to play and loop directly on the site without sending visitors to Instagram.
-        options:
-          extensions: [mp4, mov, webm]
-          multiple:
-            max: 3
-      - name: reels
-        label: Instagram reels
-        type: string
-        description: Paste reel links (Share → Copy link in Instagram). Shown after any uploaded reel videos above (up to 3 total).
-        list: true
       - name: venues
         label: Venues
         type: object

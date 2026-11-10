@@ -569,8 +569,8 @@
   function renderReels() {
     const grid = $("#reel-grid");
     const subhead = $("#reels-subhead");
-    const rawVideos = [state.site.reel_videos].flat().filter(Boolean);
-    const rawLinks = [state.site.reels].flat().filter(Boolean);
+    const rawVideos = [state.weekly?.reel_videos, state.site.reel_videos].flat().filter(Boolean);
+    const rawLinks = [state.weekly?.reels, state.site.reels].flat().filter(Boolean);
     const items = [];
     for (const r of [...rawVideos, ...rawLinks]) {
       if (items.length >= MAX_REELS) break;
@@ -897,8 +897,8 @@
     renderTicket();
     renderMonth();
     renderFirstTime();
-    renderReels();
     state.weekly = (await weekly) || {};
+    renderReels();
     renderSpotlight();
     renderPhotos();
     updateFloorVisibility();
