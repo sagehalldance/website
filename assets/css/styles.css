@@ -658,15 +658,12 @@ html:has(.lightbox[open]) { overflow: hidden; }
 .site-footer { background: var(--primary-dark); color: #e9eef8; }
 .site-footer a { color: #fff; }
 .band-footer { border-bottom: 0; }
-.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; padding-block: 2.75rem 1.5rem; }
-.footer-brand img { width: 120px; background: var(--paper); border-radius: 50%; padding: 10px; margin-bottom: 0.9rem; }
-.footer-brand p { margin: 0; font-size: 1.05rem; }
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 480px; padding-block: 2.25rem 1.5rem; }
 .footer-h { font: 600 0.95rem/1 var(--font-cond); letter-spacing: 0.2em; text-transform: uppercase; color: #b7c6e6; margin-bottom: 0.9rem; }
 .footer-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; }
 .footer-links a { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.4rem 0; text-decoration: none; font-weight: 500; }
 .footer-links a:hover { text-decoration: underline; }
 .footer-note { padding-block: 1.25rem 2rem; margin: 0 auto; border-top: 1px solid rgb(255 255 255 / 0.15); font-size: 0.92rem; color: #b7c6e6; text-align: center; }
-@media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
 
 /* ==========================================================================
    Staff page (admin/)

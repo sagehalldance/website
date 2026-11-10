@@ -20,7 +20,7 @@ Goals:
 
 ## Status (update every session)
 
-*Last updated: 2026-11-08*
+*Last updated: 2026-11-09*
 
 - **Repo moved (Oct 20):** `alejandro-usu/sagehall` was transferred to Sage Hall's account and renamed **`sagehalldance/website`**. GitHub Pages carried over. The Pages CMS app is installed on the new repo, and the `/admin` editor links point to it.
 - **GitHub Pages is off (Nov 4):** unpublished and switched off; Cloudflare is the only copy. The old `alejandro-usu.github.io/sagehall/` address is gone and doesn't redirect.
@@ -116,6 +116,7 @@ Newest first. Record decisions and the reasons behind them here, not a running c
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-11-09 | Simplified the footer by removing the duplicate logo/tagline block (`.footer-brand`) and centering `© 2026 Sage Hall` below the Follow along / Staff links; extracted the custom `SAGE HALL` lettering from the crest into `sage-hall-wordmark*.png` for the sticky header | The sticky header already shows the `SAGE HALL` wordmark once scrolled past the hero, so repeating the crest and tagline in the footer was redundant |
 | 2026-11-08 | Removed the duplicate 46px crest from the sticky header and hid the header `SAGE HALL` wordmark until the visitor scrolls past the hero crest logo; made the hero "First time? Start here" button match the Next Dance card's `--card` cream color; filtered `#legend` by the viewed month's active venues | Avoids repeating the crest artwork and "SAGE HALL" three times above the fold on mobile; ensures the ghost CTA button is always filled cream instead of only on tap; hides unused venues like Fairgrounds Indoor Barn from the schedule legend in months with no dances there |
 | 2026-11-05 | Removed the Subscribe (Google Calendar / Apple / Outlook) links; kept "Add this month to my calendar" | Subscribers get the raw calendar, which skips the site's clean-up (21+ badges, addresses, end times, No Dance nights). People mostly read the website |
 | 2026-11-04 | Venues section shows only venues with a night in the month the schedule is showing (not cancelled or No Dance); it follows the month arrows, and shows all venues if that month has none | Unused venues (e.g. the Indoor Barn in November) shouldn't look like they're in rotation |
