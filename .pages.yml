@@ -34,84 +34,6 @@ content:
         type: text
         description: Reference rules for how the website reads events from the Sage Hall Dances Google Calendar.
 
-  - name: flyer
-    label: Monthly flyer (backup copy)
-    description: The website reads the schedule from the Sage Hall Dances Google Calendar. Upload the month's flyer here too, and the backup copy (Dance schedule) fills itself in from it within a few minutes. The website shows the backup only if Google Calendar can't be reached. Re-uploading keeps times and places you've already filled in by hand.
-    type: file
-    path: data/flyer.json
-    format: json
-    fields:
-      - name: image
-        label: Flyer
-        type: image
-        required: true
-
-  - name: events
-    label: Dance schedule (backup copy)
-    description: The backup the website shows only if Google Calendar can't be reached. It's filled in from the monthly flyer; correct it here if needed. Edit the real schedule in the Sage Hall Dances Google Calendar. Past nights can stay; the site greys them out automatically.
-    type: file
-    path: data/events.json
-    format: json
-    fields:
-      - name: events
-        label: Dance nights
-        type: object
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{date} · {venue}"
-        fields:
-          - name: date
-            label: Date
-            type: date
-            required: true
-          - name: time
-            label: Start time
-            type: select
-            required: true
-            description: Pick "Time TBA" if it hasn't been announced yet.
-            options:
-              values:
-                - { value: "TBA", label: "Time TBA" }
-                - { value: "17:00", label: "5:00 PM" }
-                - { value: "17:30", label: "5:30 PM" }
-                - { value: "18:00", label: "6:00 PM" }
-                - { value: "18:30", label: "6:30 PM" }
-                - { value: "19:00", label: "7:00 PM" }
-                - { value: "19:30", label: "7:30 PM" }
-                - { value: "20:00", label: "8:00 PM" }
-                - { value: "20:30", label: "8:30 PM" }
-                - { value: "21:00", label: "9:00 PM" }
-                - { value: "21:30", label: "9:30 PM" }
-                - { value: "22:00", label: "10:00 PM" }
-                - { value: "22:30", label: "10:30 PM" }
-                - { value: "23:00", label: "11:00 PM" }
-                - { value: "23:30", label: "11:30 PM" }
-          - name: venue
-            label: Venue
-            type: select
-            required: true
-            description: Pick "Location TBA" if it isn't set yet. To add a new venue, add it under Site settings → Venues, then add it to this list in .pages.yml.
-            options:
-              values:
-                - Fairgrounds Event Center
-                - Fairgrounds Indoor Barn
-                - Mountain Valley Athletics
-                - Cache Bar
-                - Location TBA
-          - name: title
-            label: Special title (optional)
-            type: string
-            description: Leave blank for a regular night. e.g. "Halloween Costume Dance"
-          - name: note
-            label: Note (optional)
-            type: string
-            description: Short extra info shown under the venue, e.g. "Beginner lesson 8:15"
-          - name: cancelled
-            label: Cancelled
-            type: boolean
-            description: Keeps the night on the calendar but marks it cancelled.
-
   - name: weekly
     label: Dancers of the Week & photos
     description: Update once a week. Leave Dancers of the Week blank to show "first pick coming soon". Only feature people who are happy to be on the site.
@@ -290,3 +212,81 @@ content:
           - name: api_key
             label: Browser API key
             type: string
+
+  - name: flyer
+    label: Monthly flyer (backup copy)
+    description: The website reads the schedule from the Sage Hall Dances Google Calendar. Upload the month's flyer here too, and the backup copy (Dance schedule) fills itself in from it within a few minutes. The website shows the backup only if Google Calendar can't be reached. Re-uploading keeps times and places you've already filled in by hand.
+    type: file
+    path: data/flyer.json
+    format: json
+    fields:
+      - name: image
+        label: Flyer
+        type: image
+        required: true
+
+  - name: events
+    label: Dance schedule (backup copy)
+    description: The backup the website shows only if Google Calendar can't be reached. It's filled in from the monthly flyer; correct it here if needed. Edit the real schedule in the Sage Hall Dances Google Calendar. Past nights can stay; the site greys them out automatically.
+    type: file
+    path: data/events.json
+    format: json
+    fields:
+      - name: events
+        label: Dance nights
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{date} · {venue}"
+        fields:
+          - name: date
+            label: Date
+            type: date
+            required: true
+          - name: time
+            label: Start time
+            type: select
+            required: true
+            description: Pick "Time TBA" if it hasn't been announced yet.
+            options:
+              values:
+                - { value: "TBA", label: "Time TBA" }
+                - { value: "17:00", label: "5:00 PM" }
+                - { value: "17:30", label: "5:30 PM" }
+                - { value: "18:00", label: "6:00 PM" }
+                - { value: "18:30", label: "6:30 PM" }
+                - { value: "19:00", label: "7:00 PM" }
+                - { value: "19:30", label: "7:30 PM" }
+                - { value: "20:00", label: "8:00 PM" }
+                - { value: "20:30", label: "8:30 PM" }
+                - { value: "21:00", label: "9:00 PM" }
+                - { value: "21:30", label: "9:30 PM" }
+                - { value: "22:00", label: "10:00 PM" }
+                - { value: "22:30", label: "10:30 PM" }
+                - { value: "23:00", label: "11:00 PM" }
+                - { value: "23:30", label: "11:30 PM" }
+          - name: venue
+            label: Venue
+            type: select
+            required: true
+            description: Pick "Location TBA" if it isn't set yet. To add a new venue, add it under Site settings → Venues, then add it to this list in .pages.yml.
+            options:
+              values:
+                - Fairgrounds Event Center
+                - Fairgrounds Indoor Barn
+                - Mountain Valley Athletics
+                - Cache Bar
+                - Location TBA
+          - name: title
+            label: Special title (optional)
+            type: string
+            description: Leave blank for a regular night. e.g. "Halloween Costume Dance"
+          - name: note
+            label: Note (optional)
+            type: string
+            description: Short extra info shown under the venue, e.g. "Beginner lesson 8:15"
+          - name: cancelled
+            label: Cancelled
+            type: boolean
+            description: Keeps the night on the calendar but marks it cancelled.
