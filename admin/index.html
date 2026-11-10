@@ -5,98 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Staff Sign-in · Sage Hall</title>
   <meta name="robots" content="noindex">
-  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500;600&family=Sacramento&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/styles.css">
+  <meta http-equiv="refresh" content="0; url=https://app.pagescms.org/sagehalldance/website/main">
+  <script>location.replace("https://app.pagescms.org/sagehalldance/website/main");</script>
 </head>
-<body class="admin-page">
-  <!-- The editor links below are set from CMS_REPO at the bottom of this page. -->
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="../">
-        <img src="../assets/img/sage-hall-logo.png" alt="" width="46" height="46">
-        <span>Sage Hall</span>
-      </a>
-      <a class="btn btn-small btn-outline" href="../">← Back to site</a>
-    </div>
-  </header>
-
-  <main class="admin-main">
-    <div class="wrap">
-      <div class="admin-card">
-        <header>
-          <img src="../assets/img/sage-hall-logo.png" alt="" width="120" height="117">
-          <h1>Staff sign-in</h1>
-          <p>The dance schedule comes from the <b>Sage Hall Dances</b> Google Calendar. Everything else (Dancers of the Week, photos, reels and venue info) is edited here. Changes go live on the website about a minute after you save.</p>
-        </header>
-
-        <div class="admin-actions">
-          <a class="btn btn-primary" href="https://calendar.google.com/calendar/r">Open the dance calendar</a>
-          <a class="btn btn-outline" data-cms-file="weekly" href="https://app.pagescms.org/sagehalldance/website/main/file/weekly">Update Dancers of the Week &amp; photos</a>
-          <a class="btn btn-outline" data-cms-file="settings" href="https://app.pagescms.org/sagehalldance/website/main/file/settings">Edit reels &amp; venues</a>
-          <a class="btn btn-outline" data-cms-file="settings" href="https://app.pagescms.org/sagehalldance/website/main/file/settings">Site settings</a>
-          <a class="btn btn-outline" data-cms-file="flyer" href="https://app.pagescms.org/sagehalldance/website/main/file/flyer">Upload the monthly flyer (backup copy)</a>
-        </div>
-
-        <section class="admin-section">
-          <h2>Post the monthly schedule</h2>
-          <ol>
-            <li>Open <a href="https://gemini.google.com/">Gemini</a>, signed in with the Sage Hall Google account. Attach the flyer and paste this:
-              <blockquote>Add each night on this flyer to my <b>Sage Hall Dances</b> calendar. Title: "Country Swing Dancing", or the event's name for special nights (like a fundraiser or club night). Location: exactly the venue name from the flyer, or leave it empty if there's no venue or it says TBD. Start at the time on the flyer. If no time is given, make it an all-day event; never guess a time. End at midnight for Fairgrounds and Mountain Valley Athletics nights, and 3 hours after the start for Cache Bar. Don't add anything that isn't on the flyer.</blockquote>
-            </li>
-            <li>Open the calendar and check the new nights against the flyer, especially any marked TBD. Those should be all-day events with no location.</li>
-            <li>The website picks them up within a minute.</li>
-          </ol>
-          <p>Then upload the same flyer under <b>Upload the monthly flyer (backup copy)</b>. That keeps a copy of the schedule the website falls back to if Google Calendar can't be reached. It doesn't change what the website shows.</p>
-        </section>
-
-        <section class="admin-section">
-          <h2>Add, change or cancel a dance night</h2>
-          <ol>
-            <li>Tap <b>Open the dance calendar</b> and make sure the event is in the <b>Sage Hall Dances</b> calendar, not your personal one.</li>
-            <li>Title it "Country Swing Dancing", or the event's name for a special night. Put the venue name in <b>Location</b>, spelled as on the website (for example "Fairgrounds Indoor Barn").</li>
-            <li>If the time hasn't been announced, make it <b>All day</b>. It shows as Time TBA. If the place hasn't been announced, leave <b>Location</b> empty. It shows as Location TBA.</li>
-            <li>To cancel a night, start its title with "Cancelled", e.g. "Cancelled: Country Swing Dancing". It stays on the website with a Cancelled tag. Use the <b>Announcement banner</b> in settings to explain why.</li>
-          </ol>
-          <p>Staff who don't use the Sage Hall Google account need the calendar shared with them. In Google Calendar's settings for <b>Sage Hall Dances</b>, add them under <b>Share with specific people</b> with <b>Make changes to events</b>.</p>
-        </section>
-
-        <section class="admin-section">
-          <h2>Dancers of the Week &amp; this week's photos</h2>
-          <ol>
-            <li>Tap <b>Update Dancers of the Week &amp; photos</b>.</li>
-            <li>Pick the week, type the dancers' names and a one- or two-sentence shout-out, and upload a photo. Photos straight from your phone are fine: the site shrinks them and removes location data automatically.</li>
-            <li>Under <b>This week's photos</b>, delete last week's and add up to 12 new ones. Captions are optional.</li>
-            <li>Hit <b>Save</b>.</li>
-          </ol>
-          <p>Only feature people who are happy to be on the site. If someone asks for a photo to come down, delete it here and hit Save. Leave the names blank to show “first pick coming soon”.</p>
-        </section>
-
-        <section class="admin-section">
-          <h2>Add a reel</h2>
-          <ol>
-            <li>Tap <b>Edit reels &amp; venues</b> (or <b>Site settings</b>).</li>
-            <li><b>Best option (loops on the site):</b> Upload up to 3 video files (<code>.mp4</code> or <code>.mov</code>) under <b>Uploaded reel videos</b>. They play full-frame and loop right on the page without sending people to Instagram.</li>
-            <li><b>Or link from Instagram:</b> Open the reel in Instagram, tap <b>Share → Copy link</b>, and paste it under <b>Instagram reels</b>.</li>
-          </ol>
-        </section>
-
-        <section class="admin-section">
-          <h2>About the backup copy</h2>
-          <p>The website reads the schedule from Google Calendar. If Google can't be reached, it shows the backup copy instead, which is filled in from the uploaded flyer. You can also correct it under <a data-cms-file="events" href="https://app.pagescms.org/sagehalldance/website/main/file/events">Dance schedule</a> in the editor. Edits there don't change the website while Google Calendar is working.</p>
-        </section>
-      </div>
-    </div>
-  </main>
-  <script>
-    /* Where the editor lives: GitHub owner/repository/branch. After moving the repo
-       to Sage Hall's GitHub account, change this one line (see LAUNCH.md). */
-    var CMS_REPO = "sagehalldance/website/main";
-    document.querySelectorAll("[data-cms-file]").forEach(function (a) {
-      a.href = "https://app.pagescms.org/" + CMS_REPO + "/file/" + a.getAttribute("data-cms-file");
-    });
-  </script>
+<body>
+  <p>Redirecting to <a href="https://app.pagescms.org/sagehalldance/website/main">Pages CMS</a>…</p>
 </body>
 </html>

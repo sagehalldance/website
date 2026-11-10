@@ -10,6 +10,30 @@ media:
   extensions: [jpg, jpeg, png, webp, mp4, mov, webm]
 
 content:
+  - name: guide
+    label: Staff guide & Gemini prompt
+    description: The dance schedule comes from the Sage Hall Dances Google Calendar. Everything else (Dancers of the Week, photos, reels and venue info) is edited in the tabs on the left. Changes go live on the website about a minute after you save.
+    type: file
+    path: docs/staff-guide.json
+    format: json
+    fields:
+      - name: calendar_url
+        label: 1. Google Calendar link (open to add, edit or check dance nights)
+        type: string
+        description: Open https://calendar.google.com/calendar/r signed in with the Sage Hall Google account (or a staff account the Sage Hall Dances calendar is shared with).
+      - name: gemini_url
+        label: 2. Gemini link (for importing a monthly flyer to Google Calendar)
+        type: string
+        description: Open https://gemini.google.com/ signed in with the Sage Hall Google account, attach the monthly flyer image, and paste the prompt below.
+      - name: gemini_prompt
+        label: Gemini prompt for posting the monthly schedule (copy & paste)
+        type: text
+        description: After running this in Gemini, open Google Calendar and verify the new nights against the flyer (especially any TBD nights, which should be all-day events with no location). Then upload the same flyer under "Monthly flyer (backup copy)" in the left sidebar.
+      - name: schedule_rules
+        label: How to add, change or cancel a dance night in Google Calendar
+        type: text
+        description: Reference rules for how the website reads events from the Sage Hall Dances Google Calendar.
+
   - name: flyer
     label: Monthly flyer (backup copy)
     description: The website reads the schedule from the Sage Hall Dances Google Calendar. Upload the month's flyer here too, and the backup copy (Dance schedule) fills itself in from it within a few minutes. The website shows the backup only if Google Calendar can't be reached. Re-uploading keeps times and places you've already filled in by hand.
