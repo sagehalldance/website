@@ -369,10 +369,11 @@
       h("p", { class: `ticket-venue v-${next.v.color}` }, h("span", { class: "dot" }), h("span", { text: next.v.name }), venueBadges(next)),
       next.note ? h("p", { class: "ticket-note", text: next.note }) : null,
     ].filter(Boolean));
-    card.append(h("div", { class: "ticket-stub" },
-      addToCalendar(next),
-      next.v.tba ? null : h("a", { class: "btn-dir", href: mapsUrl(next.v), target: "_blank", rel: "noopener" }, icon("pin"), h("span", { text: "Directions" })),
-    ));
+    if (!next.v.tba) {
+      card.append(h("div", { class: "ticket-stub" },
+        h("a", { class: "btn-dir", href: mapsUrl(next.v), target: "_blank", rel: "noopener" }, icon("pin"), h("span", { text: "Directions" })),
+      ));
+    }
     const more = list.slice(1, 4);
     if (more.length) {
       card.append(h("div", { class: "ticket-more" },
@@ -423,10 +424,6 @@
     renderList(monthEvents);
     renderCalendar(key, monthEvents);
     renderVenues();
-
-    const btn = $("#ics-month");
-    btn.hidden = !future.length;
-    btn.onclick = () => downloadIcs(future, `sage-hall-${key}.ics`);
     applyView();
   }
 
