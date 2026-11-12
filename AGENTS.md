@@ -20,7 +20,7 @@ Goals:
 
 ## Status (update every session)
 
-*Last updated: 2026-11-09*
+*Last updated: 2026-11-11*
 
 - **Repo moved (Oct 20):** `alejandro-usu/sagehall` was transferred to Sage Hall's account and renamed **`sagehalldance/website`**. GitHub Pages carried over. The Pages CMS app is installed on the new repo, and the `/admin` editor links point to it.
 - **GitHub Pages is off (Nov 4):** unpublished and switched off; Cloudflare is the only copy. The old `alejandro-usu.github.io/sagehall/` address is gone and doesn't redirect.
@@ -55,7 +55,7 @@ Goals:
 - [ ] Make the repo private, only after Cloudflare is live and GitHub Pages is unpublished. A private repo on a free account can't serve GitHub Pages.
 
 ### Content to confirm with the owner
-- [ ] Admission ($5 students / $7 general).
+- [x] Admission ($6 students / $7 general; Cache Bar nights are free).
 - [ ] Addresses for Mountain Valley Athletics and Cache Bar (blank, so Directions searches by name).
 - [ ] Fairgrounds address: 450 S 500 W (one source) vs 490 S 500 W (2023 Cache Valley Daily). Also whether the Indoor Barn is at the same fairgrounds.
 - [ ] About-section facts: opened 2021, founders Josh Lyman and Manuel Carias-Pineda.
@@ -73,7 +73,7 @@ Goals:
 - Tuesday nights and Cache Bar nights start with instruction for beginners.
 - Fairgrounds and Mountain Valley Athletics nights end at midnight. Cache Bar end times vary.
 - "400+ dancers a week" is the approved stat. The "biggest dance floor in Utah" claim was removed on purpose; don't bring it back.
-- Cache Bar nights are 21+.
+- Cache Bar nights are 21+ and free admission. Admission elsewhere is $6 students / $7 general.
 - Dancers of the Week is a **new tradition**. It ships empty ("first pick coming soon"); never add placeholder names.
 - No one uses @sagehalldance.com email.
 
@@ -116,6 +116,7 @@ Newest first. Record decisions and the reasons behind them here, not a running c
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-11-11 | Added `free: true` (`FREE` badge) and "Free admission." note on Cache Bar, and added "Cache Bar nights are free" to the Admission box below `$6 students · $7 general` | Surfaces free admission on Cache Bar nights across the schedule rows, Next Dance card, Venues card, and Admission box |
 | 2026-11-09 | Removed "Add to calendar" from the Next Dance ticket card and "Add this month to my calendar" below the schedule; moved all staff instructions into Pages CMS (`Staff Guide`) and moved reel fields into `Reels & Photos` | Keeps the Next Dance card and schedule footer focused on the essentials (Directions and the per-night schedule rows) and puts all staff editing tools/guides inside Pages CMS |
 | 2026-11-09 | Simplified the footer by removing the duplicate logo/tagline block (`.footer-brand`) and centering `© 2026 Sage Hall` below the Follow along / Staff links; extracted the custom `SAGE HALL` lettering from the crest into `sage-hall-wordmark*.png` for the sticky header | The sticky header already shows the `SAGE HALL` wordmark once scrolled past the hero, so repeating the crest and tagline in the footer was redundant |
 | 2026-11-08 | Removed the duplicate 46px crest from the sticky header and hid the header `SAGE HALL` wordmark until the visitor scrolls past the hero crest logo; made the hero "First time? Start here" button match the Next Dance card's `--card` cream color; filtered `#legend` by the viewed month's active venues | Avoids repeating the crest artwork and "SAGE HALL" three times above the fold on mobile; ensures the ghost CTA button is always filled cream instead of only on tap; hides unused venues like Fairgrounds Indoor Barn from the schedule legend in months with no dances there |

@@ -138,7 +138,7 @@ content:
       - name: admission
         label: Admission
         type: string
-        description: e.g. "$5 students · $7 general"
+        description: e.g. "$6 students · $7 general"
       - name: venues
         label: Venues
         type: object
@@ -168,6 +168,9 @@ content:
                 - gold
           - name: ages21
             label: 21+ only
+            type: boolean
+          - name: free
+            label: Free admission
             type: boolean
           - name: ends
             label: Usual end time

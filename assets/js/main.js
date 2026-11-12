@@ -193,14 +193,15 @@
         || (ev.fromGoogle ? byName.find((x) => ttl.includes(x.key)) : null);
       let title = ev.title;
       const ages21 = Boolean(v?.ages21) || /\b21\s*\+/.test(`${title} ${ev.note}`);
+      const free = Boolean(v?.free);
       if (ev.fromGoogle && v && ttl.includes(v.key)) {
         const vPat = v.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/fairgrounds/i, "fairgrounds?");
         title = title.replace(new RegExp(vPat, "i"), "");
       }
       if (ev.fromGoogle) title = title.replace(/\(\s*21\s*\+\s*\)|\b21\s*\+/gi, "").replace(/^[\s·:–—-]+|[\s·:–—-]+$/g, "");
       if (ev.fromGoogle && GENERIC_TITLE.test(title.trim())) title = "";
-      if (!v) v = { name: ev.venue || "Location TBA", address: ev.venue, color: "ink", ages21: false, note: "" };
-      return { ...ev, title, v, ages21 };
+      if (!v) v = { name: ev.venue || "Location TBA", address: ev.venue, color: "ink", ages21: false, free: false, note: "" };
+      return { ...ev, title, v, ages21, free };
     }).sort((a, b) => (a.date + (a.time || "")).localeCompare(b.date + (b.time || "")));
   }
 
@@ -218,7 +219,7 @@
   }
   const eventTitle = (ev) => `Sage Hall: ${ev.title || "Country Swing"}${ev.title ? "" : ` at ${ev.v.name}`}`;
   const eventLocation = (ev) => ev.v.tba ? "" : [ev.v.name, ev.v.address && ev.v.address !== ev.v.name ? ev.v.address : ""].filter(Boolean).join(", ");
-  const eventDetails = (ev) => [ev.title && !ev.v.tba ? `At ${ev.v.name}.` : "", ev.time ? "" : "Start time to be announced.", ev.v.tba ? "Location to be announced." : "", ev.note, ev.ages21 ? "21+ only." : "", "Schedule: " + location.origin + location.pathname].filter(Boolean).join(" ");
+  const eventDetails = (ev) => [ev.title && !ev.v.tba ? `At ${ev.v.name}.` : "", ev.time ? "" : "Start time to be announced.", ev.v.tba ? "Location to be announced." : "", ev.note, ev.ages21 ? "21+ only." : "", ev.free ? "Free admission." : "", "Schedule: " + location.origin + location.pathname].filter(Boolean).join(" ");
 
   function googleUrl(ev) {
     const end = endOf(ev);
@@ -327,6 +328,7 @@
   function venueBadges(ev) {
     return [
       ev.ages21 ? h("span", { class: "badge", text: "21+" }) : null,
+      ev.free ? h("span", { class: "badge", text: "Free" }) : null,
       ev.cancelled ? h("span", { class: "badge badge-cancel", text: "Cancelled" }) : null,
     ];
   }
@@ -492,8 +494,12 @@
     const steps = (state.site.first_time || []).filter((s) => s?.title || s?.text);
     $("#first-time-list").replaceChildren(...steps.map((s) => h("li", null, h("h3", { text: s.title || "" }), h("p", { text: s.text || "" }))));
     const price = String(state.site.admission || "").trim();
-    $("#admission").hidden = !price;
+    const freeNames = state.venues.filter((v) => v.free).map((v) => v.name);
+    const note = freeNames.length && !/\bfree\b/i.test(price) ? `${freeNames.join(" & ")} nights are free` : "";
+    $("#admission").hidden = !price && !note;
     $("#admission-price").textContent = price;
+    $("#admission-note").textContent = note;
+    $("#admission-note").hidden = !note;
   }
 
   /* Only venues with a night in the month the schedule is showing. If that
@@ -506,7 +512,7 @@
     $("#venue-grid").replaceChildren(...venues.map((v) => {
       const next = list.find((e) => e.v.name === v.name);
       return h("article", { class: `venue v-${v.color}` },
-        h("h3", null, v.name, v.ages21 ? h("span", { class: "badge", text: "21+" }) : null),
+        h("h3", null, v.name, v.ages21 ? h("span", { class: "badge", text: "21+" }) : null, v.free ? h("span", { class: "badge", text: "Free" }) : null),
         v.note ? h("p", { text: v.note }) : null,
         v.address ? h("p", { class: "addr", text: v.address }) : null,
         h("a", { class: "btn-dir", href: mapsUrl(v), target: "_blank", rel: "noopener" }, icon("pin"), h("span", { text: "Directions" })),
@@ -854,6 +860,7 @@
       address: String(v.address || "").trim(),
       color: VENUE_COLORS.includes(v.color) ? v.color : "ink",
       ages21: Boolean(v.ages21),
+      free: Boolean(v.free),
       note: String(v.note || "").trim(),
       ends: String(v.ends || "").trim(),
     }));

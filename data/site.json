@@ -32,8 +32,9 @@
       "name": "Cache Bar",
       "color": "copper",
       "ages21": true,
+      "free": true,
       "ends": "varies",
-      "note": "Wednesday dances that start with instruction. Bring your ID."
+      "note": "Free admission. Wednesday dances that start with instruction. Bring your ID."
     }
   ],
   "first_time": [
