@@ -494,12 +494,8 @@
     const steps = (state.site.first_time || []).filter((s) => s?.title || s?.text);
     $("#first-time-list").replaceChildren(...steps.map((s) => h("li", null, h("h3", { text: s.title || "" }), h("p", { text: s.text || "" }))));
     const price = String(state.site.admission || "").trim();
-    const freeNames = state.venues.filter((v) => v.free).map((v) => v.name);
-    const note = freeNames.length && !/\bfree\b/i.test(price) ? `${freeNames.join(" & ")} nights are free` : "";
-    $("#admission").hidden = !price && !note;
+    $("#admission").hidden = !price;
     $("#admission-price").textContent = price;
-    $("#admission-note").textContent = note;
-    $("#admission-note").hidden = !note;
   }
 
   /* Only venues with a night in the month the schedule is showing. If that
